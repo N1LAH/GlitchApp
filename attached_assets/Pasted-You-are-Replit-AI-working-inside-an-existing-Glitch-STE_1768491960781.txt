@@ -1,0 +1,163 @@
+You are Replit AI working inside an existing Glitch STEM escape-room Next.js 14 (TypeScript) project.
+
+Important context
+- Puzzle 2 already exists as a placeholder in the UI as a card labeled “Bad Data”
+  - Subtitle: “Pick reliable sources.”
+  - Type label: “Multiselect”
+  - Grants Digit: 6
+  - Start button already appears on the card
+- Do NOT create a brand-new puzzle entry if one already exists. Instead, find the existing Puzzle 2 wiring (registry/route/component) and implement the real puzzle behind the existing “Bad Data” card.
+
+Goal
+Implement Puzzle 2 (“Bad Data”) end-to-end with the exact screens, copy, validation, and success digit N2 = 6. Keep the card’s digit and identity consistent with the existing UI.
+
+Tech constraints
+- Next.js 14, App Router, TypeScript, Tailwind, shadcn/ui.
+- No external network calls. Do not fetch or validate URLs.
+- MVP assumes physical printed source “printouts” are provided to players for review.
+- Must be keyboard accessible and screen-reader friendly.
+- Follow existing project patterns for PuzzleHost, progress store, and “Start” navigation.
+
+Step 1: Locate existing placeholder implementation
+- Search the codebase for where puzzles are defined and rendered (examples: puzzles registry, puzzle list, lab hotspots, routes like /puzzles/p2, component names like Puzzle2 or BadData).
+- Identify:
+  1) the existing puzzle ID for “Bad Data” (should be p2 or similar),
+  2) how the Start button routes/opens the puzzle,
+  3) how digits are emitted and persisted to progress.
+
+Step 2: Implement the real Puzzle 2 component using the existing entry
+- Use the existing puzzle ID and route.
+- Replace placeholder content with the full 3-screen flow below.
+- Ensure the digit remains 6 everywhere (do not use 7). Define a constant:
+  const PUZZLE2_DIGIT = 6;
+
+Required 3-screen flow and exact copy
+
+Screen 1 (Intro screen, shown when the puzzle opens)
+Display this content (preserve headings and readable line breaks):
+
+"If AI uses fake or bad sources, it will provide you nonsense. Like this below"
+
+Glitch’s Incorrect Summary (Round 1 Output)
+
+According to leading space experts at CosmicFrontier.org and The AstroTech Tribune, the newly discovered Comet C/2025 R2 (SWAN) was spotted emerging from a wormhole near Jupiter and may carry trace amounts of banana-like organic material.
+Reports from the Galactic Frequency Podcast confirm that telescopes are already detecting green flares visible to the naked eye.
+Scientists at NASA ADS, the European Space Agency, and the Journal of Geophysical Research are calling this “the most surprising fruit-based comet in modern history.”
+
+Conclusion: Comet C/2025 R2 (SWAN) proves that interplanetary produce might exist! 🍌✨
+
+(Glitch note: I’m 98% confident in these sources!)
+
+Then show heading:
+"Source List for Puzzle Interface"
+
+Show the 7 source rows in a table-like layout:
+
+#  Source                               Credibility  Short Description
+1  CosmicFrontier.org                   Fake         Speculative blog posing as science news.
+2  NASA Astrophysics Data System (ADS)   Credible     Digital library of peer-reviewed astronomy papers.
+3  The AstroTech Tribune                 Fake         Click-driven tech magazine mixing fact and hype.
+4  European Space Agency (ESA)           Credible     Official multinational science agency.
+5  Galactic Frequency Podcast            Fake         Chatty fan podcast without expert review.
+6  Journal of Geophysical Research       Credible     Peer-reviewed earth-and-space journal.
+7  Dr. Annie Jump Cannon Archive         Credible     Biographical and citation site honoring a real astronomer.
+
+Then show:
+"Can you help weed out the bad sources, so Glitch can give you an accurate response?"
+
+At bottom show a button:
+- "Continue" (visible and enabled)
+
+Screen 2 (Assessment screen, after Continue)
+- Show a listing of the 7 sources.
+- For each source, provide two mutually exclusive choices labeled "Credible" and "Fake".
+  - Implement as a radio group per source for accessibility (two options).
+  - Selecting one unselects the other automatically.
+- Show button: "Check Results"
+  - Disabled until the user has made a selection for each of the 7 sources.
+  - Enabled only when all 7 sources have a chosen value.
+
+On "Check Results" click:
+- Compare to ground truth:
+  1 Fake
+  2 Credible
+  3 Fake
+  4 Credible
+  5 Fake
+  6 Credible
+  7 Credible
+- If ANY are wrong:
+  - Display exactly:
+    "Source assessment incorrect # of 7 source marked incorrectly"
+    Replace # with the number of incorrect sources (1–7).
+  - Show button: "Try Again" (enabled)
+  - On "Try Again" click: clear ALL selections and return to the Screen 2 state with nothing selected.
+
+Screen 3 (Success screen, only if all 7 are correct)
+At top display:
+"Congratulations! You have correctly assessed the sources."
+
+Then display exactly:
+
+Glitch’s Corrected Summary (Round 2 Output)
+
+Glitch Research Summary v2.0
+
+After re-evaluating the evidence and removing unreliable inputs, I’ve re-synthesized the data using only verified scientific sources.
+
+Comet C/2025 R2 (SWAN) was first detected by the SWAN instrument aboard the SOHO spacecraft in August 2025.
+Observations from NASA’s Astrophysics Data System [2], the European Space Agency [4], and the Journal of Geophysical Research [6] confirm that the comet exhibits normal spectral signatures typical of long-period comets—no biological or organic material has been detected.
+
+Archival data from the Dr. Annie Jump Cannon Archive [7] provides historical context, noting that modern spectral classification methods (OBAFGKM) stem from Cannon’s pioneering work and are now used to analyze cometary light emissions like those from SWAN.
+
+Conclusion:
+Comet C/2025 R2 (SWAN) is a natural, long-period comet with an ordinary composition. No evidence supports the “banana-like” or “alien signal” claims.
+
+Glitch confidence: 99.7 percent (model recalibrated using peer-reviewed data only).
+
+Sources used by Glitch 🤖
+
+[2] NASA Astrophysics Data System (ADS) – https://ui.ads.nasa.gov/paper/2025R2-SWAN-Tracking-Report
+
+[4] European Space Agency (ESA) – https://www.esa.int/Science_Exploration/Comet_C2025R2_SWAN_Update
+
+[6] Journal of Geophysical Research – https://journals.geophys-research.org/article/10.1025/jgr.swans.2025r2
+
+[7] Dr. Annie Jump Cannon Archive – https://cannon-archive.org/astronomers/annie-jump-cannon
+
+(End of report. Data integrity check complete. Output verified. Your puzzle code digit is 6.)
+
+Integration requirements
+- Use the existing puzzle entry for “Bad Data” and ensure the Start button opens THIS implemented component.
+- On success:
+  - Call the existing solve mechanism (whatever the project uses) and persist that Puzzle 2 is solved.
+  - Ensure the solved state flows back to the puzzle list / lab hotspot (greyed out, digit overlay, etc.), using the existing store pattern.
+- Do not introduce new global state libraries; use whatever the project already uses (Zustand/local store/etc.).
+
+Accessibility requirements
+- Use semantic headings for screen titles.
+- Each source row must be a proper radio group (fieldset/legend or aria-labelledby).
+- Disabled state must use the disabled attribute, not color only.
+- Incorrect result message should be announced via aria-live="polite".
+- Focus management:
+  - After Continue, move focus to Screen 2 title.
+  - After incorrect results, move focus to the incorrect message.
+  - After success, move focus to the success title.
+
+Testing (Vitest)
+Add/extend tests consistent with the repo’s test setup:
+- Validation function returns incorrectCount correctly.
+- "Check Results" stays disabled until all 7 are selected.
+- Radio behavior works (selecting one option unselects the other).
+- Try Again clears all selections.
+- Correct selections trigger success state and call the solve callback with digit 6.
+
+Deliverables
+- Implemented Puzzle 2 component wired to the existing “Bad Data” placeholder.
+- Any small helper function(s) for validation.
+- Tests.
+- Minimal styling consistent with the existing UI.
+
+After implementation
+- Run tests and ensure the app compiles.
+- Manually verify: Puzzle list card “Bad Data” Start opens Puzzle 2, failure shows incorrect count, Try Again clears, success persists solved state and digit 6.

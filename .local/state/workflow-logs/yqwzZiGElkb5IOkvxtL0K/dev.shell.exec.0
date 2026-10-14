@@ -1,0 +1,22 @@
+[1G[0K⠙[1G[0K
+> glitch@0.1.0 dev
+> next dev -H 0.0.0.0 -p 5000
+
+[1G[0K⠙[1G[0K  [1m[38;2;173;127;168m▲ Next.js 14.2.15[39m[22m
+  - Local:        http://localhost:5000
+  - Network:      http://0.0.0.0:5000
+
+ [32m[1m✓[22m[39m Starting...
+ [32m[1m✓[22m[39m Ready in 4.8s
+ [37m[1m○[22m[39m Compiling /puzzles/[id] ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ [32m[1m✓[22m[39m Compiled /puzzles/[id] in 4.4s (646 modules)
+ [32m[1m✓[22m[39m Compiled in 529ms (332 modules)
+ GET /puzzles/p1-feedback-maze [32m200[39m in 5843ms
+ [37m[1m○[22m[39m Compiling / ...
+ [32m[1m✓[22m[39m Compiled / in 786ms (664 modules)
+ GET / [32m200[39m in 922ms
+ GET / [32m200[39m in 62ms

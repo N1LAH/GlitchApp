@@ -1,0 +1,54 @@
+Fix P1 Reinforcement Maze to use my provided assets, correct sprite rendering, square canvas, and slower timing.
+
+Scope: Only Puzzle 1 files. Do not touch store, other puzzles, timers, or routing.
+
+A) Force asset paths (no generated images)
+- Background must be:  /assets/images/maze/Ship_Maze.png
+- Sprite must be:      /assets/images/maze/glitch.png
+- Remove any references to attached_assets/generated_images.
+
+B) Square canvas + responsive
+In src/components/puzzle/P1ReinforcementMaze.tsx:
+- Wrap the background in a square container using Tailwind’s aspect ratio utilities:
+  <div className="relative w-full max-w-3xl mx-auto aspect-[1/1] overflow-hidden rounded-md border border-slate-700">
+     <img src="/assets/images/maze/Ship_Maze.png" alt="Ship maze"
+          className="absolute inset-0 h-full w-full object-contain select-none pointer-events-none" />
+     <!-- sprite absolutely positioned on top -->
+  </div>
+- Use object-contain so the full square art is visible without stretching.
+
+C) Pixel-art sprite rendering and centering
+- Render the sprite as an <img> absolutely positioned at current (x%, y%), centered:
+  style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
+- Add inline styles for crisp pixels:
+  style={{ imageRendering: 'pixelated', imageRendering: 'crisp-edges' }}
+- Size the sprite to a fixed fraction of the canvas (keep it small and consistent across screens), e.g. width: '5%'.
+- Ensure the sprite is on a higher z-index than the background and below any UI overlays.
+
+D) Slow timing
+- Replace timing constants (create them at top if missing):
+  const DECISION_PAUSE_MS = 600;   // was 250
+  const MOVE_DURATION_MS  = 800;   // was ~400
+- Use DECISION_PAUSE_MS where the state machine waits before choosing.
+- Use MOVE_DURATION_MS for the CSS transition / animation between nodes.
+
+E) Use my maze JSON and do not regenerate images
+- Keep reading node coordinates from src/components/puzzle/p1-maze.json.
+- Do not programmatically draw a different layout; no generated floor plans.
+- Leave the reinforcement memory logic unchanged.
+
+F) Sprite position math
+- When animating between nodes A -> B, compute intermediate position with linear interpolation over MOVE_DURATION_MS and update via requestAnimationFrame or CSS transition (current approach is fine).
+- On arrival, snap to the exact B (x%, y%) to avoid drift.
+
+G) Accessibility and UI
+- Keep the status aria-live updates.
+- Keep “Correct Decision” / “Incorrect Decision” buttons enabled only during the stopped window.
+- Remove any lingering debug text like [phase/current] from the UI.
+
+Acceptance checks
+- The maze shows my square art (not the rectangular auto-generated one).
+- Glitch sprite looks like crisp pixel art, proportionate, and centered over nodes.
+- Decisions wait ~0.6 s; movement is ~0.8 s between nodes.
+- No references to attached_assets/generated_images remain.
+- Coordinates still come from p1-maze.json; the state machine and reinforcement memory work as before.

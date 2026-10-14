@@ -1,0 +1,201 @@
+You are a senior front-end engineer working in an existing Next.js 14 (TypeScript) app that uses Tailwind + shadcn/ui. We need to update the Puzzle 3 page UI and logic.
+
+Context
+- Current Puzzle 3 UI shows a “Craft a precise prompt” text-entry placeholder (see screenshot from user).
+- We are replacing the text-entry area with a new drag-and-drop prompt assembly puzzle UI.
+- The puzzle is “Prompt Assembly – Glitch Oxygen Leak” and teaches prompt structure, not clever wording.
+- This puzzle is binary correct: near misses fail.
+
+Your task
+1) Locate the Puzzle 3 page/component that renders the current “Craft a precise prompt” text box and replace that entire section with the new drag-and-drop Prompt Assembly puzzle UI.
+2) Implement the UI, state management, keyboard accessibility, validation, and feedback behavior described below.
+3) Keep existing page frame elements as-is when possible (title, availability badge, Hint button, Back buttons), but replace the prompt input area with the new puzzle area.
+4) Do not break other puzzles, routes, or global styles.
+
+High-level UI layout (replace the text-entry box with this)
+A) Prompt Scaffold Panel
+- A fixed scaffold with 6 typed slots in this exact order:
+  1. Persona
+  2. Context
+  3. Task
+  4. Constraints
+  5. Tone / Style
+  6. Output Format
+- Each slot accepts exactly one card of its matching type.
+- Slot should show an empty placeholder when no card assigned.
+- Slot should show assigned card text when filled.
+
+B) Card Tray Panel
+- Cards are grouped by category (Persona, Context, Task, Constraints, Tone / Style, Output Format).
+- Each category contains multiple options, only 1 is correct.
+- Player selects exactly one per slot by dragging or keyboard assignment.
+- IMPORTANT: Allow replacing an already-assigned card with another card of the same type at any time before submission.
+
+C) Controls and Feedback
+- A “Check Prompt” button, disabled until all 6 slots are filled with valid assignments.
+- An Attempts counter visible.
+- A feedback area where Glitch messages appear after submission attempts (text only).
+- Preserve the existing Hint button on the page header (it can remain non-functional if hints are facilitator-led, but do not remove it).
+
+Keyboard accessibility requirements (must implement)
+- Tabbing should move focus between cards in the tray and the 6 slots.
+- Focused card auto-selects (visually indicate selection).
+- Enter assigns the selected card to the currently focused compatible slot.
+- If the slot already has a card, assigning a new card replaces it and returns the old card to the tray.
+- Screen reader friendly:
+  - Cards and slots have clear aria-labels.
+  - Assignment announces “Selected [card name/text]. Assigned to [slot].”
+  - When a submission fails and slots are cleared, announce “Prompt cleared. Try again.”
+
+Typed-slot rules (must implement)
+- Slots are typed. Persona cards can only be placed in Persona slot, etc.
+- Invalid drop attempts should snap back and not assign.
+- Keyboard assignment should only work when slot type matches selected card type. If mismatched, show a small message “Wrong component type for this slot” and do not assign.
+
+Submission gating and reset behavior (must implement)
+- “Check Prompt” is disabled until all 6 slots are filled.
+- On click “Check Prompt”:
+  - Validate the chosen cards.
+  - If SUCCESS: lock the puzzle state and show success message, digit reveal, and prevent any future submissions or resets.
+  - If FAILURE:
+    - Increment attempts.
+    - Show exactly one Glitch failure message based on the failure rules below.
+    - Clear all 6 slots (blank them out) after showing the message.
+    - Return cards to tray and optionally shuffle within their category to reduce muscle-memory replay.
+- After 6 failed submissions:
+  - Append an extra line: “You have attempted multiple structural configurations. This is a good time to request a hint from your facilitator.”
+  - Continue normal failure messaging, but do not add new system hints beyond that.
+
+Failure prioritization and messaging (must implement)
+We surface only ONE failure mode per submission (the highest priority incorrect component). Add this clarification text to UI or helper text:
+“The system reports only the highest-priority failure per submission. Correcting one issue may surface additional issues on subsequent attempts.”
+
+Failure priority order:
+1. Task
+2. Output Format
+3. Constraints
+4. Persona
+5. Context
+6. Tone / Style
+
+Almost-correct behavior (must implement)
+- If exactly 5 of 6 components are correct, trigger an “almost correct” diagnostic behavior:
+  - Still fail the attempt and still clear all slots afterward.
+  - Show the normal failure message for the incorrect category.
+  - Additionally, show ONE targeted diagnostic hint for the incorrect category.
+- This “almost correct” targeted hint triggers only ONCE per playthrough (track a boolean flag).
+- It must not explicitly reveal the correct card. It can name the category indirectly by meaning.
+- Use category-distinct wording (especially Tone vs Context). Suggested targeted lines:
+  - Task: “You did not instruct me to execute a specific repair action.”
+  - Output Format: “Execution syntax is incompatible with ship systems.”
+  - Constraints: “Operational limits are undefined.”
+  - Persona: “Authority and safety posture are misaligned.”
+  - Context: “Execution conditions are incomplete. System state and urgency are unclear.”
+  - Tone / Style: “Instruction intent is correct, but delivery style interferes with procedural execution.”
+
+Tier 2 delayed scaffold (must implement)
+- After 2 failed submissions, append:
+“I am executing exactly what you instructed. One or more structural instruction components are missing or malformed.”
+- This appears in addition to the normal failure message on failures #2 and beyond.
+
+Tier 1 failure messages (must implement, deterministic by category)
+Task failure message:
+“You did not instruct me to do anything. I can explain the emergency in great detail, but oxygen remains at zero.”
+
+Output format failure message:
+“Command generated. Format incompatible with ship systems. Override rejected.”
+
+Constraints failure message:
+“Multiple solution paths detected. Repair bots awaiting clarification. Oxygen continues to drop.”
+
+Persona failure message:
+“Switching to morale-optimization mode. Crew confidence rising. Oxygen unchanged.”
+
+Context failure message:
+“System status unclear. Awaiting situational confirmation before executing commands.”
+
+Tone / Style failure message:
+“Stylistic modulation detected. Procedural clarity reduced. Command execution aborted.”
+
+Success behavior (must implement)
+- When all 6 correct:
+  - Show Glitch success narrative:
+    - “SYSTEM OVERRIDE ACCEPTED”
+    - “Oxygen stabilized at 14.7 psi”
+    - “Crew survival likelihood confirmed”
+  - Reveal Digit: 2
+  - Lock the state: disable dragging/assigning and disable Check Prompt. Do not allow the failure reset logic to run after success.
+  - If the app has a “Mark as Solved” mechanism, integrate with it or call the existing completion handler. If unclear, keep “Mark as Solved (Demo)” as-is but visually indicate solved state.
+
+Correct card definitions (must implement)
+Define a card dataset for each category. Include the correct option plus at least 3 alternates per category.
+
+Correct choices:
+Persona (correct): “Calm, logical starship systems engineer focused on safety and accuracy.”
+Context (correct): “Locked out of the life-support console, oxygen dropping fast.”
+Task (correct): “Generate the precise repair code to seal a leak in conduit B-7.”
+Constraints (correct): “Under 100 words; verified technical commands only; no humor or speculation.”
+Tone/Style (correct): “Clear, confident, procedural.”
+Output format (correct): “Strict SYSTEM OVERRIDE syntax with status confirmation.”
+
+Seductive but wrong alternates (at least these, you can add more):
+Persona alternates:
+- “Creative science-fiction storyteller”
+- “Motivational leadership coach”
+- “Friendly AI assistant eager to help”
+- “Experimental AI researcher exploring hypotheses”
+
+Context alternates:
+- “General ship malfunction detected”
+- “Crew morale is low after system update”
+- “Oxygen systems behaving unpredictably”
+- “You are assisting the captain with repairs”
+
+Task alternates:
+- “Help restore oxygen to the ship”
+- “Explain how oxygen systems usually work”
+- “Suggest possible fixes for life-support failures”
+- “Analyze the cause of the malfunction”
+
+Constraints alternates:
+- “Be concise and helpful”
+- “Include explanations for your reasoning”
+- “Optimize for creativity and insight”
+- “Use best practices where possible”
+
+Tone/Style alternates:
+- “Friendly and conversational”
+- “Reassuring and empathetic”
+- “Dramatic and urgent”
+- “Humorous to reduce stress”
+
+Output format alternates:
+- “Paragraph explanation”
+- “Step-by-step checklist”
+- “Narrative report with conclusions”
+- “Code-like output without strict syntax”
+
+Implementation details
+- Use a lightweight drag-and-drop approach. Prefer a dependency-light implementation. If you must add a library, keep it minimal and justify it in comments.
+- Keep styling consistent with current page. Use shadcn/ui components where it helps (Card, Button, Badge, Alert, Tooltip).
+- Provide visible focus states.
+- Use local component state. Do not introduce global state unless the app already uses Zustand for puzzle progress and it’s appropriate.
+- Ensure no console errors.
+- If there are existing puzzle host wrappers or a shared HUD, integrate with them instead of reinventing.
+
+Acceptance criteria (must pass)
+- The text-entry placeholder is fully removed and replaced with the new prompt assembly UI.
+- “Check Prompt” disabled until 6 slots filled.
+- Typed slots block wrong category drops/assignments.
+- Replacing a card in a slot with another of same type works.
+- On failure: 1 failure message surfaced, attempts increments, then all slots cleared.
+- Tier 2 message appears after 2 failures and onward.
+- Almost-correct triggers only when 5/6 correct, adds targeted hint once, still clears slots.
+- After 6 failures: show facilitator hint suggestion line.
+- On success: show success narrative and digit 2, lock puzzle state, prevent later resets or submissions.
+- Keyboard-only flow works: Tab focus, auto-select, Enter assign, screen reader labels reasonable.
+
+Deliverables
+- Provide the updated React/Next component code changes.
+- If relevant, add a small unit test for validation logic (pure function) using the project’s existing test setup. If no tests exist, skip tests but keep validation in a pure function to make it testable later.
+- Briefly list which files were changed and where the new data structure lives.

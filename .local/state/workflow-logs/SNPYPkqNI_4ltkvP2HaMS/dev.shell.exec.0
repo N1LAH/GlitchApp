@@ -1,0 +1,15 @@
+[1G[0K⠙[1G[0K
+> glitch@0.1.0 dev
+> next dev -H 0.0.0.0 -p 5000
+
+[1G[0K⠙[1G[0K  [1m[38;2;173;127;168m▲ Next.js 14.2.15[39m[22m
+  - Local:        http://localhost:5000
+  - Network:      http://0.0.0.0:5000
+
+ [32m[1m✓[22m[39m Starting...
+ [32m[1m✓[22m[39m Ready in 3.6s
+ [37m[1m○[22m[39m Compiling / ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [32m[1m✓[22m[39m Compiled / in 2.7s (536 modules)
+ GET / [32m200[39m in 3045ms
+ [32m[1m✓[22m[39m Compiled in 276ms (277 modules)

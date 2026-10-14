@@ -1,0 +1,44 @@
+Implement Puzzle 1: Reinforcement Maze inside our existing PuzzleHost flow.
+
+Requirements (do not change unrelated files or the store):
+- Create a client component at src/components/puzzle/P1ReinforcementMaze.tsx
+- Pure logic module at src/components/puzzle/p1-logic.ts with no React imports:
+  - export type Cell = { x:number; y:number }
+  - export const GRID_SIZE = 8
+  - export const START: Cell = { x:0, y:0 }
+  - export const GOAL:  Cell = { x:7, y:7 }  // MVP fixed goal
+  - export function move(from:Cell, dir:"up"|"down"|"left"|"right"): Cell (clamp to grid)
+  - export function feedback(prev:Cell, next:Cell, goal:Cell): "positive"|"negative"|"neutral"
+    (Return "positive" if next is closer to goal than prev by Manhattan distance, "negative" if farther, "neutral" if same.)
+  - export function isGoal(c:Cell, goal:Cell): boolean
+- UI component behavior (P1ReinforcementMaze.tsx):
+  - 8×8 grid, keyboard controls (Arrow keys + WASD), focusable container with role="application".
+  - Visual cursor for current position; goal cell is hidden.
+  - Show feedback text and subtle color cue after each move:
+    - positive → “Signal stronger” with green glow
+    - negative → “Signal weaker” with red glow
+    - neutral  → “Signal unchanged” with neutral glow
+  - When isGoal() becomes true, show a success panel with a “Claim Reward” button that calls the markSolved() passed from PuzzleHost.
+  - Accessibility: container must be tabbable, announce feedback via aria-live="polite", and support Enter to trigger “Claim Reward” when visible.
+  - No timers anywhere; do not import useTimer.
+- Wire it into dynamic puzzle page:
+  - In src/app/puzzles/[id]/page.tsx, inside the branch for puzzle.kind === "maze", render:
+      <P1ReinforcementMaze onSolved={() => markSolved()} />
+    (Receive markSolved from PuzzleHost render-prop.)
+- Styling:
+  - Use Tailwind; keep it lightweight. Grid cells should be clear and responsive; focus ring on the active cell.
+- Do not modify: Zustand store shape or actions, other puzzles, routes, or layout. Keep PuzzleHost, PuzzleHUD, and timing semantics as-is.
+
+Add tests:
+- Create tests/unit/p1-logic.test.ts using Vitest to cover move(), feedback(), isGoal() edge cases.
+
+Acceptance criteria:
+- /puzzles/p1-feedback-maze renders an 8×8 grid with a keyboard-focusable container.
+- Arrow/WASD moves the cursor; feedback text updates appropriately.
+- Reaching the GOAL reveals a “Claim Reward” button; clicking it marks puzzle solved (digit 4) and persists after refresh.
+- Tests for move(), feedback(), isGoal() pass.
+
+Caution:
+- Ensure "use client" at the top of any React component files you add.
+- No `any` types; keep strict TypeScript.
+- Do not edit the store or add timer UI.

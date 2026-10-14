@@ -1,0 +1,147 @@
+Goal
+Rollback the old P1 grid maze and replace it with the new Reinforcement Maze that uses my ship map image and a Glitch sprite. Keep all other puzzles, routes, timing, and store logic unchanged.
+
+Scope
+- Only Puzzle 1 (p1-feedback-maze) and its files.
+- Do not modify other puzzles, timing UI, routes, or the Zustand store shape.
+- No timers on screen.
+- TypeScript strict. No any types.
+
+Part A. Clean up old P1 code
+1) Delete or stop using any previous P1 grid files, such as:
+   - src/components/puzzle/P1ReinforcementMaze.tsx (old grid version only)
+   - src/components/puzzle/p1-logic.ts (old grid helpers)
+   - tests/unit/p1-logic.test.ts (old grid tests)
+   If these names already exist, we will re-create new files with the same names but with the new logic described below. Do not touch other puzzle files.
+
+Part B. Add assets
+2) Create and use the following files and paths. Do not change paths.
+   - public/assets/images/maze/Ship_Maze.png     (background image of the maze)
+   - public/assets/images/maze/glitch.png        (Glitch sprite)
+
+Part C. Maze data (graph, not grid)
+3) Add a data file at src/components/puzzle/p1-maze.json with this schema:
+{
+  "start": "<nodeId>",
+  "goal": "<nodeId>",
+  "nodes": {
+    "<nodeId>": {
+      "x": number,   // percentage 0-100 of container width
+      "y": number,   // percentage 0-100 of container height
+      "kind": "room" | "junction" | "deadend",
+      "neighbors": ["<nodeId>", ...]
+    }
+  }
+}
+- Include all 9 rooms: bridge, cafe, gym, airlock, crew, rec, engineering, medical, lab.
+- Add corridor nodes wherever a black corridor bends, branches, or ends in a dead end.
+- Start at lab. Goal is bridge.
+- Use rough coordinates now. I will refine later.
+
+Example starter graph (can be adjusted to match the art later):
+{
+  "start": "lab",
+  "goal": "bridge",
+  "nodes": {
+    "lab":         { "x": 78, "y": 82, "kind": "room",    "neighbors": ["medical"] },
+    "medical":     { "x": 64, "y": 82, "kind": "room",    "neighbors": ["engineering","crew","lab"] },
+    "engineering": { "x": 50, "y": 82, "kind": "room",    "neighbors": ["airlock","medical"] },
+    "airlock":     { "x": 36, "y": 82, "kind": "room",    "neighbors": ["engineering","bridge-corr-a"] },
+
+    "bridge-corr-a": { "x": 36, "y": 76, "kind": "junction", "neighbors": ["airlock","bridge"] },
+    "bridge":      { "x": 36, "y": 68, "kind": "room",    "neighbors": ["bridge-corr-a","cafe-corr-a"] },
+
+    "crew":        { "x": 64, "y": 68, "kind": "room",    "neighbors": ["medical","cafe","rec"] },
+    "rec":         { "x": 78, "y": 68, "kind": "room",    "neighbors": ["crew","gym"] },
+    "gym":         { "x": 78, "y": 54, "kind": "deadend", "neighbors": ["rec"] },
+
+    "cafe":        { "x": 64, "y": 54, "kind": "room",    "neighbors": ["crew","cafe-corr-a"] },
+    "cafe-corr-a": { "x": 50, "y": 54, "kind": "junction","neighbors": ["cafe","bridge"] }
+  }
+}
+
+Part D. Pure logic (no React)
+4) Create src/components/puzzle/p1-rl.ts
+   - export type NodeId = string
+   - export type Node = { x:number; y:number; kind:"room"|"junction"|"deadend"; neighbors:NodeId[] }
+   - export type Maze = { start:NodeId; goal:NodeId; nodes:Record<NodeId, Node> }
+   - export function edgeKey(from:NodeId, to:NodeId): string
+   - export type Memory = Record<string, { correct:number; incorrect:number }>
+   - export function atGoal(id:NodeId, maze:Maze): boolean
+   - export function isDeadEndNode(id:NodeId, maze:Maze): boolean   // kind === "deadend"
+   - export function shouldStop(id:NodeId, prev:NodeId|undefined, maze:Maze): boolean
+       // stop at rooms, and at junctions where options excluding backtrack > 1
+   - export function nextChoice(
+         nodeId:NodeId,
+         prev:NodeId|undefined,
+         maze:Maze,
+         memory:Memory
+     ): { next:NodeId; choiceEdge:string }
+       // choose among neighbors (excluding prev only if there are other options)
+       // softmax over score = (correct - incorrect), small epsilon so every option has non-zero chance
+   - export function updateMemory(
+         memory:Memory,
+         edge:string,
+         label:"correct"|"incorrect"
+     ): Memory
+       // returns a new memory with incremented counts
+
+Part E. React component
+5) Create src/components/puzzle/P1ReinforcementMaze.tsx
+   - "use client"
+   - Props: { onSolved: () => void }
+   - Load maze from p1-maze.json.
+   - State:
+       current: NodeId
+       prev: NodeId | undefined
+       lastEdge: string | null
+       memory: Memory
+       phase: "stopped" | "deciding" | "moving"
+       status: string  // text for aria-live
+   - Render:
+       - A responsive 16:9 container with the background image /assets/images/maze/Ship_Maze.png
+       - Glitch sprite absolutely positioned at (x%, y%) for the current node
+       - Control panel with two buttons:
+           [ Correct decision ] [ Incorrect decision ]
+         These are enabled only when phase = "stopped" and lastEdge != null. Clicking them updates memory for lastEdge.
+       - aria-live="polite" region for status
+   - State machine:
+       - On mount: set current = maze.start, prev = undefined, phase = "stopped"
+       - If atGoal(current) -> onSolved() and do not continue
+       - When phase = "stopped": after 250 ms, set phase = "deciding"
+       - When phase = "deciding":
+           - If shouldStop(current, prev, maze) is false, auto-advance without a pause
+           - Else compute nextChoice(...), store lastEdge, set phase = "moving", start animation
+       - Movement: animate from prev node to next node with CSS transform over 400 ms
+           - After animation: set prev = old current, current = next, phase = "stopped"
+           - If isDeadEndNode(current, maze) is true, pause 250 ms then reset to start (preserve memory)
+           - If atGoal(current) is true, call onSolved()
+   - No timers visible in the UI. Do not import any useTimer.
+
+Part F. Wire into the puzzle page
+6) Edit src/app/puzzles/[id]/page.tsx
+   - In the branch for puzzle.kind === "maze", render the new component:
+       <P1ReinforcementMaze onSolved={() => markSolved({ id: puzzle.id, digit: puzzle.grants?.digit, token: puzzle.grants?.token })} />
+   - Do not change other branches.
+
+Part G. Tests
+7) Add tests/unit/p1-rl.test.ts with Vitest:
+   - nextChoice biases toward edges with higher (correct - incorrect)
+   - updateMemory increments counts correctly
+   - shouldStop returns true for rooms and for junctions with a real choice
+   - isDeadEndNode returns true for nodes with kind "deadend"
+   - atGoal works only at the goal node
+
+Part H. Styling and accessibility
+8) Use Tailwind for layout. Keep the container responsive. Keep clear focus outlines on buttons. Keep aria-live announcements when stopping, when a dead end causes reset, and when the goal is reached.
+
+Acceptance checks
+- Navigating to /puzzles/p1-feedback-maze shows the Ship_Maze.png background with the Glitch sprite.
+- Glitch stops only at rooms and real junctions, not in single-path corridors.
+- Every stop waits 0.25 seconds, then a decision is made. Movement animation 400 ms between nodes.
+- Two buttons allow labeling the last decision as Correct or Incorrect. These update the memory for that directed edge.
+- Entering a dead-end node triggers a short pause and a reset to LAB. Reinforcement memory is preserved.
+- Reaching BRIDGE triggers onSolved() and grants digit 4 through existing markSolved.
+- Unit tests pass.
+- No timers are rendered anywhere.
+- No unrelated files or store code are modified.

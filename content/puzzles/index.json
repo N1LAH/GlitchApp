@@ -1,0 +1,47 @@
+[
+  {
+    "id": "p1-feedback-maze",
+    "title": "Feedback Maze",
+    "kind": "maze",
+    "description": "Navigate the grid using signal feedback.",
+    "grants": {
+      "digit": 4
+    }
+  },
+  {
+    "id": "p2-bad-data",
+    "title": "Bad Data",
+    "kind": "multiselect",
+    "description": "Assess source credibility.",
+    "grants": {
+      "digit": 6
+    }
+  },
+  {
+    "id": "p3-prompt-precision",
+    "title": "Prompt Precision",
+    "kind": "text-entry",
+    "description": "Craft a precise prompt.",
+    "grants": {
+      "digit": 2
+    }
+  },
+  {
+    "id": "p4-fact-fiction",
+    "title": "Fact or Fiction",
+    "kind": "slider",
+    "description": "Sort eight statements correctly.",
+    "grants": {
+      "token": "UNLOCK5"
+    }
+  },
+  {
+    "id": "p5-final-console",
+    "title": "Final Console",
+    "kind": "keypad",
+    "description": "Use the color clues from the other puzzles to enter the three-digit door code.",
+    "requires": [
+      "p4-fact-fiction"
+    ]
+  }
+]

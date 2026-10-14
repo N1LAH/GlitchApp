@@ -1,0 +1,31 @@
+[1G[0K⠙[1G[0K
+> glitch@0.1.0 dev
+> next dev -H 0.0.0.0 -p 5000
+
+[1G[0K⠙[1G[0K  [1m[38;2;173;127;168m▲ Next.js 14.2.15[39m[22m
+  - Local:        http://localhost:5000
+  - Network:      http://0.0.0.0:5000
+
+ [32m[1m✓[22m[39m Starting...
+ [32m[1m✓[22m[39m Ready in 4.1s
+ [37m[1m○[22m[39m Compiling / ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [32m[1m✓[22m[39m Compiled / in 2.9s (525 modules)
+ GET / [32m200[39m in 3229ms
+ [32m[1m✓[22m[39m Compiled in 256ms (272 modules)
+ [37m[1m○[22m[39m Compiling /episodes ...
+ [32m[1m✓[22m[39m Compiled /episodes in 583ms (539 modules)
+ [37m[1m○[22m[39m Compiling /puzzles/[id] ...
+ [32m[1m✓[22m[39m Compiled /puzzles/[id] in 662ms (667 modules)
+ GET / [32m200[39m in 137ms
+ [37m[1m○[22m[39m Compiling /_not-found ...
+ [32m[1m✓[22m[39m Compiled /_not-found in 568ms (670 modules)
+ GET /favicon.png [33m404[39m in 876ms
+ GET / [32m200[39m in 47ms
+ [32m[1m✓[22m[39m Compiled in 358ms (348 modules)
+ [32m[1m✓[22m[39m Compiled in 257ms (348 modules)
+ [32m[1m✓[22m[39m Compiled in 607ms (681 modules)
+ [32m[1m✓[22m[39m Compiled in 149ms (348 modules)
+ [32m[1m✓[22m[39m Compiled in 670ms (684 modules)
+ [33m[1m⚠[22m[39m Fast Refresh had to perform a full reload when r/workspace/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}","ids":[]}, r/workspace/src/app/globals.css","ids":[]}, r/workspace/src/components/DevToolbar.tsx","ids":["default"]} changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /episodes [32m200[39m in 81ms

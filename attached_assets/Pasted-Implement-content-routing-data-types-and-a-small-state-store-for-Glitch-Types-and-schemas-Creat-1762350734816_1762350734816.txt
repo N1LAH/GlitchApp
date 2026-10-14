@@ -1,0 +1,124 @@
+Implement content routing, data types, and a small state store for Glitch.
+
+Types and schemas
+
+Create src/types/puzzle.ts with:
+
+export type PuzzleId = "p1-feedback-maze" | "p2-bad-data" | "p3-prompt-precision" | "p4-fact-fiction" | "p5-final-console";
+
+export type PuzzleKind = "maze" | "multiselect" | "text-entry" | "slider" | "keypad";
+
+export interface PuzzleDef {
+  id: PuzzleId;
+  title: string;
+  kind: PuzzleKind;
+  description: string;
+  requires?: PuzzleId[];         // dependencies
+  grants?: { digit?: number; token?: string }; // what solving yields
+}
+
+
+Create content/puzzles/index.json with these MVP definitions:
+
+[
+  { "id":"p1-feedback-maze","title":"Feedback Maze","kind":"maze","description":"Navigate the grid using signal feedback.","grants":{"digit":4} },
+  { "id":"p2-bad-data","title":"Bad Data","kind":"multiselect","description":"Pick reliable sources.","grants":{"digit":6} },
+  { "id":"p3-prompt-precision","title":"Prompt Precision","kind":"text-entry","description":"Craft a precise prompt.","grants":{"digit":2} },
+  { "id":"p4-fact-fiction","title":"Fact or Fiction","kind":"slider","description":"Sort eight statements correctly.","requires":["p1-feedback-maze","p2-bad-data","p3-prompt-precision"],"grants":{"token":"UNLOCK5"} },
+  { "id":"p5-final-console","title":"Final Console","kind":"keypad","description":"Enter digits in door order Blue=N2, Red=N3, Orange=N1.","requires":["p4-fact-fiction"] }
+]
+
+
+Progress store (persisted)
+
+Install Zustand: npm i zustand
+
+Create src/store/progress.ts:
+
+import { create } from "zustand";
+
+type Progress = {
+  solved: Record<string, boolean>;
+  digits: number[];         // e.g., [4,6,2]
+  tokens: Record<string, boolean>; // e.g., { UNLOCK5: true }
+  markSolved: (args: { id: string; digit?: number; token?: string }) => void;
+  reset: () => void;
+};
+
+const STORAGE_KEY = "glitch_progress_v1";
+
+function load(): Omit<Progress, "markSolved"|"reset"> {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { solved: {}, digits: [], tokens: {} };
+    const obj = JSON.parse(raw);
+    return { solved: obj.solved ?? {}, digits: obj.digits ?? [], tokens: obj.tokens ?? {} };
+  } catch { return { solved: {}, digits: [], tokens: {} }; }
+}
+
+export const useProgress = create<Progress>((set, get) => ({
+  ...load(),
+  markSolved: ({ id, digit, token }) => {
+    const next = { ...get().solved, [id]: true };
+    const digits = [...get().digits];
+    if (typeof digit === "number" && !digits.includes(digit)) digits.push(digit);
+    const tokens = { ...get().tokens };
+    if (token) tokens[token] = true;
+    const snapshot = { solved: next, digits, tokens };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+    set(snapshot);
+  },
+  reset: () => {
+    const snapshot = { solved: {}, digits: [], tokens: {} };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+    set(snapshot);
+  }
+}));
+
+
+Routing and pages
+
+Create these App Router entries:
+
+src/app/how-to-play/page.tsx with a brief explanation and a “Reset Progress” button wired to useProgress().reset().
+
+src/app/puzzles/[id]/page.tsx that:
+
+Loads content/puzzles/index.json
+
+Finds the puzzle by params.id
+
+Checks dependencies using useProgress().solved
+
+Renders a simple placeholder per kind with a “Mark solved” button that calls markSolved({ id, digit, token }) using that puzzle’s grants.
+
+If dependencies missing, show which ones are required.
+
+src/app/episodes/page.tsx that lists all puzzles with status badges (Solved / Locked / Available).
+
+Update home src/app/page.tsx:
+
+Keep the scene background and hotspots.
+
+When hotspot “Console” is activated, route to /puzzles/p5-final-console.
+
+When hotspot “Door” is activated, route to /episodes.
+
+Small helpers
+
+Create src/lib/puzzles.ts with utilities:
+
+import defs from "@/../content/puzzles/index.json";
+export const allPuzzles = defs;
+export const byId = (id: string) => allPuzzles.find(p => p.id === id);
+export const unmetDeps = (id: string, solved: Record<string, boolean>) =>
+  (byId(id)?.requires ?? []).filter(dep => !solved[dep]);
+
+
+Admin preview guard (simple)
+
+Create src/app/admin/content-preview/page.tsx that renders the raw JSON only if the URL includes ?key=${process.env.NEXT_PUBLIC_ADMIN_PREVIEW_KEY || "preview"}; otherwise show “Unauthorized.”
+
+Do not expose secrets in code. Use a public preview key for now; we can tighten later.
+
+Constraints: no secrets in repo. Strict TS. Keep functions small and commented.

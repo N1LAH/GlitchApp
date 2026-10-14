@@ -1,0 +1,153 @@
+Add a reusable Puzzle Engine and wire timing.
+
+Store updates (timing)
+
+Edit src/store/progress.ts to add:
+
+startedAt?: number, finishedAt?: number
+
+actions: startRun(): void, finishRun(): void
+
+Behavior: startRun() sets startedAt = Date.now() if not already set. finishRun() sets finishedAt = Date.now().
+
+Timer hook
+
+Create src/components/puzzle/useTimer.ts:
+
+"use client";
+import { useEffect, useRef, useState } from "react";
+export function useTimer(active: boolean) {
+  const [elapsed, setElapsed] = useState(0);
+  const raf = useRef<number | null>(null);
+  useEffect(() => {
+    if (!active) return;
+    const start = performance.now();
+    const tick = (t: number) => {
+      setElapsed(Math.floor((t - start) / 1000));
+      raf.current = requestAnimationFrame(tick);
+    };
+    raf.current = requestAnimationFrame(tick);
+    return () => { if (raf.current) cancelAnimationFrame(raf.current); };
+  }, [active]);
+  return { elapsed }; // seconds
+}
+
+
+HUD
+
+Create src/components/puzzle/PuzzleHUD.tsx (client component):
+
+Shows title, status chip (Locked/Available/Solved), timer in mm:ss, and a Hint button opening a dialog with placeholder text (“Ask your instructor for a hint”).
+
+Respect keyboard focus trap for the dialog.
+
+PuzzleHost
+
+Create src/components/puzzle/PuzzleHost.tsx (client):
+
+"use client";
+import { ReactNode, useEffect } from "react";
+import { useProgress } from "@/store/progress";
+import { unmetDeps } from "@/lib/puzzles";
+import { useTimer } from "./useTimer";
+import PuzzleHUD from "./PuzzleHUD";
+
+type Grants = { digit?: number; token?: string };
+export default function PuzzleHost(props: {
+  id: string;
+  title: string;
+  description?: string;
+  requires?: string[];
+  grants?: Grants;
+  children?: (ctx: { markSolved: () => void; solved: boolean }) => ReactNode;
+}) {
+  const { id, title, description, requires, grants, children } = props;
+  const { solved, markSolved, startedAt } = useProgress();
+  const missing = unmetDeps(id, solved);
+  const isLocked = missing.length > 0;
+  const isSolved = !!solved[id];
+
+  // start timer on first puzzle view if not already started
+  const { startRun } = useProgress();
+  useEffect(() => { if (!startedAt) startRun(); /* no-op if already set */ }, [startedAt, startRun]);
+
+  // lightweight view log
+  useEffect(() => { console.info("puzzle_view", { id }); }, [id]);
+
+  // timer runs while not solved
+  const { elapsed } = useTimer(!isSolved && !isLocked);
+
+  if (isLocked) {
+    return (
+      <div className="rounded-lg border border-yellow-500/40 bg-yellow-900/10 p-4">
+        <PuzzleHUD title={title} status="Locked" seconds={elapsed} />
+        <p className="mt-2 text-sm text-neutral-300">
+          This puzzle is locked. Required first: {missing.join(", ")}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-lg border border-white/10 bg-black/30 p-4">
+      <PuzzleHUD title={title} status={isSolved ? "Solved" : "Available"} seconds={elapsed} />
+      {description && <p className="text-sm text-neutral-300 mb-3">{description}</p>}
+      {children?.({
+        markSolved: () => {
+          markSolved({ id, digit: grants?.digit, token: grants?.token });
+          console.info("puzzle_solved", { id, digit: grants?.digit, token: grants?.token });
+        },
+        solved: isSolved
+      })}
+    </div>
+  );
+}
+
+
+Wire [id]/page.tsx to PuzzleHost
+
+In src/app/puzzles/[id]/page.tsx, import the JSON puzzle and wrap your per-kind content:
+
+import PuzzleHost from "@/components/puzzle/PuzzleHost";
+
+Replace your inner !isLocked && ( … ) block with:
+
+<PuzzleHost
+  id={puzzle.id}
+  title={puzzle.title}
+  description={puzzle.description}
+  requires={puzzle.requires}
+  grants={puzzle.grants}
+>
+  {({ markSolved, solved }) => (
+    <>
+      {/* keep your existing per-kind placeholders here */}
+      {/* add a Solve button that calls markSolved() when appropriate */}
+    </>
+  )}
+</PuzzleHost>
+
+
+Start & End screens (routing + timer)
+
+Add /start: src/app/start/page.tsx with your start image and a “Start” button:
+
+On click, call useProgress().startRun() then router.push("/").
+
+Add /end: src/app/end/page.tsx:
+
+Compute total = finishedAt && startedAt ? finishedAt - startedAt : 0.
+
+Show mm:ss and a “Play again” that resets progress and routes to /start.
+
+Finish timing on P5 solve
+
+In [id]/page.tsx inside the keypad branch, when you call markSolved() for p5-final-console, also call useProgress().finishRun() then router.push("/end").
+
+Conditional keypad art
+
+Keep your existing logic; ensure images live at:
+
+/assets/images/keypad/keypad-plain.png
+
+/assets/images/keypad/keypad-colored.png

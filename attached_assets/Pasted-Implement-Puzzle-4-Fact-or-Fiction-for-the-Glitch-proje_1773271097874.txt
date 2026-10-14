@@ -1,0 +1,180 @@
+Implement Puzzle 4, “Fact or Fiction,” for the Glitch project.
+
+Important constraints:
+- Do not redesign the overall app architecture unless required for integration.
+- Reuse existing project patterns, components, styling conventions, state management, persistence, and puzzle integration mechanisms where possible.
+- Keep the implementation accessible, keyboard-friendly, and consistent with the rest of the project.
+- Do not add analytics.
+- Do not add extra gameplay features beyond what is specified.
+- If a required integration detail is missing, infer it from nearby existing puzzle implementations and keep the solution minimal and consistent.
+
+Goal:
+Build a puzzle where players sort 8 AI statements into Fact and Fiction columns using drag-and-drop and keyboard controls. When all 8 are correctly classified and the user clicks Check Answers, the puzzle is solved, the keypad activates, Puzzle 5 is unlocked, and the fictional statements show corrected versions with a small “Corrected” label.
+
+Puzzle title:
+Fact or Fiction
+
+Instruction text:
+Help Glitch learn fact from fiction and activate the keypad. Drag each statement to the correct column.
+
+Learning goal:
+Teach basic AI concepts by having players distinguish between true and false statements about artificial intelligence.
+
+Statements and answers:
+1. “AI stands for Artificial Imagination.” → Fiction
+2. “AI learns from patterns in data.” → Fact
+3. “AI can always be trusted to give the right answer.” → Fiction
+4. “AI Assistants like Glitch are examples of AI.” → Fact
+5. “AI never makes mistakes.” → Fiction
+6. “AI can be trained with rewards and penalties, like teaching a pet.” → Fact
+7. “AI models always know what words mean.” → Fiction
+8. “AI can generate text, images, and even music.” → Fact
+
+Corrected versions for Fiction statements:
+- “AI stands for Artificial Imagination.” → “AI stands for Artificial Intelligence.”
+- “AI can always be trusted to give the right answer.” → “AI can sometimes give incorrect answers.”
+- “AI never makes mistakes.” → “AI systems can make mistakes.”
+- “AI models always know what words mean.” → “AI models detect patterns in words but do not truly understand meaning.”
+
+Reference asset assumption:
+This puzzle uses an existing or separate AI Fact Booklet for educational support, but you do not need to implement the booklet content unless the current puzzle framework already expects it. Just make sure the puzzle text and logic assume the booklet exists.
+
+Functional requirements:
+
+1. Initial state
+- Show 8 statement cards in an Unassigned area.
+- Show two labeled columns: Fact and Fiction.
+- Show Check Answers button in a disabled state.
+- Hide Reset Puzzle button.
+- Keypad is inactive.
+- Feedback area should show either the instruction text or remain empty, depending on the project’s existing pattern. Prefer consistency with other puzzles.
+
+2. Assignment behavior
+- Users can drag statement cards into Fact or Fiction.
+- Users can move cards between columns freely before checking answers.
+- Users can return cards to the Unassigned area before checking answers.
+- A card can exist in only one place at a time: Unassigned, Fact, or Fiction.
+- If a card is dragged to a new column, it must be removed from the old location automatically.
+- If a drag is dropped outside a valid area, return the card to its prior location.
+- When all 8 statements are assigned to Fact or Fiction, enable Check Answers.
+- If any card is moved back to Unassigned, disable Check Answers again.
+
+3. Check Answers behavior
+- When Check Answers is clicked, disable it immediately while evaluation runs to avoid duplicate submissions.
+- Score is the number of cards placed in the correct column out of 8.
+
+4. Success behavior
+When Check Answers is clicked and all 8 are correct:
+- Display this success message:
+  “Great work. You identified all the AI facts correctly. The keypad is now activated.”
+- Activate the keypad visual indicator, including the ⚡ symbol if that is how keypad activation is shown in the project.
+- Unlock Puzzle 5 using the project’s existing puzzle progression mechanism.
+- Persist solved state.
+- Remove the Check Answers button.
+- Do not show Reset Puzzle after success.
+- Disable all further statement movement.
+- Fact statements remain unchanged.
+- Fiction statements should display:
+  - the original incorrect statement
+  - the corrected version prefixed with “Corrected:”
+  - a small “Corrected” label
+- Success message should remain visible until the user exits the puzzle.
+- If the user leaves and comes back, the puzzle should still appear solved and show the corrected Fiction statements.
+
+5. Failure behavior
+When Check Answers is clicked and one or more answers are wrong:
+- Display:
+  “You correctly identified X of 8 statements.”
+- Replace Check Answers with Reset Puzzle.
+- Do not allow another check until reset.
+- Preserve this failed state if the user exits and returns, until they reset.
+
+6. Reset behavior
+When Reset Puzzle is clicked:
+- Return all statement cards to Unassigned.
+- Clear both Fact and Fiction columns.
+- Hide Reset Puzzle.
+- Restore Check Answers in disabled state.
+- Clear prior feedback text and return to the default pre-check state.
+- Reset should not be available after success.
+
+7. Persistence rules
+Use the project’s existing persistence pattern, likely localStorage or equivalent local progress persistence, rather than inventing a new system.
+Persist:
+- current assignments before solve
+- failed checked state after failure
+- solved state after success
+On refresh:
+- before solve, restore assignments
+- after failure, restore failed state
+- after success, restore solved state
+Puzzle 5 unlock must rely on saved completion state, not only a one-time transient event.
+
+8. Accessibility requirements
+- Puzzle must be playable without a mouse.
+- Implement keyboard support consistent with project patterns. Prefer:
+  - Tab to move focus
+  - Space or Enter to select a card
+  - clear keyboard action to place card into Fact or Fiction
+  - clear keyboard action to return a card to Unassigned
+  - Enter or Space to activate buttons
+- Do not rely on color alone to communicate Fact vs Fiction.
+- Keep text readable and responsive on smaller screens.
+- Fact and Fiction labels must always be visible as text.
+
+9. Responsive behavior
+- Statement cards should wrap text cleanly.
+- Layout should remain usable on smaller screens.
+- If needed, columns or card areas may scroll, but do not compress text into unreadability.
+
+10. Integration requirements
+- Use existing project puzzle host, HUD, state, styling, completion events, and unlock flow if present.
+- Hook this puzzle into the existing Puzzle 5 unlock mechanism.
+- If there is an existing completion flag pattern, use it.
+- If there is an existing puzzle schema or content file pattern, store the puzzle content there rather than hardcoding everything inside one component unless that is the project convention.
+- Keep implementation minimal and aligned with the current architecture.
+
+11. Content/data structure
+Use a structured array or schema for the 8 statements, with fields similar to:
+- id
+- statementText
+- correctAnswer
+- explanation
+- correctedText, for Fiction items
+Use type-safe structures if the project is TypeScript.
+
+12. Visual behavior after solve
+For Fiction cards after success:
+- Keep them in the Fiction column
+- Show the original text
+- Show a small “Corrected” label
+- Show the corrected version beneath it
+Do not replace the original completely, because the puzzle should preserve the learning contrast.
+
+13. Edge case handling
+- Prevent duplicate submissions from double-clicking Check Answers
+- Invalid drops return to prior location
+- Card cannot exist in multiple places
+- Moving a card from assigned to Unassigned disables Check Answers if fewer than 8 remain assigned
+- Solved puzzle should not become interactive again on revisit
+- Failed checked state should persist until reset
+- Reset must clear feedback and restore initial interaction state
+
+14. Acceptance criteria
+The implementation is complete only if all of the following work:
+- User can assign all 8 statements
+- Check Answers stays disabled until all 8 are assigned
+- Correct solve shows success message, keypad activation, Puzzle 5 unlock, and corrected Fiction cards
+- Incorrect solve shows correct count out of 8 and Reset Puzzle
+- Reset returns puzzle to initial state
+- Refresh preserves in-progress, failed, and solved states correctly
+- Re-entering after success shows the solved state
+- Keyboard-only play is possible
+- No duplicate cards or broken drag state
+- Implementation matches current project look and architecture
+
+Please implement this cleanly and minimally, then summarize:
+1. what files you changed
+2. how puzzle state is stored
+3. how Puzzle 5 unlock is triggered and persisted
+4. any assumptions you had to make
