@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useProgress } from "@/store/progress";
+import { useProgress, P4_STORAGE_KEY } from "@/store/progress";
 import GlitchSpeech from "@/components/GlitchSpeech";
 
-const STORAGE_KEY = "glitch_p4_v1";
+const STORAGE_KEY = P4_STORAGE_KEY;
 const PUZZLE_ID = "p4-fact-fiction";
 
 export interface Statement {
@@ -15,14 +15,14 @@ export interface Statement {
 }
 
 export const STATEMENTS: Statement[] = [
-  { id: "s1", text: "AI stands for Artificial Imagination.", answer: "Fiction", correctedText: "AI stands for Artificial Intelligence." },
-  { id: "s2", text: "AI learns from patterns in data.", answer: "Fact" },
-  { id: "s3", text: "AI can always be trusted to give the right answer.", answer: "Fiction", correctedText: "AI can sometimes give incorrect answers." },
-  { id: "s4", text: "AI Assistants like Glitch are examples of AI.", answer: "Fact" },
-  { id: "s5", text: "AI never makes mistakes.", answer: "Fiction", correctedText: "AI systems can make mistakes." },
-  { id: "s6", text: "AI can be trained with rewards and penalties, like teaching a pet.", answer: "Fact" },
-  { id: "s7", text: "AI models always know what words mean.", answer: "Fiction", correctedText: "AI models detect patterns in words but do not truly understand meaning." },
-  { id: "s8", text: "AI can generate text, images, and even music.", answer: "Fact" },
+  { id: "f1", text: "AI learns by finding patterns in large amounts of data.", answer: "Fact" },
+  { id: "f2", text: "If an AI sounds confident, its answer is probably right.", answer: "Fiction", correctedText: "AI can sound confident even when it is wrong, so check answers that matter." },
+  { id: "f3", text: "AI can pick up unfair patterns (bias) from the data it was trained on.", answer: "Fact" },
+  { id: "f4", text: "If an AI chatbot gives you a link or a source, you can trust that it exists.", answer: "Fiction", correctedText: "AI chatbots sometimes invent sources and links that look real. Open them to check." },
+  { id: "f5", text: "AI can be trained by giving it rewards for good choices and penalties for bad ones.", answer: "Fact" },
+  { id: "f6", text: "Getting the same answer from an AI twice proves the answer is correct.", answer: "Fiction", correctedText: "An AI can repeat the same mistake. Check important answers with a trusted source." },
+  { id: "f7", text: "AI can generate text, images, and even music.", answer: "Fact" },
+  { id: "f8", text: "A chatbot automatically knows about events that happened after it was trained.", answer: "Fiction", correctedText: "A chatbot only knows what was in its training data, unless it's connected to a tool that looks up newer information." },
 ];
 
 type Column = "Fact" | "Fiction";
@@ -71,7 +71,7 @@ export default function P4FactFiction({ onSolved, solved }: Props) {
   const liveRef = useRef<HTMLDivElement>(null);
 
   const allAssigned = STATEMENTS.every((s) => assignments[s.id] !== null);
-  const isLocked = checkPhase === "success" || checkPhase === "failed";
+  const isLocked = checkPhase === "success";
 
   const announce = useCallback((msg: string) => {
     if (liveRef.current) liveRef.current.textContent = msg;
@@ -110,6 +110,7 @@ export default function P4FactFiction({ onSolved, solved }: Props) {
     (id: string, column: Column) => {
       if (isLocked) return;
       setAssignments((prev) => ({ ...prev, [id]: column }));
+      setCheckPhase("idle");
       setSelectedId(null);
       announce(`Moved to ${column}.`);
     },
@@ -120,6 +121,7 @@ export default function P4FactFiction({ onSolved, solved }: Props) {
     (id: string) => {
       if (isLocked) return;
       setAssignments((prev) => ({ ...prev, [id]: null }));
+      setCheckPhase("idle");
       setSelectedId(null);
       announce("Returned to unassigned.");
     },
@@ -170,15 +172,6 @@ export default function P4FactFiction({ onSolved, solved }: Props) {
     setChecking(false);
   }, [allAssigned, checking, isLocked, assignments, onSolved]);
 
-  const handleReset = useCallback(() => {
-    const fresh = Object.fromEntries(STATEMENTS.map((s) => [s.id, null]));
-    setAssignments(fresh as Record<string, Column | null>);
-    setCheckPhase("idle");
-    setScore(0);
-    setSelectedId(null);
-    saveState({ assignments: fresh as Record<string, Column | null>, checkPhase: "idle", score: 0 });
-    announce("Puzzle reset. All cards returned to unassigned.");
-  }, [announce]);
 
   const unassigned = STATEMENTS.filter((s) => assignments[s.id] === null);
   const factCards = STATEMENTS.filter((s) => assignments[s.id] === "Fact");
@@ -223,8 +216,6 @@ export default function P4FactFiction({ onSolved, solved }: Props) {
           if (e.key === "n" || e.key === "N") { e.preventDefault(); assignCard(s.id, "Fiction"); }
           if (e.key === "u" || e.key === "U") { e.preventDefault(); returnToUnassigned(s.id); }
         }}
-        onFocus={() => { if (!isLocked) setSelectedId(s.id); }}
-        onBlur={() => setSelectedId((prev) => (prev === s.id ? null : prev))}
       >
         {checkPhase === "success" && inColumn === "Fiction" && s.answer === "Fiction" ? (
           <div className="space-y-1">
@@ -280,7 +271,8 @@ export default function P4FactFiction({ onSolved, solved }: Props) {
       </GlitchSpeech>
 
       <p className="text-sm text-slate-600">
-        Drag each statement to the correct column.
+        Tap a statement, then tap &quot;Place here&quot; on the right column
+        (or drag it there).
       </p>
       <p className="text-xs text-slate-500">
         Keyboard shortcut: Select a card, then press <kbd className="px-1 py-0.5 rounded bg-slate-200 text-slate-700 text-xs">F</kbd> for Fact, <kbd className="px-1 py-0.5 rounded bg-slate-200 text-slate-700 text-xs">N</kbd> for Fiction, <kbd className="px-1 py-0.5 rounded bg-slate-200 text-slate-700 text-xs">U</kbd> to return to Unassigned.
@@ -293,7 +285,7 @@ export default function P4FactFiction({ onSolved, solved }: Props) {
         {columnDropZone("Fiction", "❌ Fiction", fictionCards, "border-puzzle-red/50 bg-rose-50")}
       </div>
 
-      {checkPhase === "idle" && (
+      {checkPhase !== "success" && (
         <button
           onClick={handleCheckAnswers}
           disabled={!allAssigned || checking}
@@ -304,20 +296,13 @@ export default function P4FactFiction({ onSolved, solved }: Props) {
       )}
 
       {checkPhase === "failed" && (
-        <>
-          <div role="alert">
-            <GlitchSpeech mood="worried">
-              You correctly identified {score} of 8 statements — my circuits
-              are still fuzzy. Reset and try again!
-            </GlitchSpeech>
-          </div>
-          <button
-            onClick={handleReset}
-            className="w-full rounded-full border border-slate-300 bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2"
-          >
-            Reset Puzzle
-          </button>
-        </>
+        <div role="alert">
+          <GlitchSpeech mood="worried">
+            Not quite — some statements are in the wrong column. Your sorting
+            is still here: think about each one again, move any you&apos;re
+            unsure about, and check again.
+          </GlitchSpeech>
+        </div>
       )}
 
       {checkPhase === "success" && (

@@ -16,8 +16,8 @@ Open http://localhost:5000 in your browser (in GitHub Codespaces, use the
 instantly — no restart needed.
 
 Progress is saved per-browser in `localStorage`, so each player/device gets an
-independent session. To wipe a session, use **Reset Progress** on the episodes
-or how-to-play page.
+independent session. Sessions older than 12 hours are discarded automatically.
+To wipe a session between groups, open **`/new`** (bookmark it) or use `/dev`.
 
 ## Two ways in: player vs. dev
 
@@ -50,8 +50,9 @@ npm run dev:tools   # same server, dev toolbar + demo skip buttons visible
 
 Start (`/start`) → Lab hub (`/`) → Episodes (`/episodes`) →
 Maze → Bad Data → Prompt Precision → Fact or Fiction → Final Console keypad →
-End screen. The keypad code and color-clue scheme live at the top of
-`src/components/puzzle/P5FinalConsole.tsx` (currently Green 2, Blue 4, Red 6 → `246`).
+End screen. The color-clue scheme lives in `src/lib/clues.ts` (color order Green,
+Blue, Red — put it on the handout). Digits are randomized per session; `/dev`
+shows the current code.
 
 ## Deploying (later)
 

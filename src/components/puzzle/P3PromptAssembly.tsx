@@ -23,40 +23,40 @@ const SLOT_ORDER: SlotType[] = [
 
 const CARDS: CardDef[] = [
   { id: "persona-1", type: "Persona", text: "Calm, logical starship systems engineer focused on safety and accuracy.", correct: true },
-  { id: "persona-2", type: "Persona", text: "Creative science-fiction storyteller", correct: false },
-  { id: "persona-3", type: "Persona", text: "Motivational leadership coach", correct: false },
-  { id: "persona-4", type: "Persona", text: "Friendly AI assistant eager to help", correct: false },
-  { id: "persona-5", type: "Persona", text: "Experimental AI researcher exploring hypotheses", correct: false },
+  { id: "persona-2", type: "Persona", text: "Creative science-fiction writer who invents exciting stories about space missions.", correct: false },
+  { id: "persona-3", type: "Persona", text: "Upbeat motivational coach who keeps the crew's spirits high under pressure.", correct: false },
+  { id: "persona-4", type: "Persona", text: "Friendly general-purpose assistant who is happy to help with anything at all.", correct: false },
+  { id: "persona-5", type: "Persona", text: "Curious research scientist who enjoys exploring new theories and wild ideas.", correct: false },
 
   { id: "context-1", type: "Context", text: "Locked out of the life-support console, oxygen dropping fast.", correct: true },
-  { id: "context-2", type: "Context", text: "General ship malfunction detected", correct: false },
-  { id: "context-3", type: "Context", text: "Crew morale is low after system update", correct: false },
-  { id: "context-4", type: "Context", text: "Oxygen systems behaving unpredictably", correct: false },
-  { id: "context-5", type: "Context", text: "You are assisting the captain with repairs", correct: false },
+  { id: "context-2", type: "Context", text: "Something on the ship is malfunctioning, but nobody is sure what.", correct: false },
+  { id: "context-3", type: "Context", text: "The crew feels stressed after a long week of software updates.", correct: false },
+  { id: "context-4", type: "Context", text: "Oxygen readings have looked a little unusual over the past few days.", correct: false },
+  { id: "context-5", type: "Context", text: "You are helping the captain plan routine repairs for next month.", correct: false },
 
-  { id: "task-1", type: "Task", text: "Generate the precise repair code to seal a leak in conduit B-7.", correct: true },
-  { id: "task-2", type: "Task", text: "Help restore oxygen to the ship", correct: false },
-  { id: "task-3", type: "Task", text: "Explain how oxygen systems usually work", correct: false },
-  { id: "task-4", type: "Task", text: "Suggest possible fixes for life-support failures", correct: false },
-  { id: "task-5", type: "Task", text: "Analyze the cause of the malfunction", correct: false },
+  { id: "task-1", type: "Task", text: "Draft the repair code to seal the leak in conduit B-7.", correct: true },
+  { id: "task-2", type: "Task", text: "Help us fix the oxygen problem on the ship somehow, fast.", correct: false },
+  { id: "task-3", type: "Task", text: "Explain in detail how a starship's oxygen system usually works.", correct: false },
+  { id: "task-4", type: "Task", text: "Brainstorm a long list of possible fixes for life-support failures.", correct: false },
+  { id: "task-5", type: "Task", text: "Figure out what caused the malfunction and write up a full report.", correct: false },
 
-  { id: "constraints-1", type: "Constraints", text: "Under 100 words; verified technical commands only; no humor or speculation.", correct: true },
-  { id: "constraints-2", type: "Constraints", text: "Be concise and helpful", correct: false },
-  { id: "constraints-3", type: "Constraints", text: "Include explanations for your reasoning", correct: false },
-  { id: "constraints-4", type: "Constraints", text: "Optimize for creativity and insight", correct: false },
-  { id: "constraints-5", type: "Constraints", text: "Use best practices where possible", correct: false },
+  { id: "constraints-1", type: "Constraints", text: "Under 100 words; only commands from the ship's repair manual; no jokes or guesses.", correct: true },
+  { id: "constraints-2", type: "Constraints", text: "Keep it fairly short and helpful, and use your best judgment on the rest.", correct: false },
+  { id: "constraints-3", type: "Constraints", text: "Explain your reasoning for every single step in as much detail as possible.", correct: false },
+  { id: "constraints-4", type: "Constraints", text: "Be as creative and original as you can; surprise us with brand-new ideas.", correct: false },
+  { id: "constraints-5", type: "Constraints", text: "Follow best practices wherever possible and include anything that might be useful.", correct: false },
 
-  { id: "tone-1", type: "Tone / Style", text: "Clear, confident, procedural.", correct: true },
-  { id: "tone-2", type: "Tone / Style", text: "Friendly and conversational", correct: false },
-  { id: "tone-3", type: "Tone / Style", text: "Reassuring and empathetic", correct: false },
-  { id: "tone-4", type: "Tone / Style", text: "Dramatic and urgent", correct: false },
-  { id: "tone-5", type: "Tone / Style", text: "Humorous to reduce stress", correct: false },
+  { id: "tone-1", type: "Tone / Style", text: "Clear, confident and step-by-step, like a repair manual.", correct: true },
+  { id: "tone-2", type: "Tone / Style", text: "Friendly and chatty, like talking with a good friend.", correct: false },
+  { id: "tone-3", type: "Tone / Style", text: "Warm, gentle and reassuring, to keep everyone calm.", correct: false },
+  { id: "tone-4", type: "Tone / Style", text: "Dramatic and urgent, like an action-movie countdown.", correct: false },
+  { id: "tone-5", type: "Tone / Style", text: "Light and funny, with jokes to help reduce the stress.", correct: false },
 
-  { id: "output-1", type: "Output Format", text: "Strict SYSTEM OVERRIDE syntax with status confirmation.", correct: true },
-  { id: "output-2", type: "Output Format", text: "Paragraph explanation", correct: false },
-  { id: "output-3", type: "Output Format", text: "Step-by-step checklist", correct: false },
-  { id: "output-4", type: "Output Format", text: "Narrative report with conclusions", correct: false },
-  { id: "output-5", type: "Output Format", text: "Code-like output without strict syntax", correct: false },
+  { id: "output-1", type: "Output Format", text: "Strict SYSTEM OVERRIDE command syntax, ending with a status line.", correct: true },
+  { id: "output-2", type: "Output Format", text: "A few paragraphs explaining the repair in everyday language.", correct: false },
+  { id: "output-3", type: "Output Format", text: "A bulleted list of ideas the crew could try in any order.", correct: false },
+  { id: "output-4", type: "Output Format", text: "A narrative report with background, findings and conclusions.", correct: false },
+  { id: "output-5", type: "Output Format", text: "Code-like text that looks right but skips the ship's exact syntax.", correct: false },
 ];
 
 const FAILURE_PRIORITY: SlotType[] = [
@@ -69,7 +69,7 @@ const FAILURE_PRIORITY: SlotType[] = [
 ];
 
 const FAILURE_MESSAGES: Record<SlotType, string> = {
-  "Task": "You did not instruct me to do anything. I can explain the emergency in great detail, but oxygen remains at zero.",
+  "Task": "You did not give me the specific job that needs doing. I can talk about the emergency all day, but oxygen remains at zero.",
   "Output Format": "Command generated. Format incompatible with ship systems. Override rejected.",
   "Constraints": "Multiple solution paths detected. Repair bots awaiting clarification. Oxygen continues to drop.",
   "Persona": "Switching to morale-optimization mode. Crew confidence rising. Oxygen unchanged.",
@@ -156,11 +156,13 @@ export default function P3PromptAssembly({ onSolved }: Props) {
   const [attempts, setAttempts] = useState(0);
   const [feedbackMessages, setFeedbackMessages] = useState<string[]>([]);
   const [locked, setLocked] = useState(false);
+  const clearFeedback = useCallback(() => {
+    if (!locked) setFeedbackMessages([]);
+  }, [locked]);
   const [success, setSuccess] = useState(false);
   const [almostCorrectUsed, setAlmostCorrectUsed] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [typeError, setTypeError] = useState<string | null>(null);
-  const [showReset, setShowReset] = useState(false);
   const [expandedTrays, setExpandedTrays] = useState<Record<SlotType, boolean>>({
     "Persona": false,
     "Context": false,
@@ -209,17 +211,19 @@ export default function P3PromptAssembly({ onSolved }: Props) {
       });
       setSelectedCardId(null);
       setTypeError(null);
+      clearFeedback();
       announce(`Assigned to ${slotType}.`);
     },
-    [locked, cardMap, announce]
+    [locked, cardMap, announce, clearFeedback]
   );
 
   const unassignCard = useCallback(
     (slotType: SlotType) => {
       if (locked) return;
       setAssignments((prev) => ({ ...prev, [slotType]: null }));
+      clearFeedback();
     },
-    [locked]
+    [locked, clearFeedback]
   );
 
   const handleDragStart = useCallback(
@@ -270,21 +274,20 @@ export default function P3PromptAssembly({ onSolved }: Props) {
     if (!allSlotsFilled || locked) return;
 
     const result = validateAssembly(assignments, cardMap);
+    const newAttempts = attempts + 1;
+    setAttempts(newAttempts);
 
     if (result.correctCount === 6) {
       setSuccess(true);
       setLocked(true);
       setFeedbackMessages([
-        "SYSTEM OVERRIDE ACCEPTED",
-        "Oxygen stabilized at 14.7 psi",
-        "Crew survival likelihood confirmed",
+        "REPAIR CODE DRAFTED",
+        "Sent to the duty engineer for review before it runs on life support",
+        "Engineer check passed: conduit B-7 sealed, oxygen stabilizing",
       ]);
       onSolved();
       return;
     }
-
-    const newAttempts = attempts + 1;
-    setAttempts(newAttempts);
 
     const messages: string[] = [];
 
@@ -314,13 +317,11 @@ export default function P3PromptAssembly({ onSolved }: Props) {
     );
 
     setFeedbackMessages(messages);
-    setShowReset(true);
   }, [allSlotsFilled, locked, assignments, cardMap, attempts, almostCorrectUsed, onSolved]);
 
-  const handleReset = useCallback(() => {
+  const handleClearAll = useCallback(() => {
     clearAllSlots();
     setFeedbackMessages([]);
-    setShowReset(false);
     topRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [clearAllSlots]);
 
@@ -352,12 +353,14 @@ export default function P3PromptAssembly({ onSolved }: Props) {
       />
 
       <GlitchSpeech mood="worried">
-        The oxygen system only responds to perfectly structured prompts, and I
-        can&apos;t remember how to write one. Build it for me — fast!
+        The oxygen system needs a clear, specific prompt before it will draft
+        the repair code, and I can&apos;t remember how to write one. Build it
+        for me — fast!
       </GlitchSpeech>
 
       <p className="text-sm text-slate-600">
-        Build a structured prompt by assigning one card to each slot. Drag cards or use keyboard (Tab to focus, Enter to select/assign).
+        Put one card in each slot. Open a slot&apos;s cards, tap a card, then
+        tap its slot (or drag it there). Use ✕ to take a card back out.
       </p>
 
       <div className="flex items-center gap-4 text-sm">
@@ -393,17 +396,15 @@ export default function P3PromptAssembly({ onSolved }: Props) {
                 }`}
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, slotType)}
+                onClick={() => handleKeyAssign(slotType)}
                 tabIndex={0}
-                role="region"
-                aria-label={`${slotType} slot${card ? `: ${card.text}` : " (empty)"}`}
+                role="button"
+                aria-label={`${slotType} slot${card ? `: ${card.text}` : " (empty)"}${isSelected ? ". Press Enter to place the selected card here." : ""}`}
                 onKeyDown={(e) => {
+                  if (e.target !== e.currentTarget) return;
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    if (card && !locked) {
-                      unassignCard(slotType);
-                    } else {
-                      handleKeyAssign(slotType);
-                    }
+                    handleKeyAssign(slotType);
                   }
                 }}
               >
@@ -415,12 +416,17 @@ export default function P3PromptAssembly({ onSolved }: Props) {
                     {card ? (
                       <p className="text-sm text-slate-800 mt-1">{card.text}</p>
                     ) : (
-                      <p className="text-sm text-slate-500 mt-1 italic">Drop a {slotType} card here</p>
+                      <p className="text-sm text-slate-500 mt-1 italic">
+                        {isSelected ? "Tap here to place the selected card" : `Place ${/^[AEIOU]/.test(slotType) ? "an" : "a"} ${slotType} card here`}
+                      </p>
                     )}
                   </div>
                   {card && !locked && (
                     <button
-                      onClick={() => unassignCard(slotType)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        unassignCard(slotType);
+                      }}
                       className="text-xs text-slate-500 hover:text-rose-600 shrink-0 mt-1"
                       aria-label={`Remove card from ${slotType} slot`}
                     >
@@ -473,12 +479,6 @@ export default function P3PromptAssembly({ onSolved }: Props) {
                               setTypeError(null);
                             }
                           }}
-                          onFocus={() => {
-                            if (!locked) {
-                              setSelectedCardId(trayCard.id);
-                              setTypeError(null);
-                            }
-                          }}
                         >
                           {trayCard.text}
                         </div>
@@ -492,7 +492,7 @@ export default function P3PromptAssembly({ onSolved }: Props) {
         })}
       </div>
 
-      {!locked && !showReset && (
+      {!locked && (
         <button
           onClick={handleCheckPrompt}
           disabled={!allSlotsFilled}
@@ -502,13 +502,20 @@ export default function P3PromptAssembly({ onSolved }: Props) {
         </button>
       )}
 
-      {!locked && showReset && (
-        <button
-          onClick={handleReset}
-          className="w-full rounded-full border border-slate-300 bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2"
-        >
-          Reset Puzzle
-        </button>
+      {!locked && !allSlotsFilled && (
+        <p className="text-center text-xs text-slate-500">
+          Fill all 6 slots to check your prompt.
+        </p>
+      )}
+
+      {!locked && feedbackMessages.length > 0 && (
+        <p className="text-center text-xs text-slate-500">
+          Your cards are still in place — swap the one Glitch is complaining
+          about and check again.{" "}
+          <button onClick={handleClearAll} className="font-semibold text-slate-700 underline hover:text-slate-900">
+            Clear all slots
+          </button>
+        </p>
       )}
 
       {feedbackMessages.length > 0 && (
@@ -540,8 +547,12 @@ export default function P3PromptAssembly({ onSolved }: Props) {
             </p>
           ))}
           {success && (
-            <p className="text-emerald-700 font-bold text-lg mt-2">
-              Digit Revealed: 2
+            <p className="font-body text-sm text-slate-700 mt-2">
+              That&apos;s a good starting structure. Not every prompt needs all
+              six parts (persona and tone are optional extras), and real
+              prompting is a conversation: read the answer, then refine your
+              prompt. And for anything important, like life support, a person
+              checks the AI&apos;s work before acting on it.
             </p>
           )}
         </div>

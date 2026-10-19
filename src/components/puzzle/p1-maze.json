@@ -2,9 +2,9 @@
   "start": "lab",
   "goal": "bridge",
   "nodes": {
-    "bridge":      { "x": 16, "y": 17, "kind": "room",     "neighbors": ["cafe"] },
-    "cafe":        { "x": 50, "y": 17, "kind": "room",     "neighbors": ["bridge", "gym", "a1"] },
-    "gym":         { "x": 85, "y": 17, "kind": "room",     "neighbors": ["cafe", "de1", "rec"] },
+    "bridge":      { "x": 16, "y": 17, "kind": "room", "name": "Bridge",     "neighbors": ["cafe"] },
+    "cafe":        { "x": 50, "y": 17, "kind": "room", "name": "Cafe",     "neighbors": ["bridge", "gym", "a1"] },
+    "gym":         { "x": 85, "y": 17, "kind": "room", "name": "Gym",     "neighbors": ["cafe", "de1", "rec"] },
     "de1":         { "x": 85, "y": 4,  "kind": "deadend",  "neighbors": ["gym"] },
     
     "a1":          { "x": 50, "y": 29, "kind": "junction", "neighbors": ["cafe", "a2"] },
@@ -14,16 +14,16 @@
     "a4":          { "x": 33, "y": 35, "kind": "junction", "neighbors": ["a3", "a5", "b1"] },
     "a5":          { "x": 16, "y": 35, "kind": "junction", "neighbors": ["a4", "airlock"] },
     
-    "airlock":     { "x": 16, "y": 52, "kind": "room",     "neighbors": ["a5", "engineering"] },
+    "airlock":     { "x": 16, "y": 52, "kind": "room", "name": "Airlock",     "neighbors": ["a5", "engineering"] },
     "b1":          { "x": 33, "y": 48, "kind": "junction", "neighbors": ["a4", "crew"] },
-    "crew":        { "x": 49, "y": 48, "kind": "room",     "neighbors": ["b1", "rec", "medical"] },
-    "rec":         { "x": 85, "y": 48, "kind": "room",     "neighbors": ["crew", "gym"] },
+    "crew":        { "x": 49, "y": 48, "kind": "room", "name": "Crew Quarters",     "neighbors": ["b1", "rec", "medical"] },
+    "rec":         { "x": 85, "y": 48, "kind": "room", "name": "Rec Room",     "neighbors": ["crew", "gym"] },
     
-    "engineering": { "x": 16, "y": 82, "kind": "room",     "neighbors": ["airlock", "c1"] },
+    "engineering": { "x": 16, "y": 82, "kind": "room", "name": "Engineering",     "neighbors": ["airlock", "c1"] },
     "c1":          { "x": 33, "y": 82, "kind": "junction", "neighbors": ["engineering", "medical", "de3"] },
     "de3":         { "x": 33, "y": 92, "kind": "deadend",  "neighbors": ["c1"] },
-    "medical":     { "x": 49, "y": 82, "kind": "room",     "neighbors": ["c1", "crew", "lab"] },
-    "lab":         { "x": 82, "y": 82, "kind": "room",     "neighbors": ["medical", "de4"] },
+    "medical":     { "x": 49, "y": 82, "kind": "room", "name": "Medical",     "neighbors": ["c1", "crew", "lab"] },
+    "lab":         { "x": 82, "y": 82, "kind": "room", "name": "Lab",     "neighbors": ["medical", "de4"] },
     "de4":         { "x": 82, "y": 68, "kind": "deadend",  "neighbors": ["lab"] }
   }
 }

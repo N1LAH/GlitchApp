@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, HelpCircle } from "lucide-react";
 import {
@@ -65,14 +65,18 @@ export default function PuzzleShell({
   theme,
   title,
   icon,
+  hints = [],
   children,
 }: {
   theme: PuzzleTheme;
   title: string;
   icon: ReactNode;
+  /** Puzzle-specific hints, revealed one at a time from gentlest to most direct. */
+  hints?: string[];
   children: ReactNode;
 }) {
   const router = useRouter();
+  const [hintsShown, setHintsShown] = useState(0);
   const t = THEME[theme];
 
   return (
@@ -115,14 +119,29 @@ export default function PuzzleShell({
                 <DialogHeader>
                   <DialogTitle className="text-slate-900">Need a Hint?</DialogTitle>
                   <DialogDescription className="text-slate-600">
-                    Ask your instructor for a hint to help you solve this puzzle.
+                    Hints get more specific each time. Try one before asking
+                    your facilitator.
                   </DialogDescription>
                 </DialogHeader>
-                <p className="mt-2 text-sm text-slate-600">
-                  Hints are available during the session. Remember to work
-                  through the problem systematically and review any feedback
-                  you&apos;ve received.
-                </p>
+                <ol className="mt-2 space-y-2 text-sm text-slate-700">
+                  {hints.slice(0, hintsShown).map((hint, i) => (
+                    <li key={i} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                      <span className="font-semibold text-slate-900">Hint {i + 1}:</span> {hint}
+                    </li>
+                  ))}
+                </ol>
+                {hintsShown < hints.length ? (
+                  <button
+                    onClick={() => setHintsShown((n) => n + 1)}
+                    className={`mt-2 w-full rounded-full ${t.chip} px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 ${t.ring}`}
+                  >
+                    {hintsShown === 0 ? "Show a hint" : "Show a bigger hint"}
+                  </button>
+                ) : (
+                  <p className="mt-2 text-sm text-slate-500">
+                    That&apos;s every hint. Still stuck? Ask your facilitator.
+                  </p>
+                )}
               </DialogContent>
             </Dialog>
             <button

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useProgress } from "@/store/progress";
+import { allPuzzles } from "@/lib/puzzles";
 
 /** localStorage flag toggled from the /dev console. */
 export const DEV_TOOLS_KEY = "glitch_dev_tools";
@@ -11,14 +12,6 @@ export function devToolsEnabled(): boolean {
   if (typeof window === "undefined") return false;
   return localStorage.getItem(DEV_TOOLS_KEY) === "1";
 }
-
-const ALL_PUZZLES = [
-  { id: "p1-feedback-maze", digit: 4 },
-  { id: "p2-bad-data", digit: 6 },
-  { id: "p3-prompt-precision", digit: 2 },
-  { id: "p4-fact-fiction", token: "UNLOCK5" },
-  { id: "p5-final-console" },
-];
 
 export default function DevToolbar() {
   const [open, setOpen] = useState(false);
@@ -30,8 +23,8 @@ export default function DevToolbar() {
   }, []);
 
   const unlockAll = () => {
-    for (const p of ALL_PUZZLES) {
-      markSolved({ id: p.id, digit: p.digit, token: p.token });
+    for (const p of allPuzzles) {
+      markSolved({ id: p.id, token: p.grants?.token });
     }
   };
 

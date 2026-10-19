@@ -1,51 +1,38 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useProgress } from "@/store/progress";
 import { useRouter } from "next/navigation";
 
 const PUZZLE_GUIDE: { icon: string; name: string; how: string }[] = [
   {
     icon: "🧭",
     name: "Feedback Maze",
-    how: "Guide Glitch through the maze by rewarding good moves and flagging wrong turns — that's reinforcement learning.",
+    how: "Glitch suggests each move. Give it a 👍 or 👎 to train it to find the Bridge. Earns a colored digit.",
   },
   {
     icon: "🧠",
     name: "Bad Data",
-    how: "Mark each source as credible or not credible so Glitch can rebuild a trustworthy report.",
+    how: "Mark each source as credible or not credible so Glitch can rebuild its report. Earns a colored digit.",
   },
   {
     icon: "📝",
     name: "Prompt Precision",
-    how: "Assemble a strong prompt by placing the right instruction card in each slot.",
+    how: "Build a clear, specific prompt by placing the right card in each slot. Earns a colored digit.",
   },
   {
     icon: "✅",
     name: "Fact or Fiction",
-    how: "Drag each statement into the Fact or Fiction column to help Glitch tell truth from nonsense.",
+    how: "Sort each statement about AI into Fact or Fiction. Earns the key that helps switch on the keypad.",
   },
   {
     icon: "🔐",
     name: "Final Console",
-    how: "Use the color clues you collected to enter the three-digit code and unlock the door.",
+    how: "Switches on once the other four puzzles are solved. Enter your three colored digits in the color order on your handout.",
   },
 ];
 
 export default function HowToPlayPage() {
-  const { reset } = useProgress();
   const router = useRouter();
-
-  const handleReset = () => {
-    if (
-      confirm(
-        "This will erase all your progress. Are you sure you want to reset?"
-      )
-    ) {
-      reset();
-      alert("Progress reset successfully!");
-    }
-  };
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(31,75,71,0.08),_transparent_30%),linear-gradient(135deg,_#fefcf6_0%,_#f8fafc_100%)] px-4 py-8 sm:px-6 lg:px-8">
@@ -60,8 +47,9 @@ export default function HowToPlayPage() {
           </h2>
           <p className="mt-1 text-slate-600">
             You&apos;re locked in an AI research lab with Glitch, a glitchy lab
-            AI. Solve five AI-themed puzzles to collect digits, then enter the
-            code on the final console to escape.
+            AI. Solve four AI puzzles: three give you a colored digit and one
+            gives you a key. Then enter the door code on the keypad to escape.
+            Check your team handout for clues, including the color order.
           </p>
         </div>
 
@@ -76,15 +64,21 @@ export default function HowToPlayPage() {
             </li>
             <li>
               <strong className="text-slate-800">Solve:</strong> each puzzle
-              teaches an AI idea and grants a digit or token.
+              teaches an AI idea. Feedback Maze, Bad Data and Prompt Precision
+              each give a colored digit; Fact or Fiction gives a key.
             </li>
             <li>
-              <strong className="text-slate-800">Unlock:</strong> some puzzles
-              require others first — check the lab hub for what&apos;s open.
+              <strong className="text-slate-800">Unlock:</strong> the first
+              four puzzles are open from the start, in any order. The keypad by
+              the door switches on once all four are solved.
             </li>
             <li>
-              <strong className="text-slate-800">Escape:</strong> enter the
-              three-digit code on the Final Console to unlock the door.
+              <strong className="text-slate-800">Escape:</strong> enter your
+              three colored digits in the color order shown on your handout.
+            </li>
+            <li>
+              <strong className="text-slate-800">Stuck?</strong> every puzzle
+              has a Hint button with hints that get more specific each time.
             </li>
           </ul>
         </section>
@@ -116,13 +110,6 @@ export default function HowToPlayPage() {
             className="rounded-full bg-glitch-teal text-white hover:bg-glitch-teal/90"
           >
             Back to Lab
-          </Button>
-          <Button
-            onClick={handleReset}
-            variant="outline"
-            className="rounded-full border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100"
-          >
-            Reset Progress
           </Button>
         </div>
       </div>

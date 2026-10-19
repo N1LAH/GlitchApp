@@ -3,34 +3,38 @@
     "id": "p1-feedback-maze",
     "title": "Feedback Maze",
     "kind": "maze",
-    "description": "Navigate the grid using signal feedback.",
+    "label": "Train Glitch",
+    "description": "Give Glitch feedback on each move until it finds the Bridge.",
     "grants": {
-      "digit": 4
+      "digit": true
     }
   },
   {
     "id": "p2-bad-data",
     "title": "Bad Data",
     "kind": "multiselect",
-    "description": "Assess source credibility.",
+    "label": "Check sources",
+    "description": "Decide which sources Glitch can trust.",
     "grants": {
-      "digit": 6
+      "digit": true
     }
   },
   {
     "id": "p3-prompt-precision",
     "title": "Prompt Precision",
     "kind": "text-entry",
-    "description": "Craft a precise prompt.",
+    "label": "Build a prompt",
+    "description": "Build a clear, specific prompt for the ship's computer.",
     "grants": {
-      "digit": 2
+      "digit": true
     }
   },
   {
     "id": "p4-fact-fiction",
     "title": "Fact or Fiction",
     "kind": "slider",
-    "description": "Sort eight statements correctly.",
+    "label": "Sort statements",
+    "description": "Sort eight statements about AI into Fact or Fiction.",
     "grants": {
       "token": "UNLOCK5"
     }
@@ -39,8 +43,12 @@
     "id": "p5-final-console",
     "title": "Final Console",
     "kind": "keypad",
-    "description": "Use the color clues from the other puzzles to enter the three-digit door code.",
+    "label": "Enter the code",
+    "description": "Use your colored digits and your handout to enter the three-digit door code.",
     "requires": [
+      "p1-feedback-maze",
+      "p2-bad-data",
+      "p3-prompt-precision",
       "p4-fact-fiction"
     ]
   }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useProgress } from "@/store/progress";
 import { allPuzzles } from "@/lib/puzzles";
+import { CLUES, codeFor } from "@/lib/clues";
 import { DEV_TOOLS_KEY } from "@/components/DevToolbar";
 import { useRouter } from "next/navigation";
 
@@ -14,7 +15,7 @@ import { useRouter } from "next/navigation";
 export default function DevConsolePage() {
   const router = useRouter();
   const progress = useProgress();
-  const { solved, digits, tokens, startedAt, finishedAt, markSolved, reset } =
+  const { solved, codeDigits, tokens, startedAt, timerStartedAt, finishedAt, markSolved, reset } =
     progress;
   const [hydrated, setHydrated] = useState(false);
   const [toolbarOn, setToolbarOn] = useState(false);
@@ -63,7 +64,11 @@ export default function DevConsolePage() {
           {hydrated ? (
             <ul className="space-y-1">
               <li>
-                digits: <span className="text-emerald-400">[{digits.join(", ")}]</span>
+                door code:{" "}
+                <span className="text-emerald-400">{codeFor(codeDigits)}</span>{" "}
+                <span className="text-slate-500">
+                  ({CLUES.map((c) => `${c.color} ${codeDigits[c.puzzleId]}`).join(", ")})
+                </span>
               </li>
               <li>
                 tokens:{" "}
@@ -75,6 +80,12 @@ export default function DevConsolePage() {
                 startedAt:{" "}
                 <span className="text-emerald-400">
                   {startedAt ? new Date(startedAt).toLocaleTimeString() : "—"}
+                </span>
+              </li>
+              <li>
+                timer started (first puzzle opened):{" "}
+                <span className="text-emerald-400">
+                  {timerStartedAt ? new Date(timerStartedAt).toLocaleTimeString() : "—"}
                 </span>
               </li>
               <li>
@@ -104,8 +115,8 @@ export default function DevConsolePage() {
                     <span className="text-slate-600">○</span>
                   )}{" "}
                   {p.title}
-                  {p.grants?.digit !== undefined && (
-                    <span className="text-slate-500"> → digit {p.grants.digit}</span>
+                  {p.grants?.digit && (
+                    <span className="text-slate-500"> → digit {codeDigits[p.id]}</span>
                   )}
                   {p.grants?.token && (
                     <span className="text-slate-500"> → {p.grants.token}</span>
@@ -120,13 +131,7 @@ export default function DevConsolePage() {
                   </button>
                   {hydrated && !solved[p.id] && (
                     <button
-                      onClick={() =>
-                        markSolved({
-                          id: p.id,
-                          digit: p.grants?.digit,
-                          token: p.grants?.token,
-                        })
-                      }
+                      onClick={() => markSolved({ id: p.id, token: p.grants?.token })}
                       className="rounded border border-yellow-700 px-2 py-1 text-xs text-yellow-400 hover:bg-yellow-950"
                     >
                       mark solved
@@ -139,13 +144,7 @@ export default function DevConsolePage() {
           <div className="mt-4 flex flex-wrap gap-2">
             <button
               onClick={() =>
-                allPuzzles.forEach((p) =>
-                  markSolved({
-                    id: p.id,
-                    digit: p.grants?.digit,
-                    token: p.grants?.token,
-                  })
-                )
+                allPuzzles.forEach((p) => markSolved({ id: p.id, token: p.grants?.token }))
               }
               className="rounded bg-yellow-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-yellow-500"
             >

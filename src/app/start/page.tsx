@@ -10,7 +10,7 @@ const INTRO_BEATS: string[] = [
   "Oh no — you're awake! While you were touring the lab, my systems glitched and the security door sealed us in.",
   "My AI training data is scrambled. I can't remember how to learn, which sources to trust, or even what's true anymore…",
   "Help me fix each system by solving the puzzles hidden in objects around the lab. Each one you repair reveals a colored digit.",
-  "Collect all three digits, punch them into the keypad by the door, and we're free. Ready to think your way out?",
+  "Collect all three digits, check your team handout for the color order, and punch them into the keypad by the door. Ready to think your way out?",
 ];
 
 export default function StartPage() {

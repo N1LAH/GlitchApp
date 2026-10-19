@@ -14,8 +14,7 @@ export default function NewGamePage() {
   const reset = useProgress((s) => s.reset);
 
   useEffect(() => {
-    reset(); // clears progress store + localStorage + session cookie
-    localStorage.removeItem("glitch_p4_v1"); // Fact or Fiction's own saved state
+    reset(); // clears progress, Fact or Fiction's saved sorting, and the session cookie
     router.replace("/start");
   }, [reset, router]);
 

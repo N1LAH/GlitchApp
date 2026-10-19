@@ -2,10 +2,10 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { useProgress } from "@/store/progress";
-import { unmetDeps } from "@/lib/puzzles";
+import { titleList, unmetDeps } from "@/lib/puzzles";
 import { Lock } from "lucide-react";
 
-type Grants = { digit?: number; token?: string };
+type Grants = { digit?: boolean; token?: string };
 
 export default function PuzzleHost(props: {
   id: string;
@@ -15,11 +15,11 @@ export default function PuzzleHost(props: {
   grants?: Grants;
   children?: (ctx: { markSolved: () => void; solved: boolean }) => ReactNode;
 }) {
-  const { id, title, description, grants, children } = props;
-  const { solved, markSolved, startedAt, startRun } = useProgress();
+  const { id, grants, children } = props;
+  const { solved, markSolved, startedAt, startRun, startTimer } = useProgress();
   const [mounted, setMounted] = useState(false);
 
-  const missing = unmetDeps(id, solved);
+  const missing = mounted ? unmetDeps(id, solved) : [];
   const isLocked = missing.length > 0;
   const isSolved = mounted && !!solved[id];
 
@@ -32,6 +32,10 @@ export default function PuzzleHost(props: {
   }, [startedAt, startRun]);
 
   useEffect(() => {
+    if (!isLocked) startTimer();
+  }, [isLocked, startTimer]);
+
+  useEffect(() => {
     console.info("puzzle_view", { id });
   }, [id]);
 
@@ -42,7 +46,7 @@ export default function PuzzleHost(props: {
           <Lock className="h-4 w-4" />
         </div>
         <p className="text-sm text-slate-700">
-          This puzzle is locked. Required first: {missing.join(", ")}
+          This puzzle is still locked. Solve {titleList(missing)} first.
         </p>
       </div>
     );
@@ -54,12 +58,8 @@ export default function PuzzleHost(props: {
     <>
       {children?.({
         markSolved: () => {
-          markSolved({ id, digit: grants?.digit, token: grants?.token });
-          console.info("puzzle_solved", {
-            id,
-            digit: grants?.digit,
-            token: grants?.token,
-          });
+          markSolved({ id, token: grants?.token });
+          console.info("puzzle_solved", { id, token: grants?.token });
         },
         solved: isSolved,
       })}

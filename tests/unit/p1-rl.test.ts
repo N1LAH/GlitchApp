@@ -5,10 +5,14 @@ import {
   edgeKey,
   atGoal,
   isDeadEndNode,
-  shouldStop,
+  candidatesFrom,
+  isGoodMove,
   nextChoice,
   updateMemory,
 } from "@/components/puzzle/p1-rl";
+import shipMazeData from "@/components/puzzle/p1-maze.json";
+
+const shipMaze = shipMazeData as Maze;
 
 const testMaze: Maze = {
   start: "a",
@@ -46,31 +50,32 @@ describe("p1-rl", () => {
     });
   });
 
-  describe("shouldStop", () => {
-    it("returns true for room nodes", () => {
-      expect(shouldStop("a", undefined, testMaze)).toBe(true);
-      expect(shouldStop("c", "b", testMaze)).toBe(true);
+  describe("candidatesFrom", () => {
+    it("excludes the node Glitch just came from", () => {
+      expect(candidatesFrom("b", "a", testMaze).sort()).toEqual(["c", "e"]);
     });
 
-    it("returns true for deadend nodes", () => {
-      expect(shouldStop("e", "b", testMaze)).toBe(true);
+    it("allows turning back when there is no other way", () => {
+      expect(candidatesFrom("e", "b", testMaze)).toEqual(["b"]);
+    });
+  });
+
+  describe("isGoodMove", () => {
+    it("treats steps toward the goal as good", () => {
+      expect(isGoodMove("a", "b", testMaze)).toBe(true);
+      expect(isGoodMove("b", "c", testMaze)).toBe(true);
     });
 
-    it("returns true for junctions with multiple real choices", () => {
-      expect(shouldStop("b", "a", testMaze)).toBe(true);
+    it("treats dead ends and steps away from the goal as bad", () => {
+      expect(isGoodMove("b", "e", testMaze)).toBe(false);
+      expect(isGoodMove("c", "b", testMaze)).toBe(false);
     });
 
-    it("returns false for junctions with only one choice after excluding prev", () => {
-      const singlePathMaze: Maze = {
-        start: "a",
-        goal: "c",
-        nodes: {
-          a: { x: 0, y: 0, kind: "room", neighbors: ["b"] },
-          b: { x: 25, y: 0, kind: "junction", neighbors: ["a", "c"] },
-          c: { x: 50, y: 0, kind: "room", neighbors: ["b"] },
-        },
-      };
-      expect(shouldStop("b", "a", singlePathMaze)).toBe(false);
+    it("follows the shortest route on the real ship maze", () => {
+      expect(isGoodMove("lab", "medical", shipMaze)).toBe(true);
+      expect(isGoodMove("lab", "de4", shipMaze)).toBe(false);
+      expect(isGoodMove("crew", "rec", shipMaze)).toBe(true);
+      expect(isGoodMove("crew", "b1", shipMaze)).toBe(false);
     });
   });
 
@@ -104,6 +109,21 @@ describe("p1-rl", () => {
 
       expect(cCount).toBeGreaterThan(eCount);
       expect(cCount).toBeGreaterThan(50);
+    });
+
+    it("makes a single piece of feedback change Glitch's choice", () => {
+      const memory: Memory = { "b->e": { correct: 0, incorrect: 1 } };
+      let eCount = 0;
+      for (let i = 0; i < 1000; i++) {
+        if (nextChoice("b", "a", testMaze, memory).next === "e") eCount++;
+      }
+      expect(eCount).toBeLessThan(250);
+    });
+
+    it("never re-proposes a move the student just rejected when another exists", () => {
+      for (let i = 0; i < 50; i++) {
+        expect(nextChoice("b", "a", testMaze, {}, false, ["e"]).next).toBe("c");
+      }
     });
 
     it("gives every option a non-zero chance via epsilon", () => {

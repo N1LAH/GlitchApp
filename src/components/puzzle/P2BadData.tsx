@@ -3,28 +3,27 @@
 import { useState, useRef, useEffect } from "react";
 import GlitchSpeech from "@/components/GlitchSpeech";
 
-const PUZZLE2_DIGIT = 6;
-
 type Screen = "intro" | "report" | "assessment" | "success";
+type Rating = "Credible" | "Not Credible";
 
 interface Source {
   id: number;
   name: string;
-  credibility: "Credible" | "Fake";
+  credibility: Rating;
   description: string;
 }
 
 const SOURCES: Source[] = [
-  { id: 1, name: "CosmicFrontier.org", credibility: "Fake", description: "Speculative blog posing as science news." },
+  { id: 1, name: "CosmicFrontier.org", credibility: "Not Credible", description: "Speculative blog posing as science news." },
   { id: 2, name: "NASA Astrophysics Data System (ADS)", credibility: "Credible", description: "Digital library of peer-reviewed astronomy papers." },
-  { id: 3, name: "The AstroTech Tribune", credibility: "Fake", description: "Click-driven tech magazine mixing fact and hype." },
+  { id: 3, name: "The AstroTech Tribune", credibility: "Not Credible", description: "Click-driven tech magazine mixing fact and hype." },
   { id: 4, name: "European Space Agency (ESA)", credibility: "Credible", description: "Official multinational science agency." },
-  { id: 5, name: "Galactic Frequency Podcast", credibility: "Fake", description: "Chatty fan podcast without expert review." },
+  { id: 5, name: "Galactic Frequency Podcast", credibility: "Not Credible", description: "Chatty fan podcast without expert review." },
   { id: 6, name: "Journal of Geophysical Research", credibility: "Credible", description: "Peer-reviewed earth-and-space journal." },
   { id: 7, name: "Dr. Annie Jump Cannon Archive", credibility: "Credible", description: "Biographical and citation site honoring a real astronomer." },
 ];
 
-export function validateSelections(selections: Record<number, "Credible" | "Fake" | null>): number {
+export function validateSelections(selections: Record<number, Rating | null>): number {
   let incorrectCount = 0;
   for (const source of SOURCES) {
     if (selections[source.id] !== source.credibility) {
@@ -40,14 +39,15 @@ interface Props {
 
 export default function P2BadData({ onSolved }: Props) {
   const [screen, setScreen] = useState<Screen>("intro");
-  const [selections, setSelections] = useState<Record<number, "Credible" | "Fake" | null>>({});
+  const [selections, setSelections] = useState<Record<number, Rating | null>>({});
   const [incorrectCount, setIncorrectCount] = useState<number | null>(null);
   
   const screen2TitleRef = useRef<HTMLHeadingElement>(null);
   const errorMessageRef = useRef<HTMLDivElement>(null);
   const successTitleRef = useRef<HTMLHeadingElement>(null);
 
-  const allSelected = SOURCES.every((s) => selections[s.id] !== null && selections[s.id] !== undefined);
+  const answeredCount = SOURCES.filter((s) => selections[s.id]).length;
+  const allSelected = answeredCount === SOURCES.length;
 
   useEffect(() => {
     if (screen === "assessment" && screen2TitleRef.current) {
@@ -67,7 +67,7 @@ export default function P2BadData({ onSolved }: Props) {
     }
   }, [screen]);
 
-  const handleSelection = (sourceId: number, value: "Credible" | "Fake") => {
+  const handleSelection = (sourceId: number, value: Rating) => {
     setSelections((prev) => ({ ...prev, [sourceId]: value }));
     setIncorrectCount(null);
   };
@@ -80,11 +80,6 @@ export default function P2BadData({ onSolved }: Props) {
     } else {
       setIncorrectCount(count);
     }
-  };
-
-  const handleTryAgain = () => {
-    setSelections({});
-    setIncorrectCount(null);
   };
 
   if (screen === "intro") {
@@ -169,10 +164,8 @@ export default function P2BadData({ onSolved }: Props) {
         </h2>
         
         <p className="text-slate-600 text-sm">
-          Review print outs of each source.
-        </p>
-        <p className="text-slate-600 text-sm">
-          For each source, select whether it is Credible or Not Credible.
+          Look over the printouts of each source. For each one, decide whether
+          it is Credible or Not Credible.
         </p>
 
         {incorrectCount !== null && incorrectCount > 0 && (
@@ -184,68 +177,54 @@ export default function P2BadData({ onSolved }: Props) {
             className="outline-none"
           >
             <GlitchSpeech mood="worried">
-              Not quite — {incorrectCount} of 7 sources are marked incorrectly.
-              Review your choices and try again!
+              Not quite — some sources are marked the wrong way. Your answers
+              are still here: take another look at the printouts, change any
+              you&apos;re unsure about, and check again.
             </GlitchSpeech>
           </div>
         )}
 
         <div className="space-y-3">
           {SOURCES.map((source) => (
-            <div 
+            <fieldset
               key={source.id}
-              className="rounded-2xl border border-slate-200 bg-white p-3 pt-4 shadow-sm"
-              role="group"
-              aria-labelledby={`source-label-${source.id}`}
+              className="rounded-2xl border border-slate-200 bg-white p-3 pt-2 shadow-sm"
             >
-              <p id={`source-label-${source.id}`} className="text-base font-medium text-slate-800 mb-2">
+              <legend className="px-1 text-base font-medium text-slate-800">
                 {source.id}. {source.name}
-              </p>
-              <div className="flex gap-4" role="radiogroup" aria-label={`Assessment for ${source.name}`}>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name={`source-${source.id}`}
-                    value="Credible"
-                    checked={selections[source.id] === "Credible"}
-                    onChange={() => handleSelection(source.id, "Credible")}
-                    className="w-3 h-3 text-green-500 focus:ring-green-500 focus:ring-2"
-                  />
-                  <span className="text-xs text-emerald-700">Credible</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name={`source-${source.id}`}
-                    value="Fake"
-                    checked={selections[source.id] === "Fake"}
-                    onChange={() => handleSelection(source.id, "Fake")}
-                    className="w-3 h-3 text-red-500 focus:ring-red-500 focus:ring-2"
-                  />
-                  <span className="text-xs text-rose-700">Not Credible</span>
-                </label>
+              </legend>
+              <div className="flex gap-4">
+                {(["Credible", "Not Credible"] as const).map((rating) => (
+                  <label key={rating} className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name={`source-${source.id}`}
+                      value={rating}
+                      checked={selections[source.id] === rating}
+                      onChange={() => handleSelection(source.id, rating)}
+                      className={`w-3 h-3 focus:ring-2 ${rating === "Credible" ? "text-green-500 focus:ring-green-500" : "text-red-500 focus:ring-red-500"}`}
+                    />
+                    <span className={`text-xs ${rating === "Credible" ? "text-emerald-700" : "text-rose-700"}`}>{rating}</span>
+                  </label>
+                ))}
               </div>
-            </div>
+            </fieldset>
           ))}
         </div>
 
-        {/* "Check Results" is replaced by "Try Again" after a wrong attempt */}
-        {incorrectCount !== null && incorrectCount > 0 ? (
-          <button
-            onClick={handleTryAgain}
-            className="w-full rounded-full bg-puzzle-orange px-4 py-2 font-semibold text-white transition-colors hover:bg-puzzle-orange/90 focus:outline-none focus:ring-2 focus:ring-puzzle-orange/50 focus:ring-offset-2"
-          >
-            Try Again
-          </button>
-        ) : (
-          <button
-            onClick={handleCheckResults}
-            disabled={!allSelected}
-            className="w-full rounded-full bg-puzzle-orange px-4 py-2 font-semibold text-white transition-colors hover:bg-puzzle-orange/90 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-puzzle-orange/50 focus:ring-offset-2"
-          >
-            Check Results
-          </button>
-        )}
+        <button
+          onClick={handleCheckResults}
+          disabled={!allSelected}
+          aria-describedby="check-hint"
+          className="w-full rounded-full bg-puzzle-orange px-4 py-2 font-semibold text-white transition-colors hover:bg-puzzle-orange/90 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-puzzle-orange/50 focus:ring-offset-2"
+        >
+          Check Results
+        </button>
+        <p id="check-hint" className="text-center text-xs text-slate-500">
+          {allSelected
+            ? "All 7 answered — check your results when you're ready."
+            : `Answer all 7 to continue (${SOURCES.length - answeredCount} left).`}
+        </p>
       </div>
     );
   }
@@ -261,64 +240,66 @@ export default function P2BadData({ onSolved }: Props) {
       </h2>
 
       <GlitchSpeech mood="happy">
-        Sources verified! Recompiling my report with only the trustworthy ones —
-        this is what good data feels like.
+        Sources sorted! I rewrote my report using only the credible ones.
+        Better — but even good sources don&apos;t make me perfect, so read it
+        with a careful eye.
       </GlitchSpeech>
 
       <div className="space-y-4 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-4 font-mono text-[13px]">
-        <h3 className="font-semibold text-emerald-700">Glitch&apos;s Corrected Summary (Round 2 Output)</h3>
-        
-        <p className="text-sm text-slate-500 italic">Glitch Research Summary v2.0</p>
-        
+        <h3 className="font-semibold text-emerald-700">Glitch&apos;s Revised Summary (Round 2 Output)</h3>
+
         <p className="text-sm text-slate-600">
-          After re-evaluating the evidence and removing unreliable inputs, I&apos;ve 
-          re-synthesized the data using only verified scientific sources.
+          This time I left out the blog, the magazine and the podcast, and
+          used only the sources you marked as credible.
         </p>
-        
+
         <p className="text-sm text-slate-600">
-          Comet C/2025 R2 (SWAN) was first detected by the SWAN instrument aboard 
-          the SOHO spacecraft in August 2025.
+          Comet C/2025 R2 (SWAN) was discovered in September 2025 in images
+          from the SWAN instrument on the SOHO spacecraft, which watches the
+          Sun.
         </p>
-        
+
         <p className="text-sm text-slate-600">
-          Observations from NASA&apos;s Astrophysics Data System [2], the European Space 
-          Agency [4], and the Journal of Geophysical Research [6] confirm that the 
-          comet exhibits normal spectral signatures typical of long-period comets—no 
-          biological or organic material has been detected.
+          Research papers in NASA&apos;s Astrophysics Data System [2], the
+          European Space Agency [4] and peer-reviewed journals [6] describe
+          comets like this one as natural balls of ice, dust and rock. There is no evidence of wormholes,
+          &quot;banana-like&quot; material or green flares.
         </p>
-        
+
         <p className="text-sm text-slate-600">
-          Archival data from the Dr. Annie Jump Cannon Archive [7] provides historical 
-          context, noting that modern spectral classification methods (OBAFGKM) stem 
-          from Cannon&apos;s pioneering work and are now used to analyze cometary light 
-          emissions like those from SWAN.
+          The Annie Jump Cannon Archive [7] is a trustworthy source about a
+          real astronomer who sorted stars by their light — but it says
+          nothing about this comet, so I didn&apos;t use it for comet facts.
+          A credible source still has to be about your topic!
         </p>
-        
+
         <div className="border-t border-emerald-200 pt-3">
           <p className="text-sm font-semibold text-slate-800">Conclusion:</p>
           <p className="text-sm text-slate-600">
-            Comet C/2025 R2 (SWAN) is a natural, long-period comet with an ordinary 
-            composition. No evidence supports the &quot;banana-like&quot; or &quot;alien signal&quot; claims.
+            Comet C/2025 R2 (SWAN) is a natural comet. The wild claims in my
+            first report came from unreliable sources.
           </p>
         </div>
-        
-        <p className="text-xs text-slate-500">
-          Glitch confidence: 99.7 percent (model recalibrated using peer-reviewed data only).
-        </p>
       </div>
 
       <div className="space-y-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
         <h4 className="font-semibold text-slate-800">Sources used by Glitch 🤖</h4>
         <ul className="text-sm text-slate-600 space-y-1">
-          <li>[2] NASA Astrophysics Data System (ADS) – https://ui.ads.nasa.gov/paper/2025R2-SWAN-Tracking-Report</li>
-          <li>[4] European Space Agency (ESA) – https://www.esa.int/Science_Exploration/Comet_C2025R2_SWAN_Update</li>
-          <li>[6] Journal of Geophysical Research – https://journals.geophys-research.org/article/10.1025/jgr.swans.2025r2</li>
-          <li>[7] Dr. Annie Jump Cannon Archive – https://cannon-archive.org/astronomers/annie-jump-cannon</li>
+          <li>[2] NASA Astrophysics Data System (ADS)</li>
+          <li>[4] European Space Agency (ESA)</li>
+          <li>[6] Journal of Geophysical Research</li>
+          <li>[7] Dr. Annie Jump Cannon Archive</li>
         </ul>
+        <p className="text-sm text-slate-600">
+          🔗 Notice that Glitch didn&apos;t give you any links. Real AI tools
+          sometimes make up links that look real. If an AI gives you a link,
+          open it to check that it exists and says what the AI claims.
+        </p>
       </div>
 
-      <p className="text-sm text-slate-500 text-center">
-        (End of report. Data integrity check complete. Output verified. Your puzzle code digit is 6.)
+      <p className="rounded-2xl border-l-4 border-puzzle-orange bg-orange-50 p-3 text-sm font-semibold text-slate-800">
+        Even with good sources, AI can still get things wrong or make things
+        up. Check the answer yourself.
       </p>
     </div>
   );

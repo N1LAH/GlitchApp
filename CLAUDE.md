@@ -23,12 +23,13 @@ Run locally: `npm install` then `npm run dev` (serves on port 5000).
 Order: **Maze (RL) → Bad Data → Prompt Precision → Fact or Fiction → Final Console (keypad)**.
 Defined in `content/puzzles/index.json`. Components in `src/components/puzzle/`:
 
-- `P1ReinforcementMaze.tsx` — reinforcement-learning maze; player marks moves Correct/Incorrect
-  until Glitch reaches the Bridge. Grants digit 4.
-- `P2BadData.tsx` — mark sources credible/unreliable. Grants digit 6.
-- `P3PromptAssembly.tsx` — assemble a 6-slot prompt (drag/assign). Grants digit 2.
-- `P4FactFiction.tsx` — sort statements true/false. Grants token UNLOCK5 (requires P1–P3).
-- `P5FinalConsole.tsx` — the keypad; enter the 3-digit code to escape.
+- `P1ReinforcementMaze.tsx` — reinforcement-learning maze; Glitch proposes each move, the player
+  gives 👍/👎, and the feedback changes Glitch's policy (`p1-rl.ts`). Each call is judged against the
+  shortest route to the Bridge. Grants a colored digit (Blue).
+- `P2BadData.tsx` — mark sources credible/not credible. Grants a colored digit (Red).
+- `P3PromptAssembly.tsx` — assemble a 6-slot prompt (tap card → tap slot, or drag). Grants a colored digit (Green).
+- `P4FactFiction.tsx` — sort statements Fact/Fiction. Grants token UNLOCK5.
+- `P5FinalConsole.tsx` — the keypad; requires ALL four puzzles above. 3 wrong codes → 30s lockout.
 
 Puzzle routing/host: `src/app/puzzles/[id]/page.tsx` + `src/components/puzzle/PuzzleHost.tsx`.
 
@@ -68,9 +69,25 @@ Puzzle routing/host: `src/app/puzzles/[id]/page.tsx` + `src/components/puzzle/Pu
 
 ## Keypad config (easy to change)
 
-The clue scheme + code live at the top of `src/components/puzzle/P5FinalConsole.tsx` in the
-`CLUES` array. Currently: **Green 2, Blue 4, Red 6 → code "246"** (entered in that order).
-Change `CLUES` (order matters) and the displayed clues + correct code update automatically.
+The clue scheme lives in `src/lib/clues.ts` (`CLUES`). The code is the digits entered in color
+order **Green, Blue, Red** — that order should be on the team handout (the keypad deliberately
+lists clues in puzzle order, not code order). **Digits are randomized per game session**
+(`randomCodeDigits`, distinct 1–9, never an evenly spaced run like 2-4-6) and stored in the
+progress store as `codeDigits`. Facilitators see the current session's code on `/dev`.
+
+## Sessions, timer, facilitator tools
+
+- Saved progress older than 12 h is discarded automatically (shared-device safety); `/new` wipes a
+  session instantly between groups. Reset buttons were removed from student pages.
+- The end-screen clock starts when the first puzzle opens (`timerStartedAt`), shown as h:mm:ss.
+- `/end` redirects to the lab unless the door was actually unlocked.
+- Dev toolbar + "Mark as Solved (Demo)" only appear with `npm run dev:tools` or when enabled on `/dev`.
+
+10. **Test & content review fixes** (2026-10-19, "Glitch Lab Test Findings" F1–F16, C1–C5, C7; C6
+   safety/privacy intentionally skipped): retry flows keep answers, no count-only feedback, maze
+   feedback matters, randomized code + full keypad gating, rewritten Bad Data report (no fake
+   links / self-verification), plausible Prompt cards, Fact or Fiction items without always/never,
+   puzzle-specific tiered hints, end-screen "4 habits" debrief, solved hotspots replayable.
 
 ## Open decisions (need sign-off from Liz / project owner)
 
@@ -79,11 +96,12 @@ Change `CLUES` (order matters) and the displayed clues + correct code update aut
    They have different puzzle order/mechanics. Most of Liz's original change-notes were written
    against the Figma version and don't map onto this code. Confirm this Replit/Next.js app is the
    official build going forward. (The most recent link shared was the Replit one.)
-2. **Keypad code + clue scheme** — confirm/adjust the `CLUES` values above.
-3. **Prompt puzzle difficulty** — `P3PromptAssembly` reveals only ONE wrong slot per submission,
-   with cryptic in-character error messages. Decide whether to make feedback clearer for kids.
-4. **Maze first-run difficulty** — the RL maze forces a dead-end on the first run by design; decide
-   if that's too punishing for the age group.
+2. **Keypad code + clue scheme** — codes are now random per session, so the handout must give the
+   color order (Green, Blue, Red). Confirm the handout matches `CLUES` in `src/lib/clues.ts`.
+3. **Prompt puzzle difficulty** — `P3PromptAssembly` reveals only ONE wrong slot per submission
+   (the reviewer liked this); cards are kept between attempts now.
+4. **Maze first proposal** — Glitch's first suggestion from the Lab is always the dead end, so
+   players immediately practice a 👎 (or see what a bad 👍 does).
 5. **Facilitator guide answer key** is still a placeholder (that's a separate doc, not in this repo).
 
 ## Workflow & deployment

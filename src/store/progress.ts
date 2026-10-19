@@ -1,22 +1,38 @@
 "use client";
 
 import { create } from "zustand";
+import { CLUES, randomCodeDigits } from "@/lib/clues";
 
-type Progress = {
+type Snapshot = {
   solved: Record<string, boolean>;
-  digits: number[];
   tokens: Record<string, boolean>;
+  /** This session's door-code digit for each digit puzzle (randomized per session). */
+  codeDigits: Record<string, number>;
+  /** When the team entered the lab (gates the /start redirect). */
   startedAt?: number;
+  /** When the team opened its first puzzle — the clock on the end screen. */
+  timerStartedAt?: number;
   finishedAt?: number;
   p1FirstRunCompleted: boolean;
-  markSolved: (args: { id: string; digit?: number; token?: string }) => void;
+};
+
+type Progress = Snapshot & {
+  markSolved: (args: { id: string; token?: string }) => void;
   markP1FirstRunCompleted: () => void;
   reset: () => void;
   startRun: () => void;
+  startTimer: () => void;
   finishRun: () => void;
 };
 
 const STORAGE_KEY = "glitch_progress_v1";
+/** Fact or Fiction keeps its own in-progress sorting under this key. */
+export const P4_STORAGE_KEY = "glitch_p4_v2";
+/**
+ * A saved game older than this is treated as abandoned and discarded, so a
+ * team on a shared device never inherits a previous group's progress or clock.
+ */
+const SESSION_MAX_AGE_MS = 12 * 60 * 60 * 1000;
 /**
  * Mirrors startedAt as a cookie so middleware.ts can redirect fresh visitors
  * to /start at the edge, before any hub HTML is ever sent — localStorage
@@ -27,7 +43,7 @@ const STARTED_COOKIE = "glitch_started";
 
 function setStartedCookie() {
   if (typeof document === "undefined") return;
-  document.cookie = `${STARTED_COOKIE}=1; path=/; max-age=31536000; SameSite=Lax`;
+  document.cookie = `${STARTED_COOKIE}=1; path=/; max-age=${SESSION_MAX_AGE_MS / 1000}; SameSite=Lax`;
 }
 
 function clearStartedCookie() {
@@ -35,98 +51,94 @@ function clearStartedCookie() {
   document.cookie = `${STARTED_COOKIE}=; path=/; max-age=0; SameSite=Lax`;
 }
 
-function load(): Omit<Progress, "markSolved" | "markP1FirstRunCompleted" | "reset" | "startRun" | "finishRun"> {
-  if (typeof window === "undefined") {
-    return { solved: {}, digits: [], tokens: {}, startedAt: undefined, finishedAt: undefined, p1FirstRunCompleted: false };
-  }
+function fresh(): Snapshot {
+  return {
+    solved: {},
+    tokens: {},
+    codeDigits: randomCodeDigits(),
+    startedAt: undefined,
+    timerStartedAt: undefined,
+    finishedAt: undefined,
+    p1FirstRunCompleted: false,
+  };
+}
+
+function persist(snapshot: Snapshot) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+}
+
+function validCodeDigits(value: unknown): value is Record<string, number> {
+  if (!value || typeof value !== "object") return false;
+  const digits = value as Record<string, unknown>;
+  return CLUES.every((c) => typeof digits[c.puzzleId] === "number");
+}
+
+function load(): Snapshot {
+  if (typeof window === "undefined") return fresh();
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { solved: {}, digits: [], tokens: {}, startedAt: undefined, finishedAt: undefined, p1FirstRunCompleted: false };
+    if (!raw) return fresh();
     const obj = JSON.parse(raw);
-    return {
+    if (typeof obj.startedAt === "number" && Date.now() - obj.startedAt > SESSION_MAX_AGE_MS) {
+      localStorage.removeItem(P4_STORAGE_KEY);
+      clearStartedCookie();
+      return fresh();
+    }
+    const snapshot: Snapshot = {
       solved: obj.solved ?? {},
-      digits: obj.digits ?? [],
       tokens: obj.tokens ?? {},
+      codeDigits: validCodeDigits(obj.codeDigits) ? obj.codeDigits : randomCodeDigits(),
       startedAt: obj.startedAt,
+      timerStartedAt: obj.timerStartedAt,
       finishedAt: obj.finishedAt,
       p1FirstRunCompleted: obj.p1FirstRunCompleted ?? false,
     };
+    if (!validCodeDigits(obj.codeDigits)) persist(snapshot);
+    return snapshot;
   } catch {
-    return { solved: {}, digits: [], tokens: {}, startedAt: undefined, finishedAt: undefined, p1FirstRunCompleted: false };
+    return fresh();
   }
 }
 
-export const useProgress = create<Progress>((set, get) => ({
-  ...load(),
-  markSolved: ({ id, digit, token }) => {
-    const next = { ...get().solved, [id]: true };
-    const digits = [...get().digits];
-    if (typeof digit === "number" && !digits.includes(digit)) {
-      digits.push(digit);
-    }
-    const tokens = { ...get().tokens };
-    if (token) tokens[token] = true;
-    const snapshot = {
-      solved: next,
-      digits,
-      tokens,
-      startedAt: get().startedAt,
-      finishedAt: get().finishedAt,
-      p1FirstRunCompleted: get().p1FirstRunCompleted,
-    };
-    if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-    }
-    set(snapshot);
-  },
-  markP1FirstRunCompleted: () => {
-    const snapshot = {
-      ...get(),
-      p1FirstRunCompleted: true,
-    };
-    if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-    }
-    set({ p1FirstRunCompleted: true });
-  },
-  reset: () => {
-    const snapshot = { 
-      solved: {}, 
-      digits: [], 
-      tokens: {},
-      startedAt: undefined,
-      finishedAt: undefined,
-      p1FirstRunCompleted: false,
-    };
-    if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-    }
-    clearStartedCookie();
-    set(snapshot);
-  },
-  startRun: () => {
-    if (get().startedAt) {
+export const useProgress = create<Progress>((set, get) => {
+  const snapshotOf = (): Snapshot => {
+    const { solved, tokens, codeDigits, startedAt, timerStartedAt, finishedAt, p1FirstRunCompleted } = get();
+    return { solved, tokens, codeDigits, startedAt, timerStartedAt, finishedAt, p1FirstRunCompleted };
+  };
+  const update = (patch: Partial<Snapshot>) => {
+    const snapshot = { ...snapshotOf(), ...patch };
+    persist(snapshot);
+    set(patch);
+  };
+
+  return {
+    ...load(),
+    markSolved: ({ id, token }) => {
+      const tokens = { ...get().tokens };
+      if (token) tokens[token] = true;
+      update({ solved: { ...get().solved, [id]: true }, tokens });
+    },
+    markP1FirstRunCompleted: () => update({ p1FirstRunCompleted: true }),
+    reset: () => {
+      const snapshot = fresh();
+      persist(snapshot);
+      if (typeof window !== "undefined") localStorage.removeItem(P4_STORAGE_KEY);
+      clearStartedCookie();
+      set(snapshot);
+    },
+    startRun: () => {
       setStartedCookie();
-      return;
-    }
-    const snapshot = {
-      ...get(),
-      startedAt: Date.now(),
-    };
-    if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-    }
-    setStartedCookie();
-    set({ startedAt: snapshot.startedAt });
-  },
-  finishRun: () => {
-    const snapshot = {
-      ...get(),
-      finishedAt: Date.now(),
-    };
-    if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-    }
-    set({ finishedAt: snapshot.finishedAt });
-  },
-}));
+      if (!get().startedAt) update({ startedAt: Date.now() });
+    },
+    startTimer: () => {
+      if (!get().timerStartedAt) update({ timerStartedAt: Date.now() });
+    },
+    finishRun: () => update({ finishedAt: Date.now() }),
+  };
+});
+
+/** Digits the team has earned so far, in door-code order. */
+export function earnedClues(solved: Record<string, boolean>, codeDigits: Record<string, number>) {
+  return CLUES.filter((c) => solved[c.puzzleId]).map((c) => ({ ...c, digit: codeDigits[c.puzzleId] }));
+}

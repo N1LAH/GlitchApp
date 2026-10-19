@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Hotspot, { type HotspotState } from "@/components/hotspot";
 import GlitchSpeech from "@/components/GlitchSpeech";
 import { useProgress } from "@/store/progress";
-import { byId, allPuzzles } from "@/lib/puzzles";
-import { CLUES } from "@/components/puzzle/P5FinalConsole";
+import { byId, allPuzzles, titleList, unmetDeps } from "@/lib/puzzles";
+import { clueFor } from "@/lib/clues";
 import { useRouter } from "next/navigation";
 
 /**
@@ -31,26 +31,30 @@ const OBJECTS: {
 ];
 
 /** Tooltip for a solved puzzle: the reward it granted (color matters!). */
-function solvedTooltip(puzzleId: string) {
-  const clue = CLUES.find((c) => c.puzzleId === puzzleId);
-  if (clue) {
-    return (
-      <span>
-        {byId(puzzleId)?.title}:{" "}
-        <span className={`text-base font-bold ${clue.text}`}>
-          {clue.color} {clue.digit}
-        </span>
-      </span>
-    );
-  }
-  if (puzzleId === "p4-fact-fiction") return <span>🔓 Keypad unlocked</span>;
-  return <span>🚪 Door unlocked — you escaped!</span>;
+function solvedTooltip(puzzleId: string, codeDigits: Record<string, number>) {
+  const clue = clueFor(puzzleId);
+  const reward = clue ? (
+    <span className={`text-base font-bold ${clue.text}`}>
+      {clue.color} {codeDigits[puzzleId]}
+    </span>
+  ) : puzzleId === "p4-fact-fiction" ? (
+    "🔑 keypad key collected"
+  ) : (
+    "🚪 door unlocked!"
+  );
+  return (
+    <span>
+      <strong>{byId(puzzleId)?.title}</strong>: {reward}
+      <br />
+      <span className="text-xs text-slate-500">Solved. Click to play it again.</span>
+    </span>
+  );
 }
 
 export default function Home() {
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
-  const { solved, startedAt } = useProgress();
+  const { solved, startedAt, codeDigits } = useProgress();
 
   useEffect(() => {
     setHydrated(true);
@@ -72,21 +76,18 @@ export default function Home() {
   const stateFor = (puzzleId: string): HotspotState => {
     if (!hydrated) return "available";
     if (solved[puzzleId]) return "solved";
-    // Only the keypad is gated: it stays inactive until Fact or Fiction is solved.
-    if (puzzleId === "p5-final-console" && !solved["p4-fact-fiction"]) {
-      return "inactive";
-    }
-    return "available";
+    // Only the keypad is gated: it stays inactive until the other four puzzles are solved.
+    return unmetDeps(puzzleId, solved).length > 0 ? "inactive" : "available";
   };
 
   const tooltipFor = (puzzleId: string, state: HotspotState) => {
     const def = byId(puzzleId);
-    if (state === "solved") return solvedTooltip(puzzleId);
+    if (state === "solved") return solvedTooltip(puzzleId, codeDigits);
     if (state === "inactive") {
       return (
         <span>
-          <strong>{def?.title}</strong> — locked. Solve Fact or Fiction to
-          activate the keypad.
+          <strong>{def?.title}</strong> — locked. Solve{" "}
+          {titleList(unmetDeps(puzzleId, solved))} to switch on the keypad.
         </span>
       );
     }
@@ -109,7 +110,7 @@ export default function Home() {
     : solvedCount === 0
       ? "Something scrambled my circuits and locked us in! Click the glowing objects around the lab to help me relearn how AI works."
       : solvedCount >= 4
-        ? "All my systems are back online! The keypad next to the door is active — enter the color code to get us out."
+        ? "All my systems are back online! The keypad next to the door is active. Check your handout for the color order and enter the code to get us out."
         : `That's ${solvedCount} of my systems back online. Keep investigating the lab!`;
 
   return (
@@ -150,7 +151,7 @@ export default function Home() {
         </div>
 
         {/* Fixed-aspect scene so hotspot percentages always match the artwork */}
-        <div className="relative mx-auto aspect-[3/2] w-full overflow-hidden rounded-[28px] border-8 border-glitch-teal-deep shadow-2xl">
+        <div className="relative mx-auto aspect-[3/2] w-full max-w-[max(36rem,calc((100vh_-_15rem)_*_1.5))] overflow-hidden rounded-[28px] border-8 border-glitch-teal-deep shadow-2xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/images/lab-bg.webp"

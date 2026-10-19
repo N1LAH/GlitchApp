@@ -22,7 +22,7 @@ describe("scoreAssignments", () => {
   });
 
   it("counts partially correct assignments", () => {
-    const partial = { ...correctAssignments, s1: "Fact" as const };
+    const partial = { ...correctAssignments, [STATEMENTS[1].id]: "Fact" as const };
     expect(scoreAssignments(partial)).toBe(7);
   });
 

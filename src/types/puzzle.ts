@@ -16,7 +16,10 @@ export interface PuzzleDef {
   id: PuzzleId;
   title: string;
   kind: PuzzleKind;
+  /** Plain-language activity label shown to players (e.g. "Check sources"). */
+  label: string;
   description: string;
   requires?: PuzzleId[];
-  grants?: { digit?: number; token?: string };
+  /** digit: awards this session's colored door-code digit (see lib/clues.ts). */
+  grants?: { digit?: boolean; token?: string };
 }

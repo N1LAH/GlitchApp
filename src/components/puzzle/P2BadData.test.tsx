@@ -4,11 +4,11 @@ import { validateSelections } from "./P2BadData";
 describe("validateSelections", () => {
   it("returns 0 when all selections are correct", () => {
     const correctSelections = {
-      1: "Fake" as const,
+      1: "Not Credible" as const,
       2: "Credible" as const,
-      3: "Fake" as const,
+      3: "Not Credible" as const,
       4: "Credible" as const,
-      5: "Fake" as const,
+      5: "Not Credible" as const,
       6: "Credible" as const,
       7: "Credible" as const,
     };
@@ -21,7 +21,7 @@ describe("validateSelections", () => {
       2: "Credible" as const,
       3: "Credible" as const,
       4: "Credible" as const,
-      5: "Fake" as const,
+      5: "Not Credible" as const,
       6: "Credible" as const,
       7: "Credible" as const,
     };
@@ -31,12 +31,12 @@ describe("validateSelections", () => {
   it("returns 7 when all selections are wrong", () => {
     const allWrong = {
       1: "Credible" as const,
-      2: "Fake" as const,
+      2: "Not Credible" as const,
       3: "Credible" as const,
-      4: "Fake" as const,
+      4: "Not Credible" as const,
       5: "Credible" as const,
-      6: "Fake" as const,
-      7: "Fake" as const,
+      6: "Not Credible" as const,
+      7: "Not Credible" as const,
     };
     expect(validateSelections(allWrong)).toBe(7);
   });
@@ -46,13 +46,13 @@ describe("validateSelections", () => {
     expect(validateSelections(emptySelections)).toBe(7);
   });
 
-  it("correctly identifies sources 1, 3, 5 as Fake", () => {
+  it("correctly identifies sources 1, 3, 5 as Not Credible", () => {
     const onlyFakes = {
-      1: "Fake" as const,
+      1: "Not Credible" as const,
       2: null,
-      3: "Fake" as const,
+      3: "Not Credible" as const,
       4: null,
-      5: "Fake" as const,
+      5: "Not Credible" as const,
       6: null,
       7: null,
     };
