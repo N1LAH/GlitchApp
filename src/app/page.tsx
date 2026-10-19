@@ -31,11 +31,11 @@ const OBJECTS: {
 ];
 
 /** Tooltip for a solved puzzle: the reward it granted (color matters!). */
-function solvedTooltip(puzzleId: string, codeDigits: Record<string, number>) {
+function solvedTooltip(puzzleId: string) {
   const clue = clueFor(puzzleId);
   const reward = clue ? (
     <span className={`text-base font-bold ${clue.text}`}>
-      {clue.color} {codeDigits[puzzleId]}
+      {clue.color} {clue.digit}
     </span>
   ) : puzzleId === "p4-fact-fiction" ? (
     "🔑 keypad key collected"
@@ -54,7 +54,7 @@ function solvedTooltip(puzzleId: string, codeDigits: Record<string, number>) {
 export default function Home() {
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
-  const { solved, startedAt, codeDigits } = useProgress();
+  const { solved, startedAt } = useProgress();
 
   useEffect(() => {
     setHydrated(true);
@@ -82,7 +82,7 @@ export default function Home() {
 
   const tooltipFor = (puzzleId: string, state: HotspotState) => {
     const def = byId(puzzleId);
-    if (state === "solved") return solvedTooltip(puzzleId, codeDigits);
+    if (state === "solved") return solvedTooltip(puzzleId);
     if (state === "inactive") {
       return (
         <span>

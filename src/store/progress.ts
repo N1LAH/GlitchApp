@@ -1,13 +1,11 @@
 "use client";
 
 import { create } from "zustand";
-import { CLUES, randomCodeDigits } from "@/lib/clues";
+import { CLUES } from "@/lib/clues";
 
 type Snapshot = {
   solved: Record<string, boolean>;
   tokens: Record<string, boolean>;
-  /** This session's door-code digit for each digit puzzle (randomized per session). */
-  codeDigits: Record<string, number>;
   /** When the team entered the lab (gates the /start redirect). */
   startedAt?: number;
   /** When the team opened its first puzzle — the clock on the end screen. */
@@ -55,7 +53,6 @@ function fresh(): Snapshot {
   return {
     solved: {},
     tokens: {},
-    codeDigits: randomCodeDigits(),
     startedAt: undefined,
     timerStartedAt: undefined,
     finishedAt: undefined,
@@ -66,12 +63,6 @@ function fresh(): Snapshot {
 function persist(snapshot: Snapshot) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-}
-
-function validCodeDigits(value: unknown): value is Record<string, number> {
-  if (!value || typeof value !== "object") return false;
-  const digits = value as Record<string, unknown>;
-  return CLUES.every((c) => typeof digits[c.puzzleId] === "number");
 }
 
 function load(): Snapshot {
@@ -85,17 +76,14 @@ function load(): Snapshot {
       clearStartedCookie();
       return fresh();
     }
-    const snapshot: Snapshot = {
+    return {
       solved: obj.solved ?? {},
       tokens: obj.tokens ?? {},
-      codeDigits: validCodeDigits(obj.codeDigits) ? obj.codeDigits : randomCodeDigits(),
       startedAt: obj.startedAt,
       timerStartedAt: obj.timerStartedAt,
       finishedAt: obj.finishedAt,
       p1FirstRunCompleted: obj.p1FirstRunCompleted ?? false,
     };
-    if (!validCodeDigits(obj.codeDigits)) persist(snapshot);
-    return snapshot;
   } catch {
     return fresh();
   }
@@ -103,8 +91,8 @@ function load(): Snapshot {
 
 export const useProgress = create<Progress>((set, get) => {
   const snapshotOf = (): Snapshot => {
-    const { solved, tokens, codeDigits, startedAt, timerStartedAt, finishedAt, p1FirstRunCompleted } = get();
-    return { solved, tokens, codeDigits, startedAt, timerStartedAt, finishedAt, p1FirstRunCompleted };
+    const { solved, tokens, startedAt, timerStartedAt, finishedAt, p1FirstRunCompleted } = get();
+    return { solved, tokens, startedAt, timerStartedAt, finishedAt, p1FirstRunCompleted };
   };
   const update = (patch: Partial<Snapshot>) => {
     const snapshot = { ...snapshotOf(), ...patch };
@@ -139,6 +127,6 @@ export const useProgress = create<Progress>((set, get) => {
 });
 
 /** Digits the team has earned so far, in door-code order. */
-export function earnedClues(solved: Record<string, boolean>, codeDigits: Record<string, number>) {
-  return CLUES.filter((c) => solved[c.puzzleId]).map((c) => ({ ...c, digit: codeDigits[c.puzzleId] }));
+export function earnedClues(solved: Record<string, boolean>) {
+  return CLUES.filter((c) => solved[c.puzzleId]);
 }

@@ -246,38 +246,39 @@ export default function P2BadData({ onSolved }: Props) {
       </GlitchSpeech>
 
       <div className="space-y-4 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-4 font-mono text-[13px]">
-        <h3 className="font-semibold text-emerald-700">Glitch&apos;s Revised Summary (Round 2 Output)</h3>
+        <h3 className="font-semibold text-emerald-700">Glitch&apos;s Corrected Summary (Round 2 Output)</h3>
+
+        <p className="text-sm text-slate-500 italic">Glitch Research Summary v2.0</p>
 
         <p className="text-sm text-slate-600">
-          This time I left out the blog, the magazine and the podcast, and
-          used only the sources you marked as credible.
+          After removing the unreliable inputs, I rebuilt this report using
+          only the sources you marked as credible.
         </p>
 
         <p className="text-sm text-slate-600">
-          Comet C/2025 R2 (SWAN) was discovered in September 2025 in images
-          from the SWAN instrument on the SOHO spacecraft, which watches the
-          Sun.
+          Comet C/2025 R2 (SWAN) was first detected by the SWAN instrument aboard
+          the SOHO spacecraft in August 2025.
         </p>
 
         <p className="text-sm text-slate-600">
-          Research papers in NASA&apos;s Astrophysics Data System [2], the
-          European Space Agency [4] and peer-reviewed journals [6] describe
-          comets like this one as natural balls of ice, dust and rock. There is no evidence of wormholes,
-          &quot;banana-like&quot; material or green flares.
+          Observations from NASA&apos;s Astrophysics Data System [2], the European Space
+          Agency [4], and the Journal of Geophysical Research [6] confirm that the
+          comet exhibits normal spectral signatures typical of long-period comets—no
+          biological or organic material has been detected.
         </p>
 
         <p className="text-sm text-slate-600">
-          The Annie Jump Cannon Archive [7] is a trustworthy source about a
-          real astronomer who sorted stars by their light — but it says
-          nothing about this comet, so I didn&apos;t use it for comet facts.
-          A credible source still has to be about your topic!
+          Archival data from the Dr. Annie Jump Cannon Archive [7] provides historical
+          context, noting that modern spectral classification methods (OBAFGKM) stem
+          from Cannon&apos;s pioneering work and are now used to analyze cometary light
+          emissions like those from SWAN.
         </p>
 
         <div className="border-t border-emerald-200 pt-3">
           <p className="text-sm font-semibold text-slate-800">Conclusion:</p>
           <p className="text-sm text-slate-600">
-            Comet C/2025 R2 (SWAN) is a natural comet. The wild claims in my
-            first report came from unreliable sources.
+            Comet C/2025 R2 (SWAN) is a natural, long-period comet with an ordinary
+            composition. No evidence supports the &quot;banana-like&quot; or &quot;alien signal&quot; claims.
           </p>
         </div>
       </div>
@@ -285,16 +286,11 @@ export default function P2BadData({ onSolved }: Props) {
       <div className="space-y-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
         <h4 className="font-semibold text-slate-800">Sources used by Glitch 🤖</h4>
         <ul className="text-sm text-slate-600 space-y-1">
-          <li>[2] NASA Astrophysics Data System (ADS)</li>
-          <li>[4] European Space Agency (ESA)</li>
-          <li>[6] Journal of Geophysical Research</li>
-          <li>[7] Dr. Annie Jump Cannon Archive</li>
+          <li>[2] NASA Astrophysics Data System (ADS) – https://ui.ads.nasa.gov/paper/2025R2-SWAN-Tracking-Report</li>
+          <li>[4] European Space Agency (ESA) – https://www.esa.int/Science_Exploration/Comet_C2025R2_SWAN_Update</li>
+          <li>[6] Journal of Geophysical Research – https://journals.geophys-research.org/article/10.1025/jgr.swans.2025r2</li>
+          <li>[7] Dr. Annie Jump Cannon Archive – https://cannon-archive.org/astronomers/annie-jump-cannon</li>
         </ul>
-        <p className="text-sm text-slate-600">
-          🔗 Notice that Glitch didn&apos;t give you any links. Real AI tools
-          sometimes make up links that look real. If an AI gives you a link,
-          open it to check that it exists and says what the AI claims.
-        </p>
       </div>
 
       <p className="rounded-2xl border-l-4 border-puzzle-orange bg-orange-50 p-3 text-sm font-semibold text-slate-800">

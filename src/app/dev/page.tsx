@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useProgress } from "@/store/progress";
 import { allPuzzles } from "@/lib/puzzles";
-import { CLUES, codeFor } from "@/lib/clues";
+import { CLUES, DOOR_CODE, clueFor } from "@/lib/clues";
 import { DEV_TOOLS_KEY } from "@/components/DevToolbar";
 import { useRouter } from "next/navigation";
 
@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 export default function DevConsolePage() {
   const router = useRouter();
   const progress = useProgress();
-  const { solved, codeDigits, tokens, startedAt, timerStartedAt, finishedAt, markSolved, reset } =
+  const { solved, tokens, startedAt, timerStartedAt, finishedAt, markSolved, reset } =
     progress;
   const [hydrated, setHydrated] = useState(false);
   const [toolbarOn, setToolbarOn] = useState(false);
@@ -65,9 +65,9 @@ export default function DevConsolePage() {
             <ul className="space-y-1">
               <li>
                 door code:{" "}
-                <span className="text-emerald-400">{codeFor(codeDigits)}</span>{" "}
+                <span className="text-emerald-400">{DOOR_CODE}</span>{" "}
                 <span className="text-slate-500">
-                  ({CLUES.map((c) => `${c.color} ${codeDigits[c.puzzleId]}`).join(", ")})
+                  ({CLUES.map((c) => `${c.color} ${c.digit}`).join(", ")})
                 </span>
               </li>
               <li>
@@ -116,7 +116,7 @@ export default function DevConsolePage() {
                   )}{" "}
                   {p.title}
                   {p.grants?.digit && (
-                    <span className="text-slate-500"> → digit {codeDigits[p.id]}</span>
+                    <span className="text-slate-500"> → digit {clueFor(p.id)?.digit}</span>
                   )}
                   {p.grants?.token && (
                     <span className="text-slate-500"> → {p.grants.token}</span>

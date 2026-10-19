@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import GlitchSpeech from "@/components/GlitchSpeech";
-import { CLUES, codeFor } from "@/lib/clues";
+import { CLUES, DOOR_CODE } from "@/lib/clues";
 import { allPuzzles } from "@/lib/puzzles";
-import { useProgress } from "@/store/progress";
 
 const MAX_TRIES = 3;
 const LOCKOUT_SECONDS = 30;
@@ -24,8 +23,7 @@ interface Props {
 }
 
 export default function P5FinalConsole({ solved, onUnlock }: Props) {
-  const codeDigits = useProgress((s) => s.codeDigits);
-  const code = codeFor(codeDigits);
+  const code = DOOR_CODE;
   const [mounted, setMounted] = useState(false);
   const [entry, setEntry] = useState("");
   const [status, setStatus] = useState<"idle" | "error" | "success">("idle");
@@ -94,7 +92,7 @@ export default function P5FinalConsole({ solved, onUnlock }: Props) {
           {DISPLAY_CLUES.map((c) => (
             <span key={c.color} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-700">
               <span className={`h-3 w-3 rounded-full ${c.swatch}`} />
-              {mounted && solved[c.puzzleId] ? `${c.color} ${codeDigits[c.puzzleId]}` : `${c.color} ?`}
+              {mounted && solved[c.puzzleId] ? `${c.color} ${c.digit}` : `${c.color} ?`}
             </span>
           ))}
         </div>

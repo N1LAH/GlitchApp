@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Glitch Lab Facilitator Guide</title>
+<!-- Source for Glitch_Lab_Facilitator_Guide.pdf. Print to PDF (Letter, background graphics on) to regenerate. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a printed field manual. Letter pages, one reading column, session order first, answer key last on its own pages. */
+:root {
+  --teal: #1f4b47;        /* the game's own lab teal */
+  --teal-soft: #e3eeec;
+  --ink: #17302d;
+  --muted: #566b68;
+  --line: #cfdcd9;
+  --paper: #ffffff;
+  --warn: #9a5b00;
+  --warn-soft: #fff4e0;
+  --display: "Fredoka", "Trebuchet MS", sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+  --mono: "JetBrains Mono", Consolas, monospace;
+}
+@page { size: Letter; margin: 0.6in 0.7in 0.7in; }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 10.5pt/1.5 var(--body); }
+h1, h2, h3 { font-family: var(--display); color: var(--teal); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: 30pt; font-weight: 700; }
+h2 { break-after: avoid; font-size: 17pt; font-weight: 600; padding-bottom: 4pt; border-bottom: 2px solid var(--teal); margin-bottom: 10pt; }
+h3 { font-size: 12.5pt; font-weight: 600; margin-bottom: 3pt; }
+p { margin: 0 0 7pt; max-width: 68ch; }
+ul, ol { margin: 0 0 8pt; padding-left: 18pt; }
+li { margin-bottom: 3pt; }
+strong { color: var(--ink); }
+.mono, code { font-family: var(--mono); font-size: 9.5pt; font-weight: 500; }
+section { margin-top: 20pt; }
+.avoid { break-inside: avoid; }
+.page-break { break-before: page; }
+
+.cover { display: grid; grid-template-columns: 1fr auto; gap: 16pt; align-items: end; padding-bottom: 12pt; border-bottom: 4px solid var(--teal); }
+.eyebrow { font: 700 8.5pt/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6pt; }
+.lede { font-size: 11.5pt; color: var(--muted); margin-top: 6pt; max-width: 60ch; }
+.cover img { width: 70pt; height: 70pt; object-fit: contain; image-rendering: pixelated; background: var(--teal); border-radius: 50%; padding: 6pt; }
+
+.links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8pt; margin-top: 14pt; }
+.link { border: 1.5px solid var(--line); border-radius: 6pt; padding: 8pt 10pt; }
+.link .url { display: block; font-family: var(--mono); font-weight: 700; font-size: 8.8pt; color: var(--teal); margin: 3pt 0; white-space: nowrap; }
+.link p { font-size: 9pt; color: var(--muted); margin: 0; }
+.label { font: 700 7.5pt/1 var(--body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+.steps { list-style: none; padding: 0; counter-reset: step; display: grid; gap: 6pt; }
+.steps li { counter-increment: step; display: grid; grid-template-columns: 20pt 1fr; gap: 8pt; margin: 0; }
+.steps li::before { content: counter(step); font: 600 10pt/20pt var(--display); text-align: center; width: 20pt; height: 20pt; border-radius: 50%; background: var(--teal); color: #fff; }
+.steps li p { margin: 0; }
+
+.puzzle { border: 1.5px solid var(--line); border-radius: 6pt; padding: 10pt 12pt; margin-bottom: 9pt; break-inside: avoid; }
+.puzzle header { display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; margin-bottom: 4pt; }
+.where { font-size: 9pt; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 74pt 1fr; gap: 3pt 10pt; font-size: 10pt; }
+.kv dt { font-weight: 700; color: var(--muted); }
+.kv dd { margin: 0; }
+.tip { background: var(--teal-soft); border-radius: 5pt; padding: 7pt 10pt; font-size: 9.5pt; margin-top: 6pt; }
+.warn { background: var(--warn-soft); border-left: 4px solid var(--warn); border-radius: 0 5pt 5pt 0; padding: 8pt 11pt; margin: 8pt 0; }
+.warn strong { color: var(--warn); }
+
+.chips { display: flex; gap: 6pt; flex-wrap: wrap; margin: 4pt 0 6pt; }
+.chip { display: inline-flex; align-items: center; gap: 5pt; border: 1.5px solid var(--line); border-radius: 20pt; padding: 2pt 9pt 2pt 4pt; font-weight: 700; font-size: 9.5pt; }
+.chip i { width: 12pt; height: 12pt; border-radius: 50%; display: inline-block; }
+.g { background: #22c55e; } .b { background: #3b82f6; } .r { background: #ef4444; }
+
+table { width: 100%; border-collapse: collapse; font-size: 9.8pt; }
+th { text-align: left; font: 700 8pt/1.2 var(--body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 0 8pt 5pt 0; border-bottom: 2px solid var(--teal); }
+td { vertical-align: top; padding: 6pt 8pt 6pt 0; border-bottom: 1px solid var(--line); }
+td:first-child { width: 36%; font-weight: 700; }
+tr { break-inside: avoid; }
+
+.key-banner { background: var(--warn); color: #fff; border-radius: 6pt; padding: 10pt 14pt; margin-bottom: 14pt; }
+.key-banner h2 { color: #fff; border: 0; padding: 0; margin: 0 0 3pt; }
+.key-banner p { margin: 0; }
+.code { font-family: var(--display); font-weight: 700; font-size: 26pt; letter-spacing: 0.12em; color: var(--teal); margin: 2pt 0 6pt; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12pt; }
+.answer-list { list-style: none; padding: 0; margin: 0; }
+.answer-list li { padding: 4pt 0; border-bottom: 1px solid var(--line); margin: 0; }
+.tag { display: inline-block; font: 700 7.5pt/1 var(--body); letter-spacing: 0.08em; text-transform: uppercase; padding: 3pt 6pt; border-radius: 3pt; margin-right: 6pt; vertical-align: 1pt; }
+.yes { background: #d9f2e3; color: #145c33; } .no { background: #fde2e2; color: #8a1c1c; }
+.slot { display: grid; grid-template-columns: 82pt 1fr; gap: 8pt; padding: 5pt 0; border-bottom: 1px solid var(--line); }
+.slot b { color: var(--muted); }
+.route { font-family: var(--display); font-weight: 600; font-size: 12pt; color: var(--teal); margin: 4pt 0 8pt; }
+.foot { margin-top: 18pt; font-size: 8.5pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="eyebrow">Facilitator guide · Glitch: The STEM Challenge</div>
+    <h1>Glitch Lab Facilitator Guide</h1>
+    <p class="lede">Everything you need to run the AI escape room with student teams: how to get in, what each puzzle asks, how to help when a team is stuck, and how to wrap up. No technical knowledge needed.</p>
+  </div>
+  <img src="../public/assets/images/glitch-mascot.png" alt="Glitch the robot">
+</div>
+
+<div class="links">
+  <div class="link">
+    <span class="label">The game (for students)</span>
+    <span class="url">glitchapp.vercel.app</span>
+    <p>Open this on every team's device.</p>
+  </div>
+  <div class="link">
+    <span class="label">Start a fresh game</span>
+    <span class="url">glitchapp.vercel.app/new</span>
+    <p>Wipes that device and goes to the title screen. Use between groups.</p>
+  </div>
+  <div class="link">
+    <span class="label">Facilitator console</span>
+    <span class="url">glitchapp.vercel.app/dev</span>
+    <p>Lets you mark puzzles solved. For adults only. See "When something goes wrong".</p>
+  </div>
+</div>
+
+<section class="avoid">
+  <h2>How the game works</h2>
+  <p>Students are locked in an AI research lab with <strong>Glitch</strong>, a lab robot whose AI got scrambled. They click glowing objects in the lab to open puzzles. Each puzzle teaches one idea about how AI works.</p>
+  <ul>
+    <li><strong>Four puzzles are open from the start</strong>, in any order: Feedback Maze, Bad Data, Prompt Precision and Fact or Fiction.</li>
+    <li>Three of them give the team a <strong>colored digit</strong>. Fact or Fiction gives a key instead.</li>
+    <li>When all four are solved, the <strong>keypad by the door</strong> switches on. Teams enter their three digits in the <strong>color order printed on the handout</strong> to escape.</li>
+    <li>The end screen shows the team's <strong>total time</strong> and a short list of four habits for using AI.</li>
+  </ul>
+  <div class="warn"><strong>Every team has the same door code.</strong> It's in the answer key at the back. Keep those pages away from students, and keep an ear out for teams calling the code across the room.</div>
+</section>
+
+<section>
+  <h2>Before the session</h2>
+  <ol class="steps">
+    <li><p><strong>Check the devices.</strong> Open <span class="mono">glitchapp.vercel.app</span> on each team's laptop or tablet. Chrome is the most tested browser. If you plan to use iPads or another browser, play a puzzle on one first.</p></li>
+    <li><p><strong>Use a normal browser window, not a private or incognito one.</strong> The game saves progress in the browser. A private window loses everything when it's closed.</p></li>
+    <li><p><strong>Reset every device right before students arrive.</strong> Open <span class="mono">glitchapp.vercel.app/new</span> on each one. Bookmarking that page makes this one click.</p></li>
+    <li><p><strong>Print the team handouts.</strong> Make sure they show the color order for the door code: <strong>Green, then Blue, then Red</strong>. Teams can't escape without it.</p></li>
+    <li><p><strong>Keep this guide handy</strong>, with the answer key at the back kept away from students.</p></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Running the session</h2>
+  <ol class="steps">
+    <li><p><strong>Title screen.</strong> Students click the START button painted on the picture. Glitch tells a short story in four screens. They can read it or press <em>Skip intro</em>.</p></li>
+    <li><p><strong>The lab.</strong> Glowing blue boxes mark the puzzles. Hovering over one shows its name. Grey boxes are solved; they can still be clicked to play again. The keypad by the door shows a padlock until it's ready.</p></li>
+    <li><p><strong>Puzzles.</strong> Every puzzle has a <strong>Hint</strong> button at the top right. It gives three hints, each more specific than the last. Encourage teams to try one hint before asking you.</p></li>
+    <li><p><strong>Progress check.</strong> The <strong>Mission Log</strong> button in the lab lists what each team has solved, the digits they've earned, and what's still locked.</p></li>
+    <li><p><strong>Escape.</strong> After the right code, the door opens and the end screen shows the team's time. The timer starts when they open their first puzzle, not at the title screen.</p></li>
+  </ol>
+</section>
+
+<section>
+  <h2>The puzzles</h2>
+  <p>What students do, what success looks like, and where teams usually get stuck. Full answers are in the answer key at the back.</p>
+
+  <div class="puzzle">
+    <header><h3>Feedback Maze</h3><span class="where">In the lab: the grid panel on the right-hand wall</span></header>
+    <dl class="kv">
+      <dt>Students</dt><dd>Help Glitch get from the Lab to the Bridge (marked 🏁 Goal on the map). At each turn Glitch suggests a move and a yellow circle shows where it wants to go. Students press 👍 Good move or 👎 Bad move.</dd>
+      <dt>Teaches</dt><dd>Reinforcement learning: AI improves from feedback, and wrong feedback teaches it the wrong thing.</dd>
+      <dt>Reward</dt><dd>A <strong>Blue</strong> digit</dd>
+    </dl>
+    <div class="tip"><strong>Good to know:</strong> Glitch's very first suggestion is always a dead end, on purpose. A thumbs-down there is the right call. Each answer gets a short ✓ or ✗ note explaining why. Teams can't get permanently stuck: if they approve a dead end, Glitch backs out and tries again. <em>Start Over</em> sends Glitch back to the Lab but keeps what it has learned.</div>
+  </div>
+
+  <div class="puzzle">
+    <header><h3>Bad Data</h3><span class="where">In the lab: the papers on the front-left table</span></header>
+    <dl class="kv">
+      <dt>Students</dt><dd>Read Glitch's silly report about a comet, then mark each of 7 sources as Credible or Not Credible. If your handouts include printouts of the sources, this is where they're used.</dd>
+      <dt>Teaches</dt><dd>AI is only as good as its sources. Even with good sources, check the answer yourself.</dd>
+      <dt>Reward</dt><dd>A <strong>Red</strong> digit</dd>
+    </dl>
+    <div class="tip"><strong>Good to know:</strong> <em>Check Results</em> stays grey until all 7 are answered; the line under it counts how many are left. A wrong check doesn't say how many are wrong, only that some are, and the answers stay so students can change them. Afterwards, Glitch shows a corrected report that lists its sources and links, followed by a reminder to check AI answers yourself. A good question to ask: would you trust this report without opening any of its links?</div>
+  </div>
+
+  <div class="puzzle">
+    <header><h3>Prompt Precision</h3><span class="where">In the lab: the computer screen on the right-hand desk</span></header>
+    <dl class="kv">
+      <dt>Students</dt><dd>Build a prompt for the ship's computer by filling 6 slots: Persona, Context, Task, Constraints, Tone / Style and Output Format. Each slot has 5 cards to choose from.</dd>
+      <dt>Teaches</dt><dd>Clear, specific prompts get better results, and a person checks AI's work before acting on anything important.</dd>
+      <dt>Reward</dt><dd>A <strong>Green</strong> digit</dd>
+    </dl>
+    <div class="tip"><strong>Good to know:</strong> Click a slot's <em>▸ Cards</em> line to see its options. Tap a card, then tap the slot; dragging also works on a computer. A card can only go in its own slot. When a check fails, Glitch complains about <strong>one</strong> problem at a time, so the team swaps one card and checks again. This is by design, and the cards stay in place.</div>
+  </div>
+
+  <div class="puzzle">
+    <header><h3>Fact or Fiction</h3><span class="where">In the lab: the open book on the middle desk</span></header>
+    <dl class="kv">
+      <dt>Students</dt><dd>Sort 8 statements about AI into Fact or Fiction. Tap a statement, then tap <em>Place here</em> on a column (or drag it).</dd>
+      <dt>Teaches</dt><dd>What AI can and can't do: it can sound confident and be wrong, invent sources, and pick up bias from its data.</dd>
+      <dt>Reward</dt><dd>A key (no digit). This is the 4th puzzle needed to switch on the keypad.</dd>
+    </dl>
+    <div class="tip"><strong>Good to know:</strong> Exactly four are facts and four are fiction. A wrong check just says some are in the wrong column; students move cards and check again. After solving, each fiction statement shows a corrected version, which makes a good discussion prompt.</div>
+  </div>
+
+  <div class="puzzle">
+    <header><h3>Final Console (the keypad)</h3><span class="where">In the lab: the small panel beside the door on the left</span></header>
+    <dl class="kv">
+      <dt>Students</dt><dd>Enter their three colored digits in the order on the handout.</dd>
+      <dt>Unlocks</dt><dd>Only after all four other puzzles are solved.</dd>
+    </dl>
+    <div class="chips"><span class="chip"><i class="g"></i>Green first</span><span class="chip"><i class="b"></i>Blue second</span><span class="chip"><i class="r"></i>Red third</span></div>
+    <div class="tip"><strong>Good to know:</strong> The keypad lists the clues in puzzle order (Blue, Red, Green), not in code order, so students need the handout. After <strong>3 wrong codes</strong> the keypad cools down for 30 seconds. Watch out: each puzzle's <em>screen</em> color is not its <em>clue</em> color. The maze screen is purple but its digit is Blue, and Prompt Precision's screen is blue but its digit is Green. Point students to the colored circle on the reward screen.</div>
+  </div>
+</section>
+
+<section>
+  <h2>When something goes wrong</h2>
+  <table>
+    <thead><tr><th>What you see</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>The keypad has a padlock or says it's still locked</td><td>All four other puzzles must be solved first. Open the <strong>Mission Log</strong> from the lab to see which one is missing.</td></tr>
+      <tr><td>"Keypad cooling down… 30s"</td><td>The team entered 3 wrong codes. Wait 30 seconds. Meanwhile, check the handout's color order and the digits shown on the keypad.</td></tr>
+      <tr><td>The code doesn't work</td><td>Usually the digits are in the wrong order. It's Green, then Blue, then Red. Hovering over a solved object in the lab shows the digit it gave. The full code is in the answer key.</td></tr>
+      <tr><td>A team's progress disappeared</td><td>Progress lives in that one browser on that one device. It's lost if they switched devices or browsers, used a private window, or the game was more than 12 hours old. You can give back solved puzzles from <span class="mono">/dev</span> on that device (see below).</td></tr>
+      <tr><td>A new group sits down at a used device</td><td>Open <span class="mono">glitchapp.vercel.app/new</span>. Students can't reset a game mid-way on purpose, so one student can't wipe the team's work.</td></tr>
+      <tr><td>The lab picture is cut off or too big</td><td>Zoom the browser out: <strong>Ctrl and −</strong> (Windows/Chromebook) or <strong>⌘ and −</strong> (Mac).</td></tr>
+      <tr><td>Cards won't drag on a tablet</td><td>Tap instead: tap a card, then tap the slot (Prompt Precision) or <em>Place here</em> (Fact or Fiction).</td></tr>
+      <tr><td>The screen looks old or odd after an update</td><td>Refresh the page. Progress is kept.</td></tr>
+      <tr><td>A team is stuck on a puzzle</td><td>Point them to the <strong>Hint</strong> button first; the third hint is very direct. Then use the answer key to give a nudge, not the answer.</td></tr>
+      <tr><td>A team runs out of time</td><td>On their device, open <span class="mono">/dev</span> and press <em>mark solved</em> next to the puzzle they're on. They can then finish the keypad.</td></tr>
+      <tr><td>A student wants to replay a puzzle</td><td>Click its grey box in the lab, or use <em>Play again</em> in the Mission Log. Replaying doesn't change their digits.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn avoid">
+    <strong>About the facilitator console (<span class="mono">/dev</span>).</strong> It shows the door code and has buttons that change the game: <em>mark solved</em>, <em>Unlock all</em> and <em>Reset all progress</em>. Only open it on a student device when you mean to use it, and close the tab afterwards. Don't switch on its floating toolbar on student devices; that adds "Mark as Solved" buttons to every puzzle.
+  </div>
+</section>
+
+<section class="avoid">
+  <h2>Wrapping up</h2>
+  <p>The end screen lists four habits. They make a good closing discussion:</p>
+  <ul>
+    <li><strong>Check it.</strong> AI can sound confident and still be wrong, or invent sources. <em>Ask: in which puzzle did Glitch sound sure but get it wrong?</em></li>
+    <li><strong>Know where it came from.</strong> AI is only as good as the data behind it. <em>Ask: which sources did you trust in Bad Data, and why?</em></li>
+    <li><strong>Be specific, then refine.</strong> Clear prompts get better results, and you can follow up. <em>Ask: what made the winning prompt better than the others?</em></li>
+    <li><strong>You decide.</strong> AI is a tool and people stay in charge. <em>Ask: in the maze, what happened when the feedback was wrong?</em></li>
+  </ul>
+  <p>To play again, a team presses <strong>Play Again</strong> on the end screen and confirms. That starts a brand-new game with a fresh timer.</p>
+</section>
+
+<section class="page-break">
+  <div class="key-banner">
+    <h2>Answer key</h2>
+    <p>For facilitators only. Please don't show these pages to students.</p>
+  </div>
+
+  <div class="avoid">
+    <h3>Door code</h3>
+    <p class="code">2 4 6</p>
+    <p><span class="chip"><i class="g"></i>Green 2</span> from Prompt Precision, then <span class="chip"><i class="b"></i>Blue 4</span> from Feedback Maze, then <span class="chip"><i class="r"></i>Red 6</span> from Bad Data. The code is the same for every team.</p>
+  </div>
+
+  <h3 style="margin-top:14pt">Feedback Maze</h3>
+  <p>Shortest route to the Bridge:</p>
+  <p class="route">Lab → Medical → Crew Quarters → Rec Room → Gym → Cafe → Bridge</p>
+  <p>Give 👍 to any move along this route and 👎 to anything else, including Glitch's first suggestion (up, into a dead end). Some short stretches have only one way to go, so Glitch moves on without asking.</p>
+
+  <h3 style="margin-top:14pt">Bad Data</h3>
+  <div class="two">
+    <ul class="answer-list">
+      <li><span class="tag yes">Credible</span>NASA Astrophysics Data System (ADS)</li>
+      <li><span class="tag yes">Credible</span>European Space Agency (ESA)</li>
+      <li><span class="tag yes">Credible</span>Journal of Geophysical Research</li>
+      <li><span class="tag yes">Credible</span>Dr. Annie Jump Cannon Archive</li>
+    </ul>
+    <ul class="answer-list">
+      <li><span class="tag no">Not credible</span>CosmicFrontier.org</li>
+      <li><span class="tag no">Not credible</span>The AstroTech Tribune</li>
+      <li><span class="tag no">Not credible</span>Galactic Frequency Podcast</li>
+    </ul>
+  </div>
+
+  <div class="avoid">
+  <h3 style="margin-top:14pt">Prompt Precision</h3>
+    <div class="slot"><b>Persona</b><span>Calm, logical starship systems engineer focused on safety and accuracy.</span></div>
+    <div class="slot"><b>Context</b><span>Locked out of the life-support console, oxygen dropping fast.</span></div>
+    <div class="slot"><b>Task</b><span>Draft the repair code to seal the leak in conduit B-7.</span></div>
+    <div class="slot"><b>Constraints</b><span>Under 100 words; only commands from the ship's repair manual; no jokes or guesses.</span></div>
+    <div class="slot"><b>Tone / Style</b><span>Clear, confident and step-by-step, like a repair manual.</span></div>
+    <div class="slot"><b>Output Format</b><span>Strict SYSTEM OVERRIDE command syntax, ending with a status line.</span></div>
+  <p style="margin-top:6pt">Glitch reports one wrong slot per check, in this order: Task, Output Format, Constraints, Persona, Context, Tone / Style.</p>
+  </div>
+
+  <div class="avoid">
+  <h3 style="margin-top:14pt">Fact or Fiction</h3>
+  <ul class="answer-list">
+    <li><span class="tag yes">Fact</span>AI learns by finding patterns in large amounts of data.</li>
+    <li><span class="tag no">Fiction</span>If an AI sounds confident, its answer is probably right.</li>
+    <li><span class="tag yes">Fact</span>AI can pick up unfair patterns (bias) from the data it was trained on.</li>
+    <li><span class="tag no">Fiction</span>If an AI chatbot gives you a link or a source, you can trust that it exists.</li>
+    <li><span class="tag yes">Fact</span>AI can be trained by giving it rewards for good choices and penalties for bad ones.</li>
+    <li><span class="tag no">Fiction</span>Getting the same answer from an AI twice proves the answer is correct.</li>
+    <li><span class="tag yes">Fact</span>AI can generate text, images, and even music.</li>
+    <li><span class="tag no">Fiction</span>A chatbot automatically knows about events that happened after it was trained.</li>
+  </ul>
+  <p style="margin-top:6pt">Statements appear in this order in the game.</p>
+  </div>
+
+  <p class="foot">Glitch Lab Facilitator Guide · game link: glitchapp.vercel.app · October 2026</p>
+</section>
+
+</body>
+</html>

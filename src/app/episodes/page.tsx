@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function EpisodesPage() {
   const [hydrated, setHydrated] = useState(false);
-  const { solved, codeDigits } = useProgress();
+  const { solved } = useProgress();
   const router = useRouter();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function EpisodesPage() {
     if (clue) {
       return isSolved ? (
         <span className={`font-semibold ${clue.text}`}>
-          Reward: {clue.color} {codeDigits[puzzleId]}
+          Reward: {clue.color} {clue.digit}
         </span>
       ) : (
         <span>Reward: a colored digit for the door code</span>

@@ -82,7 +82,7 @@ const puzzleShellConfig: Record<
 export default function PuzzlePage({ params }: { params: { id: string } }) {
   const [hydrated, setHydrated] = useState(false);
   const [showReward, setShowReward] = useState(false);
-  const { solved, codeDigits, finishRun } = useProgress();
+  const { solved, finishRun } = useProgress();
   const router = useRouter();
   const puzzle = byId(params.id);
 
@@ -131,10 +131,10 @@ export default function PuzzlePage({ params }: { params: { id: string } }) {
                   <span
                     className={`flex h-20 w-20 items-center justify-center rounded-full ${clue.swatch} font-display text-5xl font-bold text-white shadow-lg`}
                   >
-                    {codeDigits[clue.puzzleId]}
+                    {clue.digit}
                   </span>
                   <span className={`font-display text-2xl font-bold ${clue.text}`}>
-                    {clue.color} {codeDigits[clue.puzzleId]}
+                    {clue.color} {clue.digit}
                   </span>
                 </div>
               ) : (

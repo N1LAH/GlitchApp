@@ -31,7 +31,7 @@ const HABITS: { icon: string; title: string; body: string }[] = [
 ];
 
 export default function EndPage() {
-  const { solved, codeDigits, finishedAt, timerStartedAt, reset } = useProgress();
+  const { solved, finishedAt, timerStartedAt, reset } = useProgress();
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
   const [confirmingReset, setConfirmingReset] = useState(false);
@@ -47,7 +47,7 @@ export default function EndPage() {
   if (!escaped) return null;
 
   const totalTime = finishedAt && timerStartedAt ? finishedAt - timerStartedAt : null;
-  const clues = earnedClues(solved, codeDigits);
+  const clues = earnedClues(solved);
 
   const handlePlayAgain = () => {
     reset();

@@ -50,9 +50,9 @@ npm run dev:tools   # same server, dev toolbar + demo skip buttons visible
 
 Start (`/start`) → Lab hub (`/`) → Episodes (`/episodes`) →
 Maze → Bad Data → Prompt Precision → Fact or Fiction → Final Console keypad →
-End screen. The color-clue scheme lives in `src/lib/clues.ts` (color order Green,
-Blue, Red — put it on the handout). Digits are randomized per session; `/dev`
-shows the current code.
+End screen. The keypad code and color-clue scheme live in `src/lib/clues.ts`
+(currently Green 2, Blue 4, Red 6 → `246`, the same for every team). The color
+order must be on the team handout. The facilitator guide is in `docs/`.
 
 ## Deploying (later)
 

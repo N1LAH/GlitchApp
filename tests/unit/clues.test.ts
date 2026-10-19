@@ -1,30 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { CLUES, codeFor, randomCodeDigits } from "@/lib/clues";
+import { CLUES, DOOR_CODE } from "@/lib/clues";
 import { formatTime } from "@/lib/time";
 
-describe("randomCodeDigits", () => {
-  it("gives every clue a distinct digit from 1 to 9", () => {
-    for (let i = 0; i < 200; i++) {
-      const code = randomCodeDigits();
-      const values = CLUES.map((c) => code[c.puzzleId]);
-      expect(new Set(values).size).toBe(CLUES.length);
-      for (const d of values) {
-        expect(d).toBeGreaterThanOrEqual(1);
-        expect(d).toBeLessThanOrEqual(9);
-      }
-    }
-  });
-
-  it("never produces an evenly spaced code like 246 or 321", () => {
-    for (let i = 0; i < 500; i++) {
-      const [a, b, c] = codeFor(randomCodeDigits()).split("").map(Number);
-      expect(b - a).not.toBe(c - b);
-    }
-  });
-
-  it("builds the code in clue order", () => {
-    const digits = Object.fromEntries(CLUES.map((c, i) => [c.puzzleId, i + 3]));
-    expect(codeFor(digits)).toBe("345");
+describe("door code", () => {
+  it("is the clue digits in color order: Green, Blue, Red", () => {
+    expect(CLUES.map((c) => c.color)).toEqual(["Green", "Blue", "Red"]);
+    expect(DOOR_CODE).toBe("246");
   });
 });
 
