@@ -88,6 +88,24 @@ tr { break-inside: avoid; }
 .slot b { color: var(--muted); }
 .route { font-family: var(--display); font-weight: 600; font-size: 12pt; color: var(--teal); margin: 4pt 0 8pt; }
 .foot { margin-top: 18pt; font-size: 8.5pt; color: var(--muted); }
+
+/* Facilitator console page */
+.console-map { display: grid; grid-template-columns: 210pt 1fr; gap: 16pt; align-items: start; margin: 6pt 0 12pt; }
+.screen { background: #0f172a; border-radius: 6pt; padding: 9pt; font-family: var(--mono); font-size: 7.5pt; color: #94a3b8; display: grid; gap: 6pt; }
+.screen .title { color: #facc15; font-weight: 700; font-size: 8pt; }
+.screen .panel { border: 1px solid #334155; background: #111c33; border-radius: 4pt; padding: 6pt 7pt; position: relative; }
+.screen .panel b { color: #f1f5f9; display: block; margin-bottom: 2pt; }
+.screen .ok { color: #34d399; }
+.screen .btn { display: inline-block; border: 1px solid #a16207; color: #facc15; border-radius: 3pt; padding: 0 3pt; margin-left: 3pt; }
+.screen .pill { display: inline-block; border-radius: 3pt; padding: 1pt 4pt; color: #fff; font-weight: 700; margin-right: 3pt; }
+.marker { position: absolute; left: -8pt; top: -7pt; width: 15pt; height: 15pt; border-radius: 50%; background: var(--warn); color: #fff; font: 700 8.5pt/15pt var(--display); text-align: center; }
+.legend { list-style: none; padding: 0; margin: 0; display: grid; gap: 7pt; }
+.legend li { display: grid; grid-template-columns: 18pt 1fr; gap: 7pt; margin: 0; font-size: 9.8pt; }
+.legend .marker { position: static; }
+.legend p { margin: 0; }
+.dont { list-style: none; padding: 0; margin: 0; display: grid; gap: 4pt; }
+.dont li { margin: 0; padding-left: 16pt; position: relative; }
+.dont li::before { content: "✗"; position: absolute; left: 0; color: #b42318; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -115,7 +133,7 @@ tr { break-inside: avoid; }
   <div class="link">
     <span class="label">Facilitator console</span>
     <span class="url">glitchapp.vercel.app/dev</span>
-    <p>Lets you mark puzzles solved. For adults only. See "When something goes wrong".</p>
+    <p>Lets you check and fix a team's game. For adults only. See "The facilitator console".</p>
   </div>
 </div>
 
@@ -227,9 +245,7 @@ tr { break-inside: avoid; }
     </tbody>
   </table>
 
-  <div class="warn avoid">
-    <strong>About the facilitator console (<span class="mono">/dev</span>).</strong> It shows the door code and has buttons that change the game: <em>mark solved</em>, <em>Unlock all</em> and <em>Reset all progress</em>. Only open it on a student device when you mean to use it, and close the tab afterwards. Don't switch on its floating toolbar on student devices; that adds "Mark as Solved" buttons to every puzzle.
-  </div>
+  <p style="margin-top:8pt">Several fixes above use the facilitator console. It has its own section near the back, just before the answer key.</p>
 </section>
 
 <section class="avoid">
@@ -242,6 +258,63 @@ tr { break-inside: avoid; }
     <li><strong>You decide.</strong> AI is a tool and people stay in charge. <em>Ask: in the maze, what happened when the feedback was wrong?</em></li>
   </ul>
   <p>To play again, a team presses <strong>Play Again</strong> on the end screen and confirms. That starts a brand-new game with a fresh timer.</p>
+</section>
+
+<section class="page-break">
+  <h2>The facilitator console</h2>
+  <p>A behind-the-scenes page for adults. It shows where a team is up to and lets you fix their game when something goes wrong. Students never see it unless someone types its address.</p>
+
+  <div class="warn"><strong>It only works on the device it's opened on.</strong> Each team's progress is saved in their own browser, so to check or fix a team's game, open the console <em>on that team's device</em>. Opening it on your own laptop shows your laptop's game, not theirs.</div>
+
+  <h3 style="margin-top:10pt">Opening and leaving it</h3>
+  <ol class="steps">
+    <li><p>On the team's device, click the address bar, type <span class="mono">glitchapp.vercel.app/dev</span> and press Enter. A new tab works well, because the team's game stays open in the first one.</p></li>
+    <li><p>The console looks plain and dark on purpose, so it's obvious you've left the game. Nothing in the game links to it.</p></li>
+    <li><p>When you're done, close the console tab and go back to the game tab. Refresh the game tab if you changed anything.</p></li>
+  </ol>
+
+  <h3 style="margin-top:12pt">What's on the screen</h3>
+  <div class="console-map avoid">
+    <div class="screen" aria-label="Sketch of the facilitator console">
+      <div class="title">⚙ Glitch Lab — Dev / Facilitator Console</div>
+      <div class="panel"><span class="marker">1</span><b>Session state</b>door code: <span class="ok">246</span><br>tokens: <span class="ok">UNLOCK5</span><br>startedAt: <span class="ok">10:02:14 AM</span><br>timer started: <span class="ok">10:03:40 AM</span><br>finishedAt: —</div>
+      <div class="panel"><span class="marker">2</span><b>Puzzles</b><span class="ok">✓</span> Feedback Maze → digit 4 <span class="btn">open</span><br>○ Bad Data → digit 6 <span class="btn">open</span><span class="btn">mark solved</span><br>…<br><span class="pill" style="background:#ca8a04">Unlock all</span><span class="pill" style="background:#be123c">Reset all progress</span></div>
+      <div class="panel"><span class="marker">3</span><b>Floating dev toolbar</b>OFF — click to enable</div>
+      <div class="panel"><span class="marker">4</span><b>Jump to route</b>/start · / · /episodes · /end …</div>
+    </div>
+    <ul class="legend">
+      <li><span class="marker">1</span><p><strong>Session state</strong> shows the door code (246) and the team's times. <em>startedAt</em> is when they entered the lab, <em>timer started</em> is when they opened their first puzzle, and <em>finishedAt</em> is when they escaped. <em>UNLOCK5</em> under tokens means Fact or Fiction is solved.</p></li>
+      <li><span class="marker">2</span><p><strong>Puzzles</strong> shows ✓ for solved and ○ for not yet. <em>open</em> jumps straight into a puzzle. <em>mark solved</em> gives the team credit for one puzzle. <em>Unlock all</em> solves everything, including the door. <em>Reset all progress</em> wipes the game, like <span class="mono">/new</span>, and asks you to confirm first.</p></li>
+      <li><span class="marker">3</span><p><strong>Floating dev toolbar</strong> adds a ⚙ button and "Mark as Solved" shortcuts to every game screen. <strong>Leave it OFF</strong> on student devices.</p></li>
+      <li><span class="marker">4</span><p><strong>Jump to route</strong> lists shortcuts to every screen. Handy for showing a puzzle to another adult; you won't need it during a session.</p></li>
+    </ul>
+  </div>
+
+  <div class="avoid">
+  <h3>When to use it</h3>
+  <table>
+    <thead><tr><th>Situation</th><th>What to do in the console</th></tr></thead>
+    <tbody>
+      <tr><td>You want to see how far a team has got</td><td>Look at <strong>Puzzles</strong> (section 2). For students, the Mission Log in the game shows the same thing.</td></tr>
+      <tr><td>A team is out of time on one puzzle</td><td>Press <em>mark solved</em> next to that puzzle, then let them finish the rest themselves, including the keypad.</td></tr>
+      <tr><td>A team lost their progress</td><td>Press <em>mark solved</em> for each puzzle they had already finished. Their timer restarts from the next puzzle they open.</td></tr>
+      <tr><td>You need the door code</td><td>It's in <strong>Session state</strong> (section 1), and in the answer key.</td></tr>
+      <tr><td>A new group needs a fresh game</td><td>Press <em>Reset all progress</em>, or simply open <span class="mono">glitchapp.vercel.app/new</span>.</td></tr>
+      <tr><td>You're showing the game to other adults</td><td><em>Unlock all</em> on a demo device lets you click into any puzzle or the end screen without playing through.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="avoid">
+  <h3 style="margin-top:12pt">When not to use it</h3>
+  <ul class="dont">
+    <li><strong>Don't use it as a first response to a stuck team.</strong> The Hint button comes first, then a nudge from the answer key.</li>
+    <li><strong>Don't press <em>Unlock all</em> on a student device during a session.</strong> It opens the door without the code and skips the whole game.</li>
+    <li><strong>Don't <em>mark solved</em> the Final Console.</strong> That also opens the door without the code, and the end screen won't show a time. Let the team type 246 instead.</li>
+    <li><strong>Don't switch on the floating toolbar on student devices.</strong> It stays on in that browser until you turn it off again here.</li>
+    <li><strong>Don't leave the console open where students can see it.</strong> It shows the door code.</li>
+  </ul>
+  </div>
 </section>
 
 <section class="page-break">
