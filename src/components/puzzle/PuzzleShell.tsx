@@ -75,7 +75,7 @@ export default function PuzzleShell({
   icon: ReactNode;
   /** Puzzle-specific hints, revealed one at a time from gentlest to most direct. */
   hints?: string[];
-  /** Handout ids (see lib/handouts.ts) shown under this puzzle's Lab Papers button. */
+  /** Handout ids (see lib/handouts.ts) opened from this puzzle's reference button. */
   papers?: string[];
   children: ReactNode;
 }) {

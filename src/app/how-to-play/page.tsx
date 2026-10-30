@@ -85,9 +85,10 @@ export default function HowToPlayPage() {
               lab door.
             </li>
             <li>
-              <strong className="text-slate-800">Lab Papers:</strong> Bad Data,
-              Prompt Precision and Fact or Fiction have a Lab Papers button at
-              the top with reference papers that help you solve them.
+              <strong className="text-slate-800">Reference papers:</strong> Bad
+              Data, Prompt Precision and Fact or Fiction each have a button at
+              the top (Source Printouts, Prompting Guide, AI Fact Booklet) with
+              papers that help you solve them.
             </li>
             <li>
               <strong className="text-slate-800">Stuck?</strong> every puzzle

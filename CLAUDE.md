@@ -102,8 +102,9 @@ clues in puzzle order, not code order. Change the digits in
    Any file holding Tailwind class strings must live under a path listed there.
 
 12. **Lab Papers** (2026-10-30): the printed handouts are built into the game. Bad Data, Prompt
-   Precision and Fact or Fiction have a "Lab Papers" button in the puzzle header (`LabPapers.tsx`,
-   mapping in `src/lib/handouts.ts`). Bad Data's seven source printouts render as text mock webpages
+   Precision and Fact or Fiction have a reference button in the puzzle header (`LabPapers.tsx`,
+   mapping in `src/lib/handouts.ts`), labelled per challenge: "Source Printouts", "Prompting
+   Guide", "AI Fact Booklet" (the `button` field on each handout). Bad Data's seven source printouts render as text mock webpages
    from `content/handouts/bad-data-sources.json` (extracted from the "Fact or Fiction Print Outs"
    docx — which is actually the Bad Data sources). The AI Crash Course booklet and the Prompting
    Survival Guide are page images in `public/handouts/` with a screen-reader text version in
@@ -117,6 +118,8 @@ clues in puzzle order, not code order. Change the digits in
    removed entirely — it was a Replit-era shortcut to the puzzles. Progress shows in the lab itself
    (grey solved objects + hover tooltips; the locked keypad's tooltip lists what's missing).
    Lab tooltips are portalled (`ui/tooltip.tsx`) so they position against the page, not the scene.
+   Maze wording says Glitch "will try to remember/avoid" — never that it definitely will — so the
+   game doesn't suggest reinforcement learning guarantees a lesson sticks.
 
 ## Open decisions (need sign-off from Liz / project owner)
 

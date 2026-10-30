@@ -144,7 +144,7 @@ export default function P1ReinforcementMaze({ onSolved }: Props) {
 
   const handleStartOver = () => {
     setCoach(null);
-    returnToLab("Back at the Lab — I still remember your feedback. Press Start Run to try again!");
+    returnToLab("Back at the Lab — I'll try to remember your feedback. Press Start Run to try again!");
   };
 
   const handleFeedback = (label: "good" | "bad") => {
@@ -161,7 +161,7 @@ export default function P1ReinforcementMaze({ onSolved }: Props) {
     setCoach({
       right: rightCall,
       text: phase === "dead_end"
-        ? "Right — a dead end is always a bad move. Glitch will avoid it next time."
+        ? "Right — a dead end is always a bad move. Glitch will try to avoid it next time."
         : rightCall
           ? actuallyGood
             ? "Good call — that move got Glitch closer to the Bridge."
@@ -183,7 +183,7 @@ export default function P1ReinforcementMaze({ onSolved }: Props) {
         firstRunDoneRef.current = true;
         markP1FirstRunCompleted();
       }
-      returnToLab("Back to the Lab. I'll remember that dead end — press Start Run to try again!");
+      returnToLab("Back to the Lab. I will try to remember that next time — press Start Run to try again!");
       return;
     }
 
@@ -265,7 +265,7 @@ export default function P1ReinforcementMaze({ onSolved }: Props) {
             <span className="font-semibold text-rose-700">
               {calls.wrong} wrong call{calls.wrong === 1 ? "" : "s"}
             </span>
-            . Every 👍 and 👎 changed which way Glitch chose next time. That&apos;s{" "}
+            . Every 👍 and 👎 made Glitch more or less likely to choose that move again. That&apos;s{" "}
             <span className="font-semibold">reinforcement learning</span>: an
             AI improves through trial, error and feedback — and wrong feedback
             teaches it the wrong thing.

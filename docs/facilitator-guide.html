@@ -165,7 +165,7 @@ tr { break-inside: avoid; }
   <ol class="steps">
     <li><p><strong>Title screen.</strong> Students click the START button painted on the picture. Glitch tells a short story in four screens. They can read it or press <em>Skip intro</em>.</p></li>
     <li><p><strong>The lab.</strong> Glowing blue boxes mark the puzzles. Hovering over one shows its name. Grey boxes are solved and can't be opened again; hovering over one shows the puzzle name, "Solved" and its reward. The keypad by the door shows a padlock until it's ready.</p></li>
-    \1 Bad Data, Prompt Precision and Fact or Fiction also have a <strong>Lab Papers</strong> button with the reference handouts on screen, so printing them is optional.</p></li>
+    <li><p><strong>Puzzles.</strong> Every puzzle has a <strong>Hint</strong> button at the top right. It gives three hints, each more specific than the last. Encourage teams to try one hint before asking you. Bad Data, Prompt Precision and Fact or Fiction also have a reference button at the top (<strong>Source Printouts</strong>, <strong>Prompting Guide</strong> and <strong>AI Fact Booklet</strong>) with the handouts on screen, so printing them is optional.</p></li>
     <li><p><strong>Progress check.</strong> Solved objects in the lab turn grey; hovering over one shows its name and reward. Hovering over the locked keypad lists the puzzles that are still unsolved.</p></li>
     <li><p><strong>Escape.</strong> After the right code, the door opens and the end screen shows the team's time. The timer starts when they open their first puzzle, not at the title screen.</p></li>
   </ol>
@@ -182,13 +182,13 @@ tr { break-inside: avoid; }
       <dt>Teaches</dt><dd>Reinforcement learning: AI improves from feedback, and wrong feedback teaches it the wrong thing.</dd>
       <dt>Reward</dt><dd>A <strong>Blue</strong> digit</dd>
     </dl>
-    <div class="tip"><strong>Good to know:</strong> On the first run, Glitch's first move is always into a dead end, on purpose. At a dead end only 👎 works. Pressing it sends Glitch back to the Lab, and the team presses <em>Start Run</em> again. Glitch remembers every rating, so later runs avoid moves marked bad. Each rating gets a short ✓ or ✗ note explaining whether it was the right call. <em>Start Over</em> sends Glitch back to the Lab mid-run but keeps what it has learned.</div>
+    <div class="tip"><strong>Good to know:</strong> On the first run, Glitch's first move is always into a dead end, on purpose. At a dead end only 👎 works. Pressing it sends Glitch back to the Lab, and the team presses <em>Start Run</em> again. Glitch uses every rating to try to choose better on later runs. It can still sometimes try a move it was told was bad: feedback makes good choices more likely, not guaranteed. Each rating gets a short ✓ or ✗ note explaining whether it was the right call. <em>Start Over</em> sends Glitch back to the Lab mid-run but keeps its feedback so far.</div>
   </div>
 
   <div class="puzzle">
     <header><h3>Bad Data</h3><span class="where">In the lab: the papers on the front-left table</span></header>
     <dl class="kv">
-      <dt>Students</dt><dd>Read Glitch's silly report about a comet, then mark each of 7 sources as Credible or Not Credible. The seven sources are under the puzzle's <strong>Lab Papers</strong> button (and on the printouts, if you print them).</dd>
+      <dt>Students</dt><dd>Read Glitch's silly report about a comet, then mark each of 7 sources as Credible or Not Credible. The seven sources are under the puzzle's <strong>Source Printouts</strong> button (and on the printouts, if you print them).</dd>
       <dt>Teaches</dt><dd>AI is only as good as its sources. Even with good sources, check the answer yourself.</dd>
       <dt>Reward</dt><dd>A <strong>Red</strong> digit</dd>
     </dl>
@@ -198,7 +198,7 @@ tr { break-inside: avoid; }
   <div class="puzzle">
     <header><h3>Prompt Precision</h3><span class="where">In the lab: the computer screen on the right-hand desk</span></header>
     <dl class="kv">
-      \1 The <strong>Lab Papers</strong> button opens Glitch\'s Cosmic Survival Guide to Prompting AI.</dd>
+      <dt>Students</dt><dd>Build a prompt for the ship's computer by filling 6 slots: Persona, Context, Task, Constraints, Tone / Style and Output Format. Each slot has 5 cards to choose from. The <strong>Prompting Guide</strong> button opens Glitch's Cosmic Survival Guide to Prompting AI.</dd>
       <dt>Teaches</dt><dd>Clear, specific prompts get better results, and a person checks AI's work before acting on anything important.</dd>
       <dt>Reward</dt><dd>A <strong>Green</strong> digit</dd>
     </dl>
@@ -208,7 +208,7 @@ tr { break-inside: avoid; }
   <div class="puzzle">
     <header><h3>Fact or Fiction</h3><span class="where">In the lab: the open book on the middle desk</span></header>
     <dl class="kv">
-      \1 The <strong>Lab Papers</strong> button opens the AI Crash Course booklet.</dd>
+      <dt>Students</dt><dd>Sort 8 statements about AI into Fact or Fiction. Tap a statement, then tap <em>Place here</em> on a column (or drag it). The <strong>AI Fact Booklet</strong> button opens the AI Crash Course booklet.</dd>
       <dt>Teaches</dt><dd>What AI can and can't do: it can sound confident and be wrong, invent sources, and pick up bias from its data.</dd>
       <dt>Reward</dt><dd>A key (no digit). This is the 4th puzzle needed to switch on the keypad.</dd>
     </dl>

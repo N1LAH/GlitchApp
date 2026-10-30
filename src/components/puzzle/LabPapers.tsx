@@ -112,7 +112,7 @@ function HandoutBody({ handout }: { handout: Handout }) {
   );
 }
 
-/** "Lab Papers" button for a puzzle header: opens the puzzle's reference handouts. */
+/** Puzzle-header button that opens the puzzle's reference handout, labelled for that challenge. */
 export default function LabPapers({ ids, ringClass }: { ids: string[]; ringClass: string }) {
   const handouts = ids.map((id) => HANDOUTS[id]).filter(Boolean);
   const [active, setActive] = useState(0);
@@ -126,12 +126,12 @@ export default function LabPapers({ ids, ringClass }: { ids: string[]; ringClass
           className={`inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 ${ringClass}`}
         >
           <FileText className="h-4 w-4" />
-          Lab Papers
+          {handouts[0].button}
         </button>
       </DialogTrigger>
       <DialogContent className="flex h-[90vh] w-[calc(100%-1rem)] max-w-3xl flex-col gap-0 overflow-hidden rounded-2xl border-slate-200 bg-slate-50 p-0">
         <div className="border-b border-slate-200 bg-white px-5 py-4 pr-12">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Lab Papers</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">From around the lab</p>
           <DialogTitle className="font-display text-xl font-bold text-slate-900">{handout.title}</DialogTitle>
           <DialogDescription className="mt-1 text-sm text-slate-600">
             {handout.note ?? "Reference material from around the lab. Scroll to read; close this to get back to the puzzle."}
