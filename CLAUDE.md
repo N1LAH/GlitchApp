@@ -109,6 +109,8 @@ clues in puzzle order, not code order. Change the digits in
    Survival Guide are page images in `public/handouts/` with a screen-reader text version in
    `content/handouts/page-text.json` (the booklet's text was transcribed — its PDF has no text
    layer). The Prompting Cheatsheet is deliberately left out pending permission (WWT branding).
+   The Survival Guide images come from a corrected copy of the PDF (three dashes that the original
+   font rendered as "4" on pages 4 and 13 were replaced with en dashes).
 
 ## Open decisions (need sign-off from Liz / project owner)
 
