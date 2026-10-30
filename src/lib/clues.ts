@@ -1,7 +1,7 @@
 /**
  * Door-code clue scheme. Each digit puzzle awards a colored digit; the door
  * code is those digits entered in the order of this array (the color order
- * printed on the team handout). To change the code, edit the digits here
+ * shown on the lab wall above the keypad). To change the code, edit the digits here
  * (order matters) — the keypad, reward screens and /dev all follow.
  */
 export const CLUES: {

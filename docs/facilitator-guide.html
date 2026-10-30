@@ -143,7 +143,7 @@ tr { break-inside: avoid; }
   <ul>
     <li><strong>Four puzzles are open from the start</strong>, in any order: Feedback Maze, Bad Data, Prompt Precision and Fact or Fiction.</li>
     <li>Three of them give the team a <strong>colored digit</strong>. Fact or Fiction gives a key instead.</li>
-    <li>When all four are solved, the <strong>keypad by the door</strong> switches on. Teams enter their three digits in the <strong>color order printed on the handout</strong> to escape.</li>
+    <li>When all four are solved, the <strong>keypad by the door</strong> switches on. Teams enter their three digits in the <strong>color order posted on the wall above the keypad</strong> to escape.</li>
     <li>The end screen shows the team's <strong>total time</strong> and a short list of four habits for using AI.</li>
   </ul>
   <div class="warn"><strong>Every team has the same door code.</strong> It's in the answer key at the back. Keep those pages away from students, and keep an ear out for teams calling the code across the room.</div>
@@ -155,7 +155,7 @@ tr { break-inside: avoid; }
     <li><p><strong>Check the devices.</strong> Open <span class="mono">glitchapp.vercel.app</span> on each team's laptop or tablet. Chrome is the most tested browser. If you plan to use iPads or another browser, play a puzzle on one first.</p></li>
     <li><p><strong>Use a normal browser window, not a private or incognito one.</strong> The game saves progress in the browser. A private window loses everything when it's closed.</p></li>
     <li><p><strong>Reset every device right before students arrive.</strong> Open <span class="mono">glitchapp.vercel.app/new</span> on each one. Bookmarking that page makes this one click.</p></li>
-    <li><p><strong>Print the team handouts.</strong> Make sure they show the color order for the door code: <strong>Green, then Blue, then Red</strong>. Teams can't escape without it.</p></li>
+    <li><p><strong>Know the color order.</strong> A sign on the lab wall, just above the keypad, shows the order for the door code: <strong>Green, then Blue, then Red</strong>. Students find it themselves; point to it if a team is stuck.</p></li>
     <li><p><strong>Keep this guide handy</strong>, with the answer key at the back kept away from students.</p></li>
   </ol>
 </section>
@@ -164,7 +164,7 @@ tr { break-inside: avoid; }
   <h2>Running the session</h2>
   <ol class="steps">
     <li><p><strong>Title screen.</strong> Students click the START button painted on the picture. Glitch tells a short story in four screens. They can read it or press <em>Skip intro</em>.</p></li>
-    <li><p><strong>The lab.</strong> Glowing blue boxes mark the puzzles. Hovering over one shows its name. Grey boxes are solved; they can still be clicked to play again. The keypad by the door shows a padlock until it's ready.</p></li>
+    <li><p><strong>The lab.</strong> Glowing blue boxes mark the puzzles. Hovering over one shows its name. Grey boxes are solved and can't be opened again; hovering over one shows the puzzle name, "Solved" and its reward. The keypad by the door shows a padlock until it's ready.</p></li>
     <li><p><strong>Puzzles.</strong> Every puzzle has a <strong>Hint</strong> button at the top right. It gives three hints, each more specific than the last. Encourage teams to try one hint before asking you.</p></li>
     <li><p><strong>Progress check.</strong> The <strong>Mission Log</strong> button in the lab lists what each team has solved, the digits they've earned, and what's still locked.</p></li>
     <li><p><strong>Escape.</strong> After the right code, the door opens and the end screen shows the team's time. The timer starts when they open their first puzzle, not at the title screen.</p></li>
@@ -178,11 +178,11 @@ tr { break-inside: avoid; }
   <div class="puzzle">
     <header><h3>Feedback Maze</h3><span class="where">In the lab: the grid panel on the right-hand wall</span></header>
     <dl class="kv">
-      <dt>Students</dt><dd>Help Glitch get from the Lab to the Bridge (marked 🏁 Goal on the map). At each turn Glitch suggests a move and a yellow circle shows where it wants to go. Students press 👍 Good move or 👎 Bad move.</dd>
+      <dt>Students</dt><dd>Help Glitch get from the Lab to the Bridge (marked 🏁 Goal on the map). Students press <em>Start Run</em>. Glitch makes a move on its own, then students press 👍 Good move or 👎 Bad move to rate it.</dd>
       <dt>Teaches</dt><dd>Reinforcement learning: AI improves from feedback, and wrong feedback teaches it the wrong thing.</dd>
       <dt>Reward</dt><dd>A <strong>Blue</strong> digit</dd>
     </dl>
-    <div class="tip"><strong>Good to know:</strong> Glitch's very first suggestion is always a dead end, on purpose. A thumbs-down there is the right call. Each answer gets a short ✓ or ✗ note explaining why. Teams can't get permanently stuck: if they approve a dead end, Glitch backs out and tries again. <em>Start Over</em> sends Glitch back to the Lab but keeps what it has learned.</div>
+    <div class="tip"><strong>Good to know:</strong> On the first run, Glitch's first move is always into a dead end, on purpose. At a dead end only 👎 works. Pressing it sends Glitch back to the Lab, and the team presses <em>Start Run</em> again. Glitch remembers every rating, so later runs avoid moves marked bad. Each rating gets a short ✓ or ✗ note explaining whether it was the right call. <em>Start Over</em> sends Glitch back to the Lab mid-run but keeps what it has learned.</div>
   </div>
 
   <div class="puzzle">
@@ -218,11 +218,11 @@ tr { break-inside: avoid; }
   <div class="puzzle">
     <header><h3>Final Console (the keypad)</h3><span class="where">In the lab: the small panel beside the door on the left</span></header>
     <dl class="kv">
-      <dt>Students</dt><dd>Enter their three colored digits in the order on the handout.</dd>
+      <dt>Students</dt><dd>Enter their three colored digits in the color order shown on the sign above the keypad in the lab.</dd>
       <dt>Unlocks</dt><dd>Only after all four other puzzles are solved.</dd>
     </dl>
     <div class="chips"><span class="chip"><i class="g"></i>Green first</span><span class="chip"><i class="b"></i>Blue second</span><span class="chip"><i class="r"></i>Red third</span></div>
-    <div class="tip"><strong>Good to know:</strong> The keypad lists the clues in puzzle order (Blue, Red, Green), not in code order, so students need the handout. After <strong>3 wrong codes</strong> the keypad cools down for 30 seconds. Watch out: each puzzle's <em>screen</em> color is not its <em>clue</em> color. The maze screen is purple but its digit is Blue, and Prompt Precision's screen is blue but its digit is Green. Point students to the colored circle on the reward screen.</div>
+    <div class="tip"><strong>Good to know:</strong> The keypad lists the clues in puzzle order (Blue, Red, Green), not in code order, so students need to look at the sign above the keypad in the lab. After <strong>3 wrong codes</strong> the keypad cools down for 30 seconds. Watch out: each puzzle's <em>screen</em> color is not its <em>clue</em> color. The maze screen is purple but its digit is Blue, and Prompt Precision's screen is blue but its digit is Green. Point students to the colored circle on the reward screen.</div>
   </div>
 </section>
 
@@ -232,7 +232,7 @@ tr { break-inside: avoid; }
     <thead><tr><th>What you see</th><th>What to do</th></tr></thead>
     <tbody>
       <tr><td>The keypad has a padlock or says it's still locked</td><td>All four other puzzles must be solved first. Open the <strong>Mission Log</strong> from the lab to see which one is missing.</td></tr>
-      <tr><td>"Keypad cooling down… 30s"</td><td>The team entered 3 wrong codes. Wait 30 seconds. Meanwhile, check the handout's color order and the digits shown on the keypad.</td></tr>
+      <tr><td>"Keypad cooling down… 30s"</td><td>The team entered 3 wrong codes. Wait 30 seconds. Meanwhile, check the color order on the sign above the keypad in the lab and the digits shown on the keypad.</td></tr>
       <tr><td>The code doesn't work</td><td>Usually the digits are in the wrong order. It's Green, then Blue, then Red. Hovering over a solved object in the lab shows the digit it gave. The full code is in the answer key.</td></tr>
       <tr><td>A team's progress disappeared</td><td>Progress lives in that one browser on that one device. It's lost if they switched devices or browsers, used a private window, or the game was more than 12 hours old. You can give back solved puzzles from <span class="mono">/dev</span> on that device (see below).</td></tr>
       <tr><td>A new group sits down at a used device</td><td>Open <span class="mono">glitchapp.vercel.app/new</span>. Students can't reset a game mid-way on purpose, so one student can't wipe the team's work.</td></tr>
@@ -241,7 +241,7 @@ tr { break-inside: avoid; }
       <tr><td>The screen looks old or odd after an update</td><td>Refresh the page. Progress is kept.</td></tr>
       <tr><td>A team is stuck on a puzzle</td><td>Point them to the <strong>Hint</strong> button first; the third hint is very direct. Then use the answer key to give a nudge, not the answer.</td></tr>
       <tr><td>A team runs out of time</td><td>On their device, open <span class="mono">/dev</span> and press <em>mark solved</em> next to the puzzle they're on. They can then finish the keypad.</td></tr>
-      <tr><td>A student wants to replay a puzzle</td><td>Click its grey box in the lab, or use <em>Play again</em> in the Mission Log. Replaying doesn't change their digits.</td></tr>
+      <tr><td>A student wants to replay a puzzle</td><td>Solved objects in the lab can't be reopened. The <strong>Mission Log</strong> still has a <em>Play again</em> button for solved puzzles. Replaying doesn't change their digits.</td></tr>
     </tbody>
   </table>
 
@@ -332,7 +332,7 @@ tr { break-inside: avoid; }
   <h3 style="margin-top:14pt">Feedback Maze</h3>
   <p>Shortest route to the Bridge:</p>
   <p class="route">Lab → Medical → Crew Quarters → Rec Room → Gym → Cafe → Bridge</p>
-  <p>Give 👍 to any move along this route and 👎 to anything else, including Glitch's first suggestion (up, into a dead end). Some short stretches have only one way to go, so Glitch moves on without asking.</p>
+  <p>After each move, give 👍 if Glitch moved along this route and 👎 if it didn't. On the first run, Glitch's first move goes up into a dead end; only 👎 works there, and Glitch returns to the Lab for a new run. Some short stretches have only one way to go, so Glitch moves on without asking.</p>
 
   <h3 style="margin-top:14pt">Bad Data</h3>
   <div class="two">

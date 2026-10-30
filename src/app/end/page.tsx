@@ -77,14 +77,11 @@ export default function EndPage() {
           </div>
           <div className="rounded-[24px] border border-slate-200 bg-slate-50/80 p-6 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Door Code</p>
-            <div className="mt-3 flex justify-center gap-2">
+            <div className="mt-2 flex justify-center gap-4">
               {clues.map((c) => (
-                <span
-                  key={c.puzzleId}
-                  className={`flex h-12 w-12 items-center justify-center rounded-full ${c.swatch} font-display text-2xl font-bold text-white shadow`}
-                  title={c.color}
-                >
-                  {c.digit}
+                <span key={c.puzzleId} className={`flex flex-col items-center font-display font-bold ${c.text}`}>
+                  <span className="text-4xl">{c.digit}</span>
+                  <span className="text-xs uppercase tracking-[0.15em]">{c.color}</span>
                 </span>
               ))}
             </div>

@@ -24,7 +24,7 @@ export interface HotspotProps {
   height?: number;
   /**
    * available — clickable, transparent blue glow.
-   * solved    — transparent grey; tooltip shows the reward; still clickable to replay.
+   * solved    — not clickable, transparent grey; tooltip shows name, "Solved" and the reward.
    * inactive  — not clickable (keypad before the other puzzles), lock badge.
    */
   state?: HotspotState;
@@ -44,7 +44,7 @@ const Hotspot: React.FC<HotspotProps> = ({
   tooltip,
   onActivate,
 }) => {
-  const clickable = state !== "inactive";
+  const clickable = state === "available";
 
   const activate = () => {
     if (clickable) onActivate?.();
@@ -59,7 +59,7 @@ const Hotspot: React.FC<HotspotProps> = ({
 
   const frameTone =
     state === "solved"
-      ? "border-slate-300/60 bg-slate-500/25 cursor-pointer"
+      ? "border-slate-300/60 bg-slate-500/40 cursor-default"
       : state === "inactive"
         ? "border-slate-300/40 bg-slate-400/10 cursor-not-allowed"
         : "border-sky-300/90 bg-sky-400/10 shadow-[0_0_18px_rgba(56,189,248,0.55)] animate-pulse cursor-pointer";

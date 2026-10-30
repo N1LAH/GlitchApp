@@ -28,8 +28,8 @@ const puzzleShellConfig: Record<
     conceptTitle: "Feedback helps AI improve",
     conceptBody: "Glitch learned by trying moves and getting your feedback, so good feedback taught it good habits. Chat apps can learn from feedback over time too, but a thumbs-up doesn't change the AI in the middle of your conversation. To get a better answer right now, follow up and refine your prompt.",
     hints: [
-      "The Bridge is marked with a 🏁 flag at the top left. Before you answer, look at the glowing circle: does that move bring Glitch closer to the flag?",
-      "Short paths that stop at a wall are dead ends. Give a 👎 to any move into one, and to moves that head away from the Bridge.",
+      "The Bridge is marked with a 🏁 flag at the top left. After each move, ask: did that bring Glitch closer to the flag?",
+      "Short paths that stop at a wall are dead ends. Moves into a dead end, or away from the Bridge, are bad moves.",
       "The shortest route is Lab → Medical → Crew Quarters → Rec Room → Gym → Cafe → Bridge.",
     ],
   },
@@ -73,7 +73,7 @@ const puzzleShellConfig: Record<
     conceptBody: "The door code is hidden in puzzle clues. Use what you learned to find the final sequence and unlock the lab.",
     hints: [
       "Each digit puzzle gave you a colored digit. They're listed on the keypad as you earn them.",
-      "Your team handout shows the color order. Enter the digits in that order.",
+      "In the lab, the wall above the keypad shows the color order. Enter the digits in that order.",
       "Still stuck? Ask your facilitator to check your color order.",
     ],
   },
@@ -127,16 +127,10 @@ export default function PuzzlePage({ params }: { params: { id: string } }) {
                 Your reward is
               </p>
               {clue ? (
-                <div className="flex items-center justify-center gap-3">
-                  <span
-                    className={`flex h-20 w-20 items-center justify-center rounded-full ${clue.swatch} font-display text-5xl font-bold text-white shadow-lg`}
-                  >
-                    {clue.digit}
-                  </span>
-                  <span className={`font-display text-2xl font-bold ${clue.text}`}>
-                    {clue.color} {clue.digit}
-                  </span>
-                </div>
+                <p className={`font-display font-bold ${clue.text}`}>
+                  <span className="text-3xl">{clue.color}</span>{" "}
+                  <span className="text-6xl">{clue.digit}</span>
+                </p>
               ) : (
                 <p className="font-display text-3xl font-bold text-emerald-700">
                   🔑 Keypad key collected
@@ -144,7 +138,7 @@ export default function PuzzlePage({ params }: { params: { id: string } }) {
               )}
               <p className="text-sm text-slate-500">
                 {clue
-                  ? "Remember the color: your handout shows where it goes in the door code."
+                  ? "Remember the color: the wall above the keypad shows where it goes in the door code."
                   : unmetDeps("p5-final-console", solved).length === 0
                     ? "The keypad next to the door is now active. Time to crack the code!"
                     : "One step closer! The keypad by the door switches on once all four puzzles are solved."}

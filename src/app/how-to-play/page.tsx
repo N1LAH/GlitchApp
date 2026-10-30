@@ -7,7 +7,7 @@ const PUZZLE_GUIDE: { icon: string; name: string; how: string }[] = [
   {
     icon: "🧭",
     name: "Feedback Maze",
-    how: "Glitch suggests each move. Give it a 👍 or 👎 to train it to find the Bridge. Earns a colored digit.",
+    how: "Glitch makes a move, then you tell it whether that was a good or bad move. Your feedback trains it to find the Bridge. Earns a colored digit.",
   },
   {
     icon: "🧠",
@@ -22,12 +22,12 @@ const PUZZLE_GUIDE: { icon: string; name: string; how: string }[] = [
   {
     icon: "✅",
     name: "Fact or Fiction",
-    how: "Sort each statement about AI into Fact or Fiction. Earns the key that helps switch on the keypad.",
+    how: "Sort each statement about AI into Fact or Fiction. Activates the keypad.",
   },
   {
     icon: "🔐",
     name: "Final Console",
-    how: "Switches on once the other four puzzles are solved. Enter your three colored digits in the color order on your handout.",
+    how: "Switches on once the other four puzzles are solved. Enter your three colored digits in the color order shown on the wall above the keypad.",
   },
 ];
 
@@ -37,9 +37,17 @@ export default function HowToPlayPage() {
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(31,75,71,0.08),_transparent_30%),linear-gradient(135deg,_#fefcf6_0%,_#f8fafc_100%)] px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl rounded-[32px] border border-slate-200 bg-white/90 p-6 shadow-sm sm:p-8">
-        <h1 className="font-display text-3xl font-bold text-slate-900">
-          How to Play
-        </h1>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="font-display text-3xl font-bold text-slate-900">
+            How to Play
+          </h1>
+          <Button
+            onClick={() => router.push("/")}
+            className="rounded-full bg-glitch-teal text-white hover:bg-glitch-teal/90"
+          >
+            Back to Lab
+          </Button>
+        </div>
 
         <div className="mt-4 rounded-2xl border-l-4 border-glitch-teal bg-glitch-cream/70 p-4">
           <h2 className="font-display text-lg font-bold text-slate-800">
@@ -49,7 +57,6 @@ export default function HowToPlayPage() {
             You&apos;re locked in an AI research lab with Glitch, a glitchy lab
             AI. Solve four AI puzzles: three give you a colored digit and one
             gives you a key. Then enter the door code on the keypad to escape.
-            Check your team handout for clues, including the color order.
           </p>
         </div>
 
@@ -74,7 +81,8 @@ export default function HowToPlayPage() {
             </li>
             <li>
               <strong className="text-slate-800">Escape:</strong> enter your
-              three colored digits in the color order shown on your handout.
+              three colored digits in the color order shown on the wall above
+              the keypad.
             </li>
             <li>
               <strong className="text-slate-800">Stuck?</strong> every puzzle

@@ -5,7 +5,7 @@ import Hotspot, { type HotspotState } from "@/components/hotspot";
 import GlitchSpeech from "@/components/GlitchSpeech";
 import { useProgress } from "@/store/progress";
 import { byId, allPuzzles, titleList, unmetDeps } from "@/lib/puzzles";
-import { clueFor } from "@/lib/clues";
+import { CLUES, clueFor } from "@/lib/clues";
 import { useRouter } from "next/navigation";
 
 /**
@@ -30,7 +30,7 @@ const OBJECTS: {
   { id: "hs-keypad", puzzleId: "p5-final-console", x: 13.5, y: 43.5, width: 4.5, height: 10 },
 ];
 
-/** Tooltip for a solved puzzle: the reward it granted (color matters!). */
+/** Tooltip for a solved puzzle: its name, "Solved", and the reward it granted (color matters!). */
 function solvedTooltip(puzzleId: string) {
   const clue = clueFor(puzzleId);
   const reward = clue ? (
@@ -38,15 +38,17 @@ function solvedTooltip(puzzleId: string) {
       {clue.color} {clue.digit}
     </span>
   ) : puzzleId === "p4-fact-fiction" ? (
-    "🔑 keypad key collected"
+    "Keypad activated"
   ) : (
-    "🚪 door unlocked!"
+    "Door unlocked"
   );
   return (
     <span>
-      <strong>{byId(puzzleId)?.title}</strong>: {reward}
+      <strong>{byId(puzzleId)?.title}</strong>
       <br />
-      <span className="text-xs text-slate-500">Solved. Click to play it again.</span>
+      <span className="text-slate-500">Solved</span>
+      <br />
+      Reward: {reward}
     </span>
   );
 }
@@ -110,7 +112,7 @@ export default function Home() {
     : solvedCount === 0
       ? "Something scrambled my circuits and locked us in! Click the glowing objects around the lab to help me relearn how AI works."
       : solvedCount >= 4
-        ? "All my systems are back online! The keypad next to the door is active. Check your handout for the color order and enter the code to get us out."
+        ? "All my systems are back online! The keypad next to the door is active. The wall above it shows the color order — enter the code to get us out."
         : `That's ${solvedCount} of my systems back online. Keep investigating the lab!`;
 
   return (
@@ -151,7 +153,10 @@ export default function Home() {
         </div>
 
         {/* Fixed-aspect scene so hotspot percentages always match the artwork */}
-        <div className="relative mx-auto aspect-[3/2] w-full max-w-[max(36rem,calc((100vh_-_15rem)_*_1.5))] overflow-hidden rounded-[28px] border-8 border-glitch-teal-deep shadow-2xl">
+        <div
+          className="relative mx-auto aspect-[3/2] w-full max-w-[max(36rem,calc((100vh_-_15rem)_*_1.5))] overflow-hidden rounded-[28px] border-8 border-glitch-teal-deep shadow-2xl"
+          style={{ containerType: "inline-size" }}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/images/lab-bg.webp"
@@ -159,6 +164,20 @@ export default function Home() {
             className="absolute inset-0 h-full w-full select-none object-cover"
             draggable={false}
           />
+
+          {/* Door-code color order, posted on the wall above the keypad. Sized in
+              container units so it scales with the artwork. */}
+          <div
+            className="pointer-events-none absolute flex -translate-x-1/2 flex-col items-center gap-[0.25cqw] rounded-[0.6cqw] border-[0.25cqw] border-slate-800 bg-amber-50 px-[0.7cqw] py-[0.45cqw] font-display font-bold leading-none shadow-md"
+            style={{ left: "13.5%", top: "25%" }}
+            aria-label={`Door code color order: ${CLUES.map((c) => c.color).join(", ")}`}
+          >
+            {CLUES.map((c) => (
+              <span key={c.color} className={`text-[1.25cqw] uppercase tracking-[0.06em] ${c.text}`}>
+                {c.color}
+              </span>
+            ))}
+          </div>
 
           {OBJECTS.map((o) => {
             const state = stateFor(o.puzzleId);
