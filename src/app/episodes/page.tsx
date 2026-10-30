@@ -101,14 +101,16 @@ export default function EpisodesPage() {
                     {status === "locked" && deps.length > 0 && (
                       <span className="text-sm text-slate-500">Solve {titleList(deps)} first</span>
                     )}
-                    <Button
-                      size="sm"
-                      onClick={() => router.push(`/puzzles/${puzzle.id}`)}
-                      disabled={status === "locked"}
-                      className={status === "locked" ? "cursor-not-allowed opacity-50" : "rounded-full bg-glitch-teal text-white hover:bg-glitch-teal/90"}
-                    >
-                      {status === "solved" ? "Play again" : "Start"}
-                    </Button>
+                    {status !== "solved" && (
+                      <Button
+                        size="sm"
+                        onClick={() => router.push(`/puzzles/${puzzle.id}`)}
+                        disabled={status === "locked"}
+                        className={status === "locked" ? "cursor-not-allowed opacity-50" : "rounded-full bg-glitch-teal text-white hover:bg-glitch-teal/90"}
+                      >
+                        Start
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
