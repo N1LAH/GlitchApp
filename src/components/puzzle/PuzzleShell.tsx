@@ -3,6 +3,7 @@
 import { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, HelpCircle } from "lucide-react";
+import LabPapers from "@/components/puzzle/LabPapers";
 import {
   Dialog,
   DialogContent,
@@ -66,6 +67,7 @@ export default function PuzzleShell({
   title,
   icon,
   hints = [],
+  papers = [],
   children,
 }: {
   theme: PuzzleTheme;
@@ -73,6 +75,8 @@ export default function PuzzleShell({
   icon: ReactNode;
   /** Puzzle-specific hints, revealed one at a time from gentlest to most direct. */
   hints?: string[];
+  /** Handout ids (see lib/handouts.ts) shown under this puzzle's Lab Papers button. */
+  papers?: string[];
   children: ReactNode;
 }) {
   const router = useRouter();
@@ -82,7 +86,7 @@ export default function PuzzleShell({
   return (
     <div className={`min-h-screen w-full bg-gradient-to-br ${t.bg} p-2 sm:p-4`}>
       <div className="mx-auto max-w-4xl rounded-3xl bg-white p-4 sm:p-6 shadow-xl">
-        <div className="mb-4 flex items-center justify-between gap-4">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <span
               className={`flex h-12 w-12 items-center justify-center rounded-2xl text-2xl text-white ${t.chip}`}
@@ -93,7 +97,7 @@ export default function PuzzleShell({
               {title}
             </h1>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-end gap-3">
             <span
               className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-600 shadow-md"
               title="Glitch, your AI friend"
@@ -106,6 +110,7 @@ export default function PuzzleShell({
                 style={{ imageRendering: "pixelated" }}
               />
             </span>
+            <LabPapers ids={papers} ringClass={t.ring} />
             <Dialog>
               <DialogTrigger asChild>
                 <button

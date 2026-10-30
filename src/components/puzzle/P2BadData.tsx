@@ -164,8 +164,9 @@ export default function P2BadData({ onSolved }: Props) {
         </h2>
         
         <p className="text-slate-600 text-sm">
-          Look over the printouts of each source. For each one, decide whether
-          it is Credible or Not Credible.
+          Read each source under <strong>Lab Papers</strong> at the top of the
+          screen (or on your printouts). For each one, decide whether it is
+          Credible or Not Credible.
         </p>
 
         {incorrectCount !== null && incorrectCount > 0 && (

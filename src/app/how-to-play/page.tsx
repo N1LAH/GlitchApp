@@ -85,6 +85,11 @@ export default function HowToPlayPage() {
               the keypad.
             </li>
             <li>
+              <strong className="text-slate-800">Lab Papers:</strong> Bad Data,
+              Prompt Precision and Fact or Fiction have a Lab Papers button at
+              the top with reference papers that help you solve them.
+            </li>
+            <li>
               <strong className="text-slate-800">Stuck?</strong> every puzzle
               has a Hint button with hints that get more specific each time.
             </li>

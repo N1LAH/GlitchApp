@@ -1,0 +1,749 @@
+[
+ {
+  "id": 1,
+  "name": "CosmicFrontier.org",
+  "url": "https://www.cosmicfrontier.org/2025/comet-r2-banana-mystery",
+  "paras": [
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "COSMIC FRONTIER"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Breaking Science for the Curious"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Banana Mystery: Comet C/2025 R2 (SWAN) Emits 'Fruity' Signature"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "By Zoe Raines • October 9, 2025 • Opinion"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "A wave of amateur observations suggests the newly spotted comet C/2025 R2 (SWAN) is emitting a chemical signature some listeners describe as 'fruity' — sparking excitement (and skepticism) across social feeds."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Late-night backyard astronomers from several online communities posted spectra and low-resolution photos showing a slight greenish tint to the comet's coma. Several contributors analyzed the light and claim it matches compounds commonly associated with plant-derived organic matter — humorously labeled by forum users as a 'banana signature.'"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "What supporters say"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "\"We saw consistent emission lines near 525 nm in multiple backyard spectrographs,\" says a forum poster. \"It looks like chlorophyll-ish fluorescence.\""
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "While the images and community analyses are intriguing, mainstream observatories have not yet corroborated the claim. Specialists caution that low-signal noise and camera color balance can produce misleading results. Still, the online chatter has inspired new amateur observing campaigns planning coordinated pre-dawn watches mid-October."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Why it matters: If confirmed, unusual organic signatures on a comet could inform theories about how complex compounds are distributed through the solar system — but extraordinary claims require extraordinary evidence."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Source type: Opinion / Community-sourced reporting. This article summarizes unverified community observations.",
+      "italic": true
+     },
+     {
+      "text": "\nRead more: https://www.cosmicfrontier.org/2025/comet-r2-banana-mystery\nContact: editorial@cosmicfrontier.org"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "name": "NASA Astrophysics Data System (ADS)",
+  "url": "https://ui.ads.nasa.gov/paper/2025R2-SWAN-Tracking-Report",
+  "paras": [
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "C/2025 R2 (SWAN): Preliminary Orbital and Luminosity Analysis"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Authors: J. K. Morales, L. Zhang, S. Patel"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Journal: Astrophysical Data Reports — Submitted Oct 2025; Peer Reviewed"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "DOI: 10.5555/ads.2025.c2025r2"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Abstract"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "We present an initial analysis of observational data collected for Comet C/2025 R2 (SWAN). Photometric and spectroscopic measurements obtained from the Solar Heliospheric Network and multiple ground-based observatories indicate orbital elements consistent with a long-period comet. Spectral analysis shows typical cometary emission lines (CN, C2) and ion tail behavior. No volatile organic compounds indicative of chlorophyll or plant-based molecules were detected above instrument thresholds. Observational cadence and signal-to-noise ratios are discussed; recommendations for follow-up high-resolution spectroscopy are provided."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Notes:",
+      "bold": true
+     },
+     {
+      "text": " Preliminary results; data available via ADS repository. Instrumentation: SHN array, 1.2m ground telescopes."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Access full record: https://ui.ads.nasa.gov/paper/2025R2-SWAN-Tracking-Report"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Contact: jk.morales@nasa.gov"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "name": "The AstroTech Tribune",
+  "url": "https://astrotech-tribune.com/news/comet-swan-alien-signal",
+  "paras": [
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "THE ASTROTECH TRIBUNE"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Technology • Science • Exploration"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Alien Signal or Solar Static? Comet SWAN Sparks Speculation"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "By Mara Ellison | October 8, 2025 | Spacefront Feature"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "For decades, scientists have wondered if the cosmos could carry a message. Now, a group of amateur astronomers say they’ve detected rhythmic bursts from Comet C/2025 R2 (SWAN) — a celestial visitor currently slicing across the outer solar system. The group claims the signals resemble repeating binary patterns, leading some to nickname it 'The Singing Comet.'"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "“It’s probably just solar wind interference,” admits Dr. Imelda Chen of the Skywatch Observatory, “but it’s still fascinating how the data seems to hum with rhythm.”",
+      "italic": true
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "The supposed signal was first logged through home-built radio arrays connected to open-source decoding software. Spectrograms posted to social platforms quickly went viral, amassing hundreds of thousands of views overnight. Experts warn that the ‘pattern’ could easily result from a combination of signal noise and digital compression artifacts."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Despite that caution, the story has captured the public’s imagination. The AstroTech Tribune’s data team attempted to replicate the findings using publicly available datasets, but found no consistent evidence of non-random emissions from the comet’s direction. Still, one contributor described the exercise as 'a good reminder of how quickly curiosity becomes certainty online.'"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "FAST FACTS"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "• Object: Comet C/2025 R2 (SWAN)\n• Discovered: August 2025\n• Orbital period: ~12,000 years\n• Apparent magnitude (Oct 2025): 8.1\n• Claimed signal type: Repeating binary burst (unverified)"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "For now, scientists remain skeptical. Until independent observatories confirm the detection, the so-called 'alien signal' remains a digital echo — more myth than message.\n\n"
+     },
+     {
+      "text": "Disclaimer: Verification pending. The AstroTech Tribune encourages critical evaluation of early-stage findings.",
+      "italic": true
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "© 2025 The AstroTech Tribune — Your Source for Space Innovation | Contact: tips@astrotech-tribune.com"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "name": "European Space Agency (ESA)",
+  "url": "https://www.esa.int/Science_Exploration/Comet_C2025R2_SWAN_Update",
+  "paras": [
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "EUROPEAN SPACE AGENCY (ESA)"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Science & Exploration Directorate — Press Release"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "ESA Confirms Ongoing Tracking of Comet C/2025 R2 (SWAN)"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Date: 9 October 2025 | Location: Paris, France"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "The European Space Agency’s Cometary Research Division has confirmed that observations of Comet C/2025 R2 (SWAN) continue using both space-based and ground-based instruments. The comet was first detected in late August 2025 by the SWAN camera aboard the SOHO spacecraft. Recent imaging shows a stable coma and a developing ion tail directed away from the Sun."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Spectral data collected as of October 8 indicate normal water and cyanogen emissions typical of this class of comet. No anomalous spectral features or organic molecular lines have been detected. The ESA Science Team emphasizes that online reports suggesting biological or 'fruit-like' compounds are unsupported by current evidence."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Comet C/2025 R2 (SWAN) is expected to reach peak visibility for Northern Hemisphere observers during mid-October, appearing just before dawn. ESA and partner agencies will continue to monitor its trajectory and compositional profile over the coming weeks."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "“It’s an exciting object, but everything we see so far suggests a normal comet,” said Dr. Elise Moreau, lead spectroscopist at ESA. “Public engagement is wonderful, yet we remind everyone that extraordinary claims require rigorous verification.”",
+      "italic": true
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Press Contact:",
+      "bold": true
+     },
+     {
+      "text": " media@esa.int | Tel: +33 1 53 69 76 54"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Reference ID: ESA-COM-2025-10-09-R2"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "© 2025 European Space Agency. All rights reserved."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "name": "Galactic Frequency Podcast",
+  "url": "https://galacticfrequencypod.com/episodes/banana-comet-buzz",
+  "paras": [
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "GALACTIC FREQUENCY PODCAST"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Episode 214 — “Banana Comet Buzz”"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Hosts: Zeke Orion & Nova Vega | Air Date: October 7, 2025"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Show Notes"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "This week, Zeke and Nova dive into one of the wildest viral astronomy stories of the year: the so‑called “Banana Comet.” From social media memes to speculative science threads, Comet C/2025 R2 (SWAN) has everyone asking—does space have snacks? 🍌"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Transcript Excerpt (00:12:33)"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "ZEKE: Okay, so apparently amateur astronomers found chlorophyll in a comet? Like, come on. That sounds like space salad.\n\nNOVA: Right? But people are posting screenshots of spectra saying there’s a 'banana‑like signal.' Which, you know, totally checks out if you’ve ever tried to calibrate your camera under a streetlight.\n\nZEKE: [laughs] Maybe the aliens are just hungry.\n\nNOVA: Or maybe—just maybe—it’s all... noise."
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Listener Comments (Selected)"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "• user_cosmic_bard: “If it glows green, it’s gotta be bananas.”\n• stargazer_89: “This is how conspiracy theories start.”\n• DrCometWatch: “No peer‑reviewed confirmation. Fun story though.”"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Join us next week when we talk about space junk art installations and why one of them might still be orbiting Mars."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Disclaimer: The Galactic Frequency Podcast is an entertainment program. Views expressed are personal opinions and not verified scientific claims."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "© 2025 Galactic Frequency Media | Contact: hello@galacticfrequencypod.com | #StayTuned"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": 6,
+  "name": "Journal of Geophysical Research",
+  "url": "https://journals.geophys-research.org/article/10.1025/jgr.swans.2025r2",
+  "paras": [
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "JOURNAL OF GEOPHYSICAL RESEARCH"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Space Physics Section — Peer‑Reviewed Article"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Solar Wind Interactions with Comet C/2025 R2 (SWAN)"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Authors: Dr. R. Singh, Dr. E. Paredes, Dr. M. Laurent"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Accepted: October 3, 2025 | Published Online: October 6, 2025"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "DOI: 10.1025/jgr.swans.2025r2"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Abstract"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "We report results from coordinated ground‑ and space‑based observations of Comet C/2025 R2 (SWAN). Solar wind interaction signatures were captured using the ESA/NASA SOHO spacecraft and follow‑up tracking from terrestrial observatories. Spectral data show the presence of CN and C2 molecular bands consistent with typical cometary outgassing. Ion tail morphology corresponds with variations in solar wind velocity and magnetic field orientation."
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Methods"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Data were acquired using narrow‑band filters and long‑slit spectroscopy across multiple nights in September 2025. Solar wind parameters were retrieved from the ACE spacecraft data archive. Spectral calibration employed reference lamps and sky‑flat correction. Analytical modeling followed the method described by Kramer et al. (2023)."
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Results"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "The observed ion tail exhibited temporal variability aligned with solar wind velocity changes of 420–510 km/s. No anomalous organic compounds or chlorophyll‑like spectral features were detected. Emission ratios of CN/C2 and C2/C3 fall within expected ranges for long‑period comets. These results confirm the object’s ordinary compositional profile and refute speculative claims of biological signatures."
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Discussion and Conclusion"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Our findings support standard models of solar wind–comet interaction. Fluctuations in the comet’s brightness are attributed to nucleus rotation and solar activity rather than exogenic chemical emissions. Future monitoring through perihelion will refine coma density estimates and improve modeling of charge‑exchange dynamics."
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "References"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Kramer, L. J., Chen, A., & Havel, S. (2023). Modeling solar wind effects on cometary tails. *J. Geophys. Res.*, 128(9), 2140‑2154.\nESA/NASA SOHO Data Archive. (2025). Solar Heliospheric Observatory Comet Tracking Dataset.\nSingh, R. et al. (2025). Ground‑based spectral analysis of C/2025 R2 (SWAN). *Astrophys. Data Reports.*"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "© 2025 American Geophysical Union. Distributed under CC BY‑NC 4.0 License."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": 7,
+  "name": "Dr. Annie Jump Cannon Archive",
+  "url": "https://cannon-archive.org/astronomers/annie-jump-cannon",
+  "paras": [
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "DR. ANNIE JUMP CANNON ARCHIVE"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Maintained by the AstroHistory Foundation — Digital Astronomical Heritage Collection"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Dr. Annie Jump Cannon (1863–1941) — Pioneer of Stellar Classification"
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Overview"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Annie Jump Cannon was an American astronomer whose work at the Harvard College Observatory led to the development of the stellar classification system still in use today. Her method organized stars by temperature and spectral characteristics, forming the O‑B‑A‑F‑G‑K‑M sequence that became the foundation of modern astrophysics."
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Biography"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Born in Dover, Delaware, Cannon earned her physics degree from Wellesley College and later joined the Harvard College Observatory. She cataloged over 350,000 stars and was one of the first women to receive an honorary doctorate from the University of Groningen. Her precision and persistence helped standardize astronomical data classification, paving the way for computational and AI‑assisted cataloging in later centuries."
+     }
+    ]
+   },
+   {
+    "bold": true,
+    "runs": [
+     {
+      "text": "Relevance to Modern Research"
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Cannon’s classification principles directly influence present‑day spectral analysis algorithms. Modern AI systems used in comet and exoplanet studies apply pattern recognition rooted in her techniques. For instance, the spectral parsing methods used to analyze Comet C/2025 R2 (SWAN) rely on the same OBAFGKM model to identify elemental signatures in emitted light."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Citation:",
+      "bold": true
+     },
+     {
+      "text": " AstroHistory Foundation. (2025). Annie Jump Cannon Digital Archive. Retrieved October 9, 2025."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "Contact:",
+      "bold": true
+     },
+     {
+      "text": " info@astrohistory.org | © 2025 AstroHistory Foundation. All rights reserved."
+     }
+    ]
+   },
+   {
+    "bold": false,
+    "runs": [
+     {
+      "text": "License: Creative Commons CC BY‑NC 4.0 — Educational and Non‑Commercial Use Permitted"
+     }
+    ]
+   }
+  ]
+ }
+]

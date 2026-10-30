@@ -15,6 +15,7 @@ import P3PromptAssembly from "@/components/puzzle/P3PromptAssembly";
 import P4FactFiction from "@/components/puzzle/P4FactFiction";
 import P5FinalConsole from "@/components/puzzle/P5FinalConsole";
 import { clueFor } from "@/lib/clues";
+import { PAPERS_BY_PUZZLE } from "@/lib/handouts";
 import PuzzleShell, { ConceptCallout, type PuzzleTheme } from "@/components/puzzle/PuzzleShell";
 import { devToolsEnabled } from "@/components/DevToolbar";
 
@@ -39,7 +40,7 @@ const puzzleShellConfig: Record<
     conceptTitle: "Good AI needs reliable input",
     conceptBody: "When Glitch uses weak or fake sources, its answers become misleading. Good sources help, but AI can still make mistakes or make things up, so check important answers yourself.",
     hints: [
-      "For each source, ask: who runs it, and do experts check its work before it's published?",
+      "Open Lab Papers (top of the screen) to read each source. Ask: who runs it, and do experts check its work before it's published?",
       "Space agencies, peer-reviewed journals and archives about real scientists tend to be credible. Blogs, fan podcasts and click-driven magazines usually aren't checked by experts.",
       "Four of the sources are credible and three are not.",
     ],
@@ -51,7 +52,7 @@ const puzzleShellConfig: Record<
     conceptBody: "A clear, specific prompt gives an AI the right instructions. Structure is a good starting point, but prompting is a conversation: check the answer, then refine your prompt.",
     hints: [
       "Read Glitch's error message carefully. It points at the one slot causing the biggest problem.",
-      "Pick cards that fit this exact emergency: the specific problem, the specific job, and the exact format the ship needs.",
+      "Pick cards that fit this exact emergency: the specific problem, the specific job, and the exact format the ship needs. The Survival Guide under Lab Papers explains what each slot is for.",
       "Skip cards that are vague (\"somehow\", \"best practices\") or that ask for creativity, jokes, chatty explanations or a loose format.",
     ],
   },
@@ -61,7 +62,7 @@ const puzzleShellConfig: Record<
     conceptTitle: "Separate facts from fiction",
     conceptBody: "AI can sound sure of itself and still be wrong. Knowing what AI can and can't do helps you decide when to trust it and when to double-check.",
     hints: [
-      "Think about what AI really does: it finds patterns in the data it learned from.",
+      "Open Lab Papers and skim the AI Crash Course. Think about what AI really does: it finds patterns in the data it learned from.",
       "AI can be wrong while sounding confident, can invent sources, and can pick up unfair patterns from its data.",
       "Exactly four statements are facts and four are fiction.",
     ],
@@ -156,7 +157,13 @@ export default function PuzzlePage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <PuzzleShell theme={shellConfig.theme} title={puzzle.title} icon={shellConfig.icon} hints={shellConfig.hints}>
+    <PuzzleShell
+      theme={shellConfig.theme}
+      title={puzzle.title}
+      icon={shellConfig.icon}
+      hints={shellConfig.hints}
+      papers={PAPERS_BY_PUZZLE[puzzle.id]}
+    >
           <PuzzleHost
             id={puzzle.id}
             title={puzzle.title}

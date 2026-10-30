@@ -101,6 +101,15 @@ clues in puzzle order, not code order. Change the digits in
    Root cause of the missing colors: `src/lib/` wasn't in Tailwind's `content` paths — it is now.
    Any file holding Tailwind class strings must live under a path listed there.
 
+12. **Lab Papers** (2026-10-30): the printed handouts are built into the game. Bad Data, Prompt
+   Precision and Fact or Fiction have a "Lab Papers" button in the puzzle header (`LabPapers.tsx`,
+   mapping in `src/lib/handouts.ts`). Bad Data's seven source printouts render as text mock webpages
+   from `content/handouts/bad-data-sources.json` (extracted from the "Fact or Fiction Print Outs"
+   docx — which is actually the Bad Data sources). The AI Crash Course booklet and the Prompting
+   Survival Guide are page images in `public/handouts/` with a screen-reader text version in
+   `content/handouts/page-text.json` (the booklet's text was transcribed — its PDF has no text
+   layer). The Prompting Cheatsheet is deliberately left out pending permission (WWT branding).
+
 ## Open decisions (need sign-off from Liz / project owner)
 
 1. **Source of truth.** There are TWO builds of this game: this **Replit/Next.js app** and an older
