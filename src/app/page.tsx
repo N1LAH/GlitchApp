@@ -30,8 +30,8 @@ const OBJECTS: {
   { id: "hs-keypad", puzzleId: "p5-final-console", x: 13.5, y: 43.5, width: 4.5, height: 10 },
 ];
 
-/** Lamp colors for the wall sign: light tints that glow on its dark panel. */
-const WALL_LAMP: Record<string, string> = { Green: "#6ee7a0", Blue: "#7cc0ff", Red: "#ff8a80" };
+/** Letter colors for the door sign: light tints that glow on its dark panel. */
+const SIGN_COLOR: Record<string, string> = { Green: "#6ee7a0", Blue: "#7cc0ff", Red: "#ff8a80" };
 
 /** Tooltip for a solved puzzle: its name, "Solved", and the reward it granted (color matters!). */
 function solvedTooltip(puzzleId: string) {
@@ -75,7 +75,7 @@ export default function Home() {
   // Warm up all in-game routes so first clicks resolve fast.
   useEffect(() => {
     allPuzzles.forEach((p) => router.prefetch(`/puzzles/${p.id}`));
-    ["/episodes", "/how-to-play", "/end"].forEach((r) => router.prefetch(r));
+    ["/how-to-play", "/end"].forEach((r) => router.prefetch(r));
   }, [router]);
 
   const stateFor = (puzzleId: string): HotspotState => {
@@ -115,7 +115,7 @@ export default function Home() {
     : solvedCount === 0
       ? "Something scrambled my circuits and locked us in! Click the glowing objects around the lab to help me relearn how AI works."
       : solvedCount >= 4
-        ? "All my systems are back online! The keypad next to the door is active. The wall above it shows the color order — enter the code to get us out."
+        ? "All my systems are back online! The keypad next to the door is active. The sign on the door shows the color order — enter the code to get us out."
         : `That's ${solvedCount} of my systems back online. Keep investigating the lab!`;
 
   return (
@@ -133,12 +133,6 @@ export default function Home() {
               </p>
             </div>
             <div className="flex gap-2">
-              <button
-                onClick={() => router.push("/episodes")}
-                className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
-              >
-                📋 Mission Log
-              </button>
               <button
                 onClick={() => router.push("/how-to-play")}
                 className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
@@ -165,29 +159,24 @@ export default function Home() {
             draggable={false}
           />
 
-          {/* Door-code color order, as a wall-mounted indicator panel above the keypad,
-              styled after the keypad panel painted in the artwork. Its own layer is the
-              size container (cqw units scale with the artwork) so the containment
-              doesn't affect hotspot tooltips. */}
+          {/* Door-code color order, mounted on the lab door above the handle. Skewed to
+              follow the door's slight perspective and sized in cqw so it scales with the
+              artwork. Its own layer is the size container so the containment doesn't
+              affect hotspot tooltips. */}
           <div className="pointer-events-none absolute inset-0" style={{ containerType: "inline-size" }}>
             <div
-              className="absolute flex -translate-x-1/2 flex-col gap-[0.45cqw] rounded-[0.7cqw] border-[0.22cqw] border-[#8fa7a2] bg-[#263130] px-[0.75cqw] py-[0.6cqw] shadow-[0.35cqw_0.35cqw_0_rgba(20,35,33,0.35)]"
-              style={{ left: "13.5%", top: "24.5%" }}
+              className="absolute flex flex-col items-center gap-[0.4cqw] rounded-[0.5cqw] border-[0.2cqw] border-[#8fa7a2] bg-[#263130] px-[0.45cqw] py-[0.5cqw] shadow-[0.3cqw_0.3cqw_0_rgba(20,35,33,0.4)]"
+              style={{ left: "6%", top: "34%", transform: "translate(-50%, -50%) skewY(4deg)" }}
               role="img"
               aria-label={`Door code color order: ${CLUES.map((c) => c.color).join(", ")}`}
             >
               {CLUES.map((c) => (
-                <span key={c.color} className="flex items-center gap-[0.5cqw]">
-                  <span
-                    className="h-[0.95cqw] w-[0.95cqw] rounded-full"
-                    style={{ background: WALL_LAMP[c.color], boxShadow: `0 0 0.6cqw ${WALL_LAMP[c.color]}` }}
-                  />
-                  <span
-                    className="font-display text-[1.15cqw] font-semibold uppercase leading-none tracking-[0.08em]"
-                    style={{ color: WALL_LAMP[c.color] }}
-                  >
-                    {c.color}
-                  </span>
+                <span
+                  key={c.color}
+                  className="font-display text-[1.05cqw] font-semibold uppercase leading-none tracking-[0.06em]"
+                  style={{ color: SIGN_COLOR[c.color], textShadow: `0 0 0.5cqw ${SIGN_COLOR[c.color]}88` }}
+                >
+                  {c.color}
                 </span>
               ))}
             </div>

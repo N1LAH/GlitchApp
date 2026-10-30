@@ -27,7 +27,7 @@ const PUZZLE_GUIDE: { icon: string; name: string; how: string }[] = [
   {
     icon: "🔐",
     name: "Final Console",
-    how: "Switches on once the other four puzzles are solved. Enter your three colored digits in the color order shown on the wall above the keypad.",
+    how: "Switches on once the other four puzzles are solved. Enter your three colored digits in the color order shown on the sign on the lab door.",
   },
 ];
 
@@ -81,8 +81,8 @@ export default function HowToPlayPage() {
             </li>
             <li>
               <strong className="text-slate-800">Escape:</strong> enter your
-              three colored digits in the color order shown on the wall above
-              the keypad.
+              three colored digits in the color order shown on the sign on the
+              lab door.
             </li>
             <li>
               <strong className="text-slate-800">Lab Papers:</strong> Bad Data,

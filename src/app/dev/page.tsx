@@ -37,7 +37,6 @@ export default function DevConsolePage() {
   const routes = [
     ["/start", "Title screen"],
     ["/", "Lab hub"],
-    ["/episodes", "Mission log"],
     ["/how-to-play", "How to play"],
     ["/end", "End screen"],
     ...allPuzzles.map((p) => [`/puzzles/${p.id}`, p.title] as [string, string]),

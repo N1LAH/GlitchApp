@@ -74,7 +74,7 @@ const puzzleShellConfig: Record<
     conceptBody: "The door code is hidden in puzzle clues. Use what you learned to find the final sequence and unlock the lab.",
     hints: [
       "Each digit puzzle gave you a colored digit. They're listed on the keypad as you earn them.",
-      "In the lab, the wall above the keypad shows the color order. Enter the digits in that order.",
+      "In the lab, the sign on the door shows the color order. Enter the digits in that order.",
       "Still stuck? Ask your facilitator to check your color order.",
     ],
   },
@@ -139,7 +139,7 @@ export default function PuzzlePage({ params }: { params: { id: string } }) {
               )}
               <p className="text-sm text-slate-500">
                 {clue
-                  ? "Remember the color: the wall above the keypad shows where it goes in the door code."
+                  ? "Remember the color: the sign on the lab door shows where it goes in the door code."
                   : unmetDeps("p5-final-console", solved).length === 0
                     ? "The keypad next to the door is now active. Time to crack the code!"
                     : "One step closer! The keypad by the door switches on once all four puzzles are solved."}

@@ -143,7 +143,7 @@ tr { break-inside: avoid; }
   <ul>
     <li><strong>Four puzzles are open from the start</strong>, in any order: Feedback Maze, Bad Data, Prompt Precision and Fact or Fiction.</li>
     <li>Three of them give the team a <strong>colored digit</strong>. Fact or Fiction gives a key instead.</li>
-    <li>When all four are solved, the <strong>keypad by the door</strong> switches on. Teams enter their three digits in the <strong>color order posted on the wall above the keypad</strong> to escape.</li>
+    <li>When all four are solved, the <strong>keypad by the door</strong> switches on. Teams enter their three digits in the <strong>color order shown on the sign on the lab door</strong> to escape.</li>
     <li>The end screen shows the team's <strong>total time</strong> and a short list of four habits for using AI.</li>
   </ul>
   <div class="warn"><strong>Every team has the same door code.</strong> It's in the answer key at the back. Keep those pages away from students, and keep an ear out for teams calling the code across the room.</div>
@@ -155,7 +155,7 @@ tr { break-inside: avoid; }
     <li><p><strong>Check the devices.</strong> Open <span class="mono">glitchapp.vercel.app</span> on each team's laptop or tablet. Chrome is the most tested browser. If you plan to use iPads or another browser, play a puzzle on one first.</p></li>
     <li><p><strong>Use a normal browser window, not a private or incognito one.</strong> The game saves progress in the browser. A private window loses everything when it's closed.</p></li>
     <li><p><strong>Reset every device right before students arrive.</strong> Open <span class="mono">glitchapp.vercel.app/new</span> on each one. Bookmarking that page makes this one click.</p></li>
-    <li><p><strong>Know the color order.</strong> A sign on the lab wall, just above the keypad, shows the order for the door code: <strong>Green, then Blue, then Red</strong>. Students find it themselves; point to it if a team is stuck.</p></li>
+    <li><p><strong>Know the color order.</strong> A sign on the lab door, just above the handle, shows the order for the door code: <strong>Green, then Blue, then Red</strong>. Students find it themselves; point to it if a team is stuck.</p></li>
     <li><p><strong>Keep this guide handy</strong>, with the answer key at the back kept away from students.</p></li>
   </ol>
 </section>
@@ -166,7 +166,7 @@ tr { break-inside: avoid; }
     <li><p><strong>Title screen.</strong> Students click the START button painted on the picture. Glitch tells a short story in four screens. They can read it or press <em>Skip intro</em>.</p></li>
     <li><p><strong>The lab.</strong> Glowing blue boxes mark the puzzles. Hovering over one shows its name. Grey boxes are solved and can't be opened again; hovering over one shows the puzzle name, "Solved" and its reward. The keypad by the door shows a padlock until it's ready.</p></li>
     \1 Bad Data, Prompt Precision and Fact or Fiction also have a <strong>Lab Papers</strong> button with the reference handouts on screen, so printing them is optional.</p></li>
-    <li><p><strong>Progress check.</strong> The <strong>Mission Log</strong> button in the lab lists what each team has solved, the digits they've earned, and what's still locked.</p></li>
+    <li><p><strong>Progress check.</strong> Solved objects in the lab turn grey; hovering over one shows its name and reward. Hovering over the locked keypad lists the puzzles that are still unsolved.</p></li>
     <li><p><strong>Escape.</strong> After the right code, the door opens and the end screen shows the team's time. The timer starts when they open their first puzzle, not at the title screen.</p></li>
   </ol>
 </section>
@@ -218,11 +218,11 @@ tr { break-inside: avoid; }
   <div class="puzzle">
     <header><h3>Final Console (the keypad)</h3><span class="where">In the lab: the small panel beside the door on the left</span></header>
     <dl class="kv">
-      <dt>Students</dt><dd>Enter their three colored digits in the color order shown on the sign above the keypad in the lab.</dd>
+      <dt>Students</dt><dd>Enter their three colored digits in the color order shown on the sign on the lab door.</dd>
       <dt>Unlocks</dt><dd>Only after all four other puzzles are solved.</dd>
     </dl>
     <div class="chips"><span class="chip"><i class="g"></i>Green first</span><span class="chip"><i class="b"></i>Blue second</span><span class="chip"><i class="r"></i>Red third</span></div>
-    <div class="tip"><strong>Good to know:</strong> The keypad lists the clues in puzzle order (Blue, Red, Green), not in code order, so students need to look at the sign above the keypad in the lab. After <strong>3 wrong codes</strong> the keypad cools down for 30 seconds. Watch out: each puzzle's <em>screen</em> color is not its <em>clue</em> color. The maze screen is purple but its digit is Blue, and Prompt Precision's screen is blue but its digit is Green. Point students to the colored circle on the reward screen.</div>
+    <div class="tip"><strong>Good to know:</strong> The keypad lists the clues in puzzle order (Blue, Red, Green), not in code order, so students need to look at the sign on the lab door. After <strong>3 wrong codes</strong> the keypad cools down for 30 seconds. Watch out: each puzzle's <em>screen</em> color is not its <em>clue</em> color. The maze screen is purple but its digit is Blue, and Prompt Precision's screen is blue but its digit is Green. Point students to the colored number on the reward screen.</div>
   </div>
 </section>
 
@@ -231,8 +231,8 @@ tr { break-inside: avoid; }
   <table>
     <thead><tr><th>What you see</th><th>What to do</th></tr></thead>
     <tbody>
-      <tr><td>The keypad has a padlock or says it's still locked</td><td>All four other puzzles must be solved first. Open the <strong>Mission Log</strong> from the lab to see which one is missing.</td></tr>
-      <tr><td>"Keypad cooling down… 30s"</td><td>The team entered 3 wrong codes. Wait 30 seconds. Meanwhile, check the color order on the sign above the keypad in the lab and the digits shown on the keypad.</td></tr>
+      <tr><td>The keypad has a padlock or says it's still locked</td><td>All four other puzzles must be solved first. Hover over the keypad in the lab to see which ones are missing.</td></tr>
+      <tr><td>"Keypad cooling down… 30s"</td><td>The team entered 3 wrong codes. Wait 30 seconds. Meanwhile, check the color order on the sign on the lab door and the digits shown on the keypad.</td></tr>
       <tr><td>The code doesn't work</td><td>Usually the digits are in the wrong order. It's Green, then Blue, then Red. Hovering over a solved object in the lab shows the digit it gave. The full code is in the answer key.</td></tr>
       <tr><td>A team's progress disappeared</td><td>Progress lives in that one browser on that one device. It's lost if they switched devices or browsers, used a private window, or the game was more than 12 hours old. You can give back solved puzzles from <span class="mono">/dev</span> on that device (see below).</td></tr>
       <tr><td>A new group sits down at a used device</td><td>Open <span class="mono">glitchapp.vercel.app/new</span>. Students can't reset a game mid-way on purpose, so one student can't wipe the team's work.</td></tr>
@@ -241,7 +241,7 @@ tr { break-inside: avoid; }
       <tr><td>The screen looks old or odd after an update</td><td>Refresh the page. Progress is kept.</td></tr>
       <tr><td>A team is stuck on a puzzle</td><td>Point them to the <strong>Hint</strong> button first; the third hint is very direct. Then use the answer key to give a nudge, not the answer.</td></tr>
       <tr><td>A team runs out of time</td><td>On their device, open <span class="mono">/dev</span> and press <em>mark solved</em> next to the puzzle they're on. They can then finish the keypad.</td></tr>
-      <tr><td>A student wants to replay a puzzle</td><td>Solved puzzles can't be reopened, from the lab or the Mission Log. If a team wants to replay, they can start a new game with <strong>Play Again</strong> on the end screen after they escape.</td></tr>
+      <tr><td>A student wants to replay a puzzle</td><td>Solved puzzles can't be reopened. If a team wants to replay, they can start a new game with <strong>Play Again</strong> on the end screen after they escape.</td></tr>
     </tbody>
   </table>
 
@@ -280,7 +280,7 @@ tr { break-inside: avoid; }
       <div class="panel"><span class="marker">1</span><b>Session state</b>door code: <span class="ok">246</span><br>tokens: <span class="ok">UNLOCK5</span><br>startedAt: <span class="ok">10:02:14 AM</span><br>timer started: <span class="ok">10:03:40 AM</span><br>finishedAt: —</div>
       <div class="panel"><span class="marker">2</span><b>Puzzles</b><span class="ok">✓</span> Feedback Maze → digit 4 <span class="btn">open</span><br>○ Bad Data → digit 6 <span class="btn">open</span><span class="btn">mark solved</span><br>…<br><span class="pill" style="background:#ca8a04">Unlock all</span><span class="pill" style="background:#be123c">Reset all progress</span></div>
       <div class="panel"><span class="marker">3</span><b>Floating dev toolbar</b>OFF — click to enable</div>
-      <div class="panel"><span class="marker">4</span><b>Jump to route</b>/start · / · /episodes · /end …</div>
+      <div class="panel"><span class="marker">4</span><b>Jump to route</b>/start · / · /how-to-play · /end …</div>
     </div>
     <ul class="legend">
       <li><span class="marker">1</span><p><strong>Session state</strong> shows the door code (246) and the team's times. <em>startedAt</em> is when they entered the lab, <em>timer started</em> is when they opened their first puzzle, and <em>finishedAt</em> is when they escaped. <em>UNLOCK5</em> under tokens means Fact or Fiction is solved.</p></li>
@@ -295,7 +295,7 @@ tr { break-inside: avoid; }
   <table>
     <thead><tr><th>Situation</th><th>What to do in the console</th></tr></thead>
     <tbody>
-      <tr><td>You want to see how far a team has got</td><td>Look at <strong>Puzzles</strong> (section 2). For students, the Mission Log in the game shows the same thing.</td></tr>
+      <tr><td>You want to see how far a team has got</td><td>Look at <strong>Puzzles</strong> (section 2). In the game, solved objects turn grey and show their reward on hover.</td></tr>
       <tr><td>A team is out of time on one puzzle</td><td>Press <em>mark solved</em> next to that puzzle, then let them finish the rest themselves, including the keypad.</td></tr>
       <tr><td>A team lost their progress</td><td>Press <em>mark solved</em> for each puzzle they had already finished. Their timer restarts from the next puzzle they open.</td></tr>
       <tr><td>You need the door code</td><td>It's in <strong>Session state</strong> (section 1), and in the answer key.</td></tr>

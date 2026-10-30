@@ -8,7 +8,7 @@ import { allPuzzles } from "@/lib/puzzles";
 const MAX_TRIES = 3;
 const LOCKOUT_SECONDS = 30;
 
-/** Clues listed in puzzle order, not code order — the color order is on the lab wall above the keypad. */
+/** Clues listed in puzzle order, not code order — the color order is on the sign on the lab door. */
 const DISPLAY_CLUES = [...CLUES].sort(
   (a, b) =>
     allPuzzles.findIndex((p) => p.id === a.puzzleId) -
@@ -82,8 +82,8 @@ export default function P5FinalConsole({ solved, onUnlock }: Props) {
   return (
     <div className="space-y-4 text-slate-700">
       <p className="text-sm text-slate-600">
-        Enter the three-digit code to unlock the lab door. The wall above the
-        keypad in the lab shows which color comes first.
+        Enter the three-digit code to unlock the lab door. The sign on the lab
+        door shows which color comes first.
       </p>
 
       <div className="rounded-[24px] border border-slate-200 bg-white/80 p-4 shadow-sm">
@@ -151,12 +151,12 @@ export default function P5FinalConsole({ solved, onUnlock }: Props) {
               <>
                 Access denied — too many wrong codes! The keypad is locked for{" "}
                 {lockedFor} seconds. Use the time to check the color order on the
-                wall above the keypad.
+                sign on the lab door.
               </>
             ) : (
               <>
                 Access denied — that code didn&apos;t work. Check your color
-                clues and the color order on the wall, then try again!{" "}
+                clues and the color order on the door, then try again!{" "}
                 {MAX_TRIES - wrongTries === 1 ? "One more wrong try locks the keypad for a bit." : ""}
               </>
             )}

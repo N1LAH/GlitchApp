@@ -48,7 +48,7 @@ npm run dev:tools   # same server, dev toolbar + demo skip buttons visible
 
 ## Game flow
 
-Start (`/start`) → Lab hub (`/`) → Episodes (`/episodes`) →
+Start (`/start`) → Lab hub (`/`) →
 Maze → Bad Data → Prompt Precision → Fact or Fiction → Final Console keypad →
 End screen. The keypad code and color-clue scheme live in `src/lib/clues.ts`
 (currently Green 2, Blue 4, Red 6 → `246`, the same for every team). The color

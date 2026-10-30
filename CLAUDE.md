@@ -72,7 +72,7 @@ Puzzle routing/host: `src/app/puzzles/[id]/page.tsx` + `src/components/puzzle/Pu
 The clue scheme + code live in `src/lib/clues.ts` (`CLUES`). Currently **Green 2, Blue 4, Red 6 →
 code "246"**, the same for every team (randomizing per session was tried and rolled back on
 2026-10-19 so facilitators have one code to remember). The color order is posted on a sign on the
-lab wall above the keypad (`src/app/page.tsx`, built from `CLUES`); the keypad deliberately lists
+lab door, above the handle (`src/app/page.tsx`, built from `CLUES`); the keypad deliberately lists
 clues in puzzle order, not code order. Change the digits in
 `CLUES` and the keypad, reward screens and `/dev` all follow.
 
@@ -112,6 +112,12 @@ clues in puzzle order, not code order. Change the digits in
    The Survival Guide images come from a corrected copy of the PDF (three dashes that the original
    font rendered as "4" on pages 4 and 13 were replaced with en dashes).
 
+13. **Liz's feedback round 3** (2026-10-30): the color-order sign moved onto the lab door (above
+   the handle, skewed 4° to follow the door's perspective). The Mission Log page (`/episodes`) was
+   removed entirely — it was a Replit-era shortcut to the puzzles. Progress shows in the lab itself
+   (grey solved objects + hover tooltips; the locked keypad's tooltip lists what's missing).
+   Lab tooltips are portalled (`ui/tooltip.tsx`) so they position against the page, not the scene.
+
 ## Open decisions (need sign-off from Liz / project owner)
 
 1. **Source of truth.** There are TWO builds of this game: this **Replit/Next.js app** and an older
@@ -120,7 +126,7 @@ clues in puzzle order, not code order. Change the digits in
    against the Figma version and don't map onto this code. Confirm this Replit/Next.js app is the
    official build going forward. (The most recent link shared was the Replit one.)
 2. **Keypad code + clue scheme** — fixed code 246 (Green 2, Blue 4, Red 6). The color order is on
-   the lab wall above the keypad. The reviewer flagged 2-4-6 as an easy pattern to guess (F9); the 3-try lockout
+   the sign on the lab door. The reviewer flagged 2-4-6 as an easy pattern to guess (F9); the 3-try lockout
    slows guessing. Confirm the handout matches `CLUES` in `src/lib/clues.ts`.
 3. **Prompt puzzle difficulty** — `P3PromptAssembly` reveals only ONE wrong slot per submission
    (the reviewer liked this); cards are kept between attempts now.
